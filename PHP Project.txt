@@ -1,0 +1,149 @@
+REGISTRATION
+
+-fields to be added
+
+	-first name
+
+	-middle name
+
+	-last name
+
+	-email address
+
+	-mobile number
+
+	-username
+
+	-radio button to select if system generated password or manual input
+
+		-(if system generated there will be prompt of change password on the FIRST login)
+
+		-password
+
+		-confirm password
+
+	-fields for Secret Question
+
+	-captcha
+
+
+-activation of account
+
+	//-use mail() for sending email activation
+
+	//-use semaphore for One-Time Password(OTP) to activate account
+
+
+-password recovery
+
+	//-Secret Question
+
+	//-sending of OTP
+
+-change password
+
+	//-alert user to change password if expires
+
+
+-notifications
+
+	//-display last login timestamp
+
+	//-display last access timestamp
+
+	//-notify for login attempts (must 3 times)
+
+	//-disable the login failure error messages
+
+	//-send an email to the admin for all the blocked/locked accounts
+
+	//-send email to admin for any type of suspicious login attempt and whether the login attempt is reached.
+
+
+-on going attack detecton
+
+	-detect if password-guessing or brute-force attack is being performed
+
+
+
+------------------
+-
+security questions
+
+	-What was your childhood nickname?
+
+	-What is the name of your favorite childhood friend?
+
+	-What was your favorite sport in high school?
+
+	-What was your favorite food as a child?
+
+	-Who is your childhood sports hero?
+
+
+
+-generate password
+
+function randomPassword() {
+
+    $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+
+    $pass = array(); //remember to declare $pass as an array
+
+    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+
+    for ($i = 0; $i < 8; $i++) {
+
+        $n = rand(0, $alphaLength);
+
+        $pass[] = $alphabet[$n];
+
+    }
+
+    return implode($pass); //turn the array into a string
+}
+
+
+
+------------------------
+
+REFERENCES
+
+-send mail (PHPMailer)
+https://stackoverflow.com/questions/8631726/trying-to-send-an-email-using-php-scripting
+https://stackoverflow.com/questions/21836282/php-function-mail-isnt-working
+https://github.com/PHPMailer/PHPMailer
+
+doodledummy617@gmail.com
+Password123$
+
+
+-brute-force attack
+https://stackoverflow.com/questions/15798918/what-is-the-best-method-to-prevent-a-brute-force-attack
+
+
+
+-semaphore (sms)
+
+https://semaphore.co/docs
+
+-sending email
+https://www.w3schools.com/php/func_mail_mail.asp
+
+
+
+-captcha
+
+https://github.com/claviska/simple-php-captcha
+
+http://labs.abeautifulsite.net/simple-php-captcha/
+
+http://www.w3schools.in/php-script/captcha/
+
+http://www.w3school.info/2016/07/28/create-own-captcha-for-your-website/
+https://developers.google.com/recaptcha/old/docs/php
+
+-get client IP Address
+https://stackoverflow.com/questions/15699101/get-the-client-ip-address-using-php
+	
+

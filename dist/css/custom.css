@@ -1,0 +1,13 @@
+/* ========== PRELOADER ========== */
+.preloader {
+  background-color:rgba(255,255,255,0.7);
+  background-image:url(../img/preloader.gif);
+  background-position:center center;
+  background-repeat:no-repeat;
+  height:100%;
+  left:0px;
+  position:fixed;
+  top:0px;
+  width:100%;
+  z-index:999999;
+}
