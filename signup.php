@@ -220,12 +220,12 @@
 																<div class="form-group">
 																	<label class="pull-left control-label mb-10" for="tb-password">Password</label>
 																	<input type="password" class="form-control" name="tb-password" id="tb-password" placeholder="Password">
-																	<div class="hidden" style="color: #cc0000" id="panel-error"></div>
+																	<div style="color: #cc0000; display: none" id="panel-error"></div>
 																</div>
 																<div class="form-group">
 																	<label class="pull-left control-label mb-10" for="tb-confirm-password">Confirm Password</label>
 																	<input type="password" class="form-control" id="tb-confirm-password" placeholder="Confirm Password">
-																	<div class="hidden" style="color: #cc0000" id="panel-not-match">&bull; Password do not match.</div>
+																	<div style="color: #cc0000; display: none" id="panel-not-match">&bull; Password do not match.</div>
 																</div>
 															</div>
 
@@ -250,7 +250,7 @@
 																<input type="hidden" name="tb-hidden-captcha" value="<?php echo $_SESSION['captcha']['code'] ?>">
 																<img src="<?php echo $_SESSION['captcha']['image_src'] ?>" id="img-captcha" >
 																<input type="text" class="form-control" required="" name="tb-captcha" id="tb-captcha" placeholder="Enter captcha code">
-																<div class="hidden" style="color: #cc0000" id="panel-captcha-error">Captcha failed. Please enter captcha code again.</div>
+																<div style="color: #cc0000; display: none" id="panel-captcha-error">Captcha failed. Please enter captcha code again.</div>
 															</div>
 														</div>
 													</div>
@@ -299,6 +299,7 @@
 		<script src="dist/js/init.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
+
 				$("#radio1").on('click', function(){
 					if (!$("#panel-password").hasClass('hidden')) {
 						$("#panel-password").addClass('hidden');
@@ -310,63 +311,88 @@
 					}
 				});
 
+				// $("#tb-email").keyup(function(){
+				// 	if ($(this).val().length > 5) {
+				// 		$.ajax({
+				// 			url: 'include/functions.php',
+				// 			type: 'post',
+				// 			data: { action: 'check-email', email: $(this).val() },
+				// 			success: function(response){
+				// 				var result = jQuery.parseJSON(response);
+				// 				if (result['status']){
+				// 					$("#div-email").addClass('has-error');
+				// 					$("#div-email #error").show();
+				// 				} else {
+				// 					$("#div-email").removeClass('has-error');
+				// 					$("#div-email #error").hide();
+				// 				}
+				// 			}
+				// 		});
+				// 	}
+				// });
+				$("#tb-email").focusout(function(){
+					if ($(this).val().length > 5) {
+						$.ajax({
+							url: 'include/functions.php',
+							type: 'post',
+							data: { action: 'check-email', email: $(this).val() },
+							success: function(response){
+								var result = jQuery.parseJSON(response);
+								if (result['status']){
+									$("#div-email").addClass('has-error');
+									$("#div-email #error").show();
+								} else {
+									$("#div-email").removeClass('has-error');
+									$("#div-email #error").hide();
+								}
+							}
+						});
+					}
+				});
+				$("#tb-username").focusout(function(){
+					if ($(this).val().length > 3) {
+						$.ajax({
+							url: 'include/functions.php',
+							type: 'post',
+							data: { action: 'check-username', username: $(this).val() },
+							success: function(response){
+								var result = jQuery.parseJSON(response);
+								if (result['status']){
+									$("#div-username").addClass('has-error');
+									$("#div-username #error").show();
+								} else {
+									$("#div-username").removeClass('has-error');
+									$("#div-username #error").hide();
+								}
+							}
+						});	
+					}
+				});
+				$("#tb-password").focusout(function(){
+					checkPassword();
+				});
+				$("#tb-confirm-password").focusout(function(){
+					checkPassword();
+				});
+				$("#tb-captcha").focusout(function(){
+					if ($('input[name="tb-hidden-captcha"]').val().toLowerCase() != $('input[name="tb-captcha"]').val().toLowerCase()){
+						$("#tb-captcha").parent().addClass('has-error');
+						$("#panel-captcha-error").show();
+					} else {
+						$("#tb-captcha").parent().removeClass('has-error');
+						$("#panel-captcha-error").hide();
+					}
+				});
+
 				$("#btn-submit").on("click", function(){
 					var errorCount = 0;
 
-					$.ajax({
-						url: 'include/functions.php',
-						type: 'post',
-						data: { action: 'check-email', email: $("#tb-email").val() },
-						success: function(response){
-							var result = jQuery.parseJSON(response);
-							if (result['status']){
-								$("#div-email").addClass('has-error');
-								$("#div-email #error").show();
-								errorCount += 1;
-							} else {
-								$("#div-email").removeClass('has-error');
-								$("#div-email #error").hide();
-							}
-						}
+					$(".has-error").each(function(){
+						errorCount++;
 					});
 
-					console.log(errorCount);
-
-					$.ajax({
-						url: 'include/functions.php',
-						type: 'post',
-						data: { action: 'check-username', username: $("#tb-username").val() },
-						success: function(response){
-							var result = jQuery.parseJSON(response);
-							if (result['status']){
-								$("#div-username").addClass('has-error');
-								$("#div-username #error").show();
-								errorCount += 1;
-							} else {
-								$("#div-username").removeClass('has-error');
-								$("#div-username #error").hide();
-							}
-						}
-					});
-					
-
-					if ($("#radio2").is(':checked')){
-						if (!checkPassword() || !confirmPassword()) {
-							errorCount += 1;
-						}
-					}
-
-					if ($('input[name="tb-hidden-captcha"]').val().toLowerCase() != $('input[name="tb-captcha"]').val().toLowerCase()){
-						$("#panel-captcha-error").removeClass('hidden');
-						errorCount += 1;
-					} else {
-						if (!$("#panel-captcha-error").hasClass('hidden')) {
-							$("#panel-captcha-error").addClass('hidden');
-						}
-					}
-					//console.log(errorCount);
 					if (!errorCount > 0) {
-						//$("#form-sign-up").submit();
+						$("#form-sign-up").submit();
 					}
 				});
 			});
@@ -395,19 +421,13 @@
 				}
 
 				if (cntError > 0) {
-					$("#tb-password").css('border-color', 'rgb(204,0,0)');
+					$("#tb-password").parent().addClass('has-error');
 					$("#panel-error").html(error);
-					$("#panel-error").removeClass("hidden");
-					return 0;
+					$("#panel-error").show();
 				} else {
-					//$("#tb-password").addClass("passed");
-					$("#tb-password").css('border-color', 'rgb(0,128,0)')
-					setTimeout(function(){
-						$("#tb-password").css('border-color', 'rgba(33, 33, 33, 0.12)');
-					},1000);
+					$("#tb-password").parent().removeClass('has-error');
 					$("#panel-error").html('');
-					$("#panel-error").addClass("hidden");
-					return 1;
+					$("#panel-error").hide();
 				}
 			}
 
@@ -417,22 +437,11 @@
 				var error = true;
 
 				if (pwd != conpwd) {
-					if (!$("#tb-confirm-password").hasClass('error')) {
-						$("#panel-not-match").removeClass('hidden');
-						$("#tb-confirm-password").addClass('error');
-						$("#tb-confirm-password").removeClass('passed');
-					}
-					return 0;
+					$("#tb-confirm-password").parent().addClass('has-error');
+					$("#panel-not-match").show();
 				} else {
-					if (!$("#tb-confirm-password").hasClass('passed')) {
-						$("#panel-not-match").addClass('hidden');
-						$("#tb-confirm-password").addClass('passed');
-						$("#tb-confirm-password").removeClass('error');
-						setTimeout(function(){
-							$("#tb-confirm-password").removeClass('passed');
-						},1000);
-					}
-					return 1;
+					$("#tb-confirm-password").parent().removeClass('has-error');
+					$("#panel-not-match").hide();
 				}
 			}
 		</script>
