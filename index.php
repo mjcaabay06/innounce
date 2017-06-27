@@ -1006,22 +1006,27 @@
 								<div  class="panel-body pb-0">
 									<div  class="tab-struct custom-tab-1">
 										<ul role="tablist" class="nav nav-tabs nav-tabs-responsive" id="myTabs_8">
-											<li class="active" role="presentation">
+											<li class="<?php echo $_SESSION['userType'] == 1 ? 'active' : 'hidden' ?>" role="presentation">
 												<a  data-toggle="tab" id="announcement_tab_8" role="tab" href="#announcement_8" aria-expanded="false">
 													<span>announcement</span>
 												</a>
 											</li>
-											<li role="presentation" class="">
+											<li role="presentation" class="<?php echo $_SESSION['userType'] == 2 ? 'active' : 'hidden' ?>">
+												<a data-toggle="tab" id="grouping_tab_8" role="tab" href="#grouping_8" aria-expanded="false">
+													<span>grouping</span>
+												</a>
+											</li>
+											<li role="presentation" class="<?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
 												<a data-toggle="tab" id="emergency_tab_8" role="tab" href="#emergency_8" aria-expanded="false">
 													<span>emergency</span>
 												</a>
 											</li>
-											<li role="presentation" class="">
+											<li role="presentation" class="<?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
 												<a data-toggle="tab" id="survey_tab_8" role="tab" href="#survey_8" aria-expanded="false">
 													<span>survey</span>
 												</a>
 											</li>
-											<li role="presentation" class="next">
+											<li role="presentation" class="next <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
 												<a aria-expanded="true"  data-toggle="tab" role="tab" id="reports_tab_8" href="#reports_8">
 													<span>reports</span>
 												</a>
@@ -1038,26 +1043,16 @@
 											</li> -->
 										</ul>
 										<div class="tab-content" id="myTabContent_8">
-											<div  id="announcement_8" class="tab-pane fade active in" role="tabpanel">
+											<div  id="announcement_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? 'in active' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
 													<div class="pt-20">
-														<!-- <select multiple id="optgroup" name="optgroup[]">
-															<optgroup label="Friends">
-																<option value="1">Yoda</option>
-																<option value="2" selected disabled>Obiwan</option>
-															</optgroup>
-															<optgroup label="Enemies">
-																<option value="3">Palpatine</option>
-																<option value="4" disabled>Darth Vader</option>
-															</optgroup>
-														</select> -->
 														<div class="form-group">
 															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
-															<div class="form-group col-md-3 col-sm-12 col-xs-12 col-md-offset-1">
+															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
 																<label class="control-label mb-5 text-left">Professors</label>
-																<select multiple class="form-control" id="sel-recipient-prof">
+																<select multiple class="form-control" id="a-sel-prof" style="height: 200px">
 																	<?php
-																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.user_type_id = 2 and users.status_id = 1 order by user_infos.last_name";
+																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.status_id = 1 and users.id != " . $_SESSION["authId"] . " order by user_infos.last_name";
 																		$rsProf = mysqli_query($mysqli, $selProf);
 
 																		while($prof = mysqli_fetch_assoc($rsProf)):
@@ -1066,92 +1061,88 @@
 																	<?php endwhile; ?>
 																</select>
 															</div>
-															<div class="form-group col-md-3 col-sm-12 col-xs-12">
+															<div class="form-group col-md-4 col-sm-12 col-xs-12">
 																<label class="control-label mb-5 text-left">Students</label>
-																<select multiple class="form-control" id="sel-recipient-stud">
+																<select multiple class="form-control" id="a-sel-stud" style="height: 200px">
 																	<?php
-																		$selProf = "select * from students inner join user_infos on users.id = user_infos.user_id where users.user_type_id = 2 and users.status_id = 1 order by user_infos.last_name";
-																		$rsProf = mysqli_query($mysqli, $selProf);
-
-																		while($prof = mysqli_fetch_assoc($rsProf)):
+																		$selCourse = "select * from courses";
+																		$rsCourse = mysqli_query($mysqli, $selCourse);
+																		while($course = mysqli_fetch_assoc($rsCourse)):
 																	?>
-																		<option value="<?php echo $prof['user_id'] ?>"><?php echo $prof['last_name'] . ', ' . $prof['first_name'] ?></option>
+																		<optgroup label="<?php echo $course['description'] ?>">
+																			<?php
+																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'];
+																				$rsYS = mysqli_query($mysqli, $selYS);
+
+																				while($ys = mysqli_fetch_assoc($rsYS)):
+																			?>
+																				<option value="<?php echo $ys['id'] ?>"><?php echo $ys['section'] ?></option>
+																			<?php endwhile; ?>		
+																		</optgroup>
 																	<?php endwhile; ?>
+																	
 																</select>
 															</div>
 														</div>
 														
 														<div class="form-group col-xs-12">
 															<label class="control-label mb-10 text-left">Message:</label>
-															<textarea class="form-control" rows="5" id="body-message"></textarea>
+															<textarea class="form-control" rows="5" id="a-message"></textarea>
 														</div>
 														<div class="form-group col-xs-12">
-															<button type="button" id="btn-send" class="btn btn-info pull-right">Send</button>
+															<button type="button" id="a-send" class="btn btn-info pull-right">Send</button>
 															<div class="clearfix"></div>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div  id="emergency_8" class="tab-pane fade" role="tabpanel">
-												<div class="col-md-12 pb-20">
-													<div class="gallery-wrap">
-														<div class="portfolio-wrap project-gallery">
-															<ul id="portfolio_1" class="portf auto-construct  project-gallery" data-col="4">
-																<li  class="item"   data-src="dist/img/gallery/equal-size/mock1.jpg" data-sub-html="<h6>Bagwati</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>" >
-																	<a href="">
-																	<img class="img-responsive" src="dist/img/gallery/equal-size/mock1.jpg"  alt="Image description" />
-																	<span class="hover-cap">Bagwati</span>
-																	</a>
-																</li>
-																<li class="item" data-src="dist/img/gallery/equal-size/mock2.jpg"   data-sub-html="<h6>Not a Keyboard</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
-																	<a href="">
-																	<img class="img-responsive" src="dist/img/gallery/equal-size/mock2.jpg"  alt="Image description" />
-																	<span class="hover-cap">Not a Keyboard</span>
-																	</a>
-																</li>
-																<li class="item" data-src="dist/img/gallery/equal-size/mock3.jpg" data-sub-html="<h6>Into the Woods</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
-																	<a href="">
-																	<img class="img-responsive" src="dist/img/gallery/equal-size/mock3.jpg"  alt="Image description" />
-																	<span class="hover-cap">Into the Woods</span>
-																	</a>
-																</li>
-																<li class="item" data-src="dist/img/gallery/equal-size/mock4.jpg"  data-sub-html="<h6>Ultra Saffire</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
-																	<a href="">
-																	<img class="img-responsive" src="dist/img/gallery/equal-size/mock4.jpg"  alt="Image description" />
-																	<span class="hover-cap"> Ultra Saffire</span>
-																	</a>
-																</li>
-																
-																<li class="item" data-src="dist/img/gallery/equal-size/mock5.jpg" data-sub-html="<h6>Happy Puppy</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
-																	<a href="">
-																	<img class="img-responsive" src="dist/img/gallery/equal-size/mock5.jpg"  alt="Image description" />	
-																	<span class="hover-cap">Happy Puppy</span>
-																	</a>
-																</li>
-																<li class="item" data-src="dist/img/gallery/equal-size/mock6.jpg"  data-sub-html="<h6>Wooden Closet</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
-																	<a href="">
-																	<img class="img-responsive" src="dist/img/gallery/equal-size/mock6.jpg"  alt="Image description" />
-																	<span class="hover-cap">Wooden Closet</span>
-																	</a>
-																</li>
-																<li class="item" data-src="dist/img/gallery/equal-size/mock7.jpg" data-sub-html="<h6>Happy Puppy</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
-																	<a href="">
-																	<img class="img-responsive" src="dist/img/gallery/equal-size/mock7.jpg"  alt="Image description" />	
-																	<span class="hover-cap">Happy Puppy</span>
-																	</a>
-																</li>
-																<li class="item" data-src="dist/img/gallery/equal-size/mock8.jpg"  data-sub-html="<h6>Wooden Closet</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
-																	<a href="">
-																	<img class="img-responsive" src="dist/img/gallery/equal-size/mock8.jpg"  alt="Image description" />
-																	<span class="hover-cap">Wooden Closet</span>
-																	</a>
-																</li>
-															</ul>
+											<div  id="grouping_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 2 ? 'in active' : 'hidden' ?>" role="tabpanel">
+												<div class="col-md-12">
+													<div class="pt-20">
+														<div class="form-group">
+															<label class="control-label mb-10 text-left col-xs-12">Students:</label>
+															<div class="form-group col-md-4 col-sm-12 col-xs-12">
+																<select multiple class="form-control" id="g-stud" style="height: 200px">
+																	<?php
+																		$selCourse = "select courses.* from courses inner join year_sections on courses.id = year_sections.course_id where year_sections.prof_id = " . $_SESSION['authId'] . " group by courses.id";
+																		$rsCourse = mysqli_query($mysqli, $selCourse);
+																		while($course = mysqli_fetch_assoc($rsCourse)):
+																	?>
+																		<optgroup label="<?php echo $course['description'] ?>">
+																			<?php
+																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'] . " and year_sections.prof_id = " . $_SESSION['authId'];
+																				$rsYS = mysqli_query($mysqli, $selYS);
+
+																				while($ys = mysqli_fetch_assoc($rsYS)):
+																			?>
+																				<option value="<?php echo $ys['id'] ?>"><?php echo $ys['section'] ?></option>
+																			<?php endwhile; ?>		
+																		</optgroup>
+																	<?php endwhile; ?>
+																	
+																</select>
+															</div>
+														</div>
+														
+														<div class="form-group col-xs-12">
+															<label class="control-label mb-10 text-left">Message:</label>
+															<textarea class="form-control" rows="5" id="g-message"></textarea>
+														</div>
+														<div class="form-group col-xs-12">
+															<button type="button" id="g-send" class="btn btn-info pull-right">Send</button>
+															<div class="clearfix"></div>
 														</div>
 													</div>
-												</div>	
+												</div>
 											</div>
-											<div  id="survey_8" class="tab-pane fade" role="tabpanel">
+											<div  id="emergency_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
+												<div class="col-md-12">
+													<div class="pt-20">
+														emergency
+													</div>
+												</div>
+											</div>
+											<div  id="survey_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
 												<!-- Row -->
 												<div class="row">
 													<div class="col-lg-12">
@@ -1245,7 +1236,7 @@
 												</div>
 											</div>
 											
-											<div  id="reports_8" class="tab-pane fade" role="tabpanel">
+											<div  id="reports_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
 												<div class="row">
 													<div class="col-lg-12">
 														<div class="followers-wrap">

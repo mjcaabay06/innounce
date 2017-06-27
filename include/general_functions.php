@@ -18,6 +18,7 @@
 				
 				$_SESSION['authId'] = $row['id'];
 				$_SESSION['username'] = $row['username'];
+				$_SESSION['userType'] = $row['user_type_id'];
 			}
 			$isAuthenticated = true;
 		} else {
