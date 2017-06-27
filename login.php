@@ -4,7 +4,7 @@
 	include "include/general_functions.php";
 
 	if (isset($_SESSION['authId'])) {
-		header("Location: ./");
+		header("Location: /admin/index.php");
 	}
 
 	$errorMessage = '';
