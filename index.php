@@ -1049,8 +1049,14 @@
 														<div class="form-group">
 															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
 															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
-																<label class="control-label mb-5 text-left">Professors</label>
-																<select multiple class="form-control" id="a-sel-prof" style="height: 200px">
+																<div class="checkbox checkbox-success">
+																	<input id="a-check-prof" type="checkbox">
+																	<label for="a-check-prof" class="control-label mb-5 text-left">
+																		Professors
+																	</label>
+																</div>
+																<!-- <label class="control-label mb-5 text-left">Professors</label> -->
+																<select multiple class="form-control" id="a-sel-prof" style="height: 200px" disabled>
 																	<?php
 																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.status_id = 1 and users.id != " . $_SESSION["authId"] . " order by user_infos.last_name";
 																		$rsProf = mysqli_query($mysqli, $selProf);
@@ -1062,8 +1068,14 @@
 																</select>
 															</div>
 															<div class="form-group col-md-4 col-sm-12 col-xs-12">
-																<label class="control-label mb-5 text-left">Students</label>
-																<select multiple class="form-control" id="a-sel-stud" style="height: 200px">
+																<div class="checkbox checkbox-success">
+																	<input id="a-check-stud" type="checkbox">
+																	<label for="a-check-stud" class="control-label mb-5 text-left">
+																		Students
+																	</label>
+																</div>
+																<!-- <label class="control-label mb-5 text-left">Students</label> -->
+																<select multiple class="form-control" id="a-sel-stud" style="height: 200px" disabled>
 																	<?php
 																		$selCourse = "select * from courses";
 																		$rsCourse = mysqli_query($mysqli, $selCourse);
@@ -1574,6 +1586,37 @@
 						$(".preloader").hide();
 					}
 				});
+			});
+
+			isCheckProf();
+			isCheckStud();
+
+			$("#a-send").on("click", function(){
+				var err = 0;
+				if (!$("#a-check-prof").is(':checked') && !$("#a-check-stud").is(':checked')) {
+					//alert("Please select a recipient.");
+					err += 1;
+				}
+
+				if ($("#a-check-prof").is(':checked')) {
+					if ($("#a-sel-prof").val() == null) {
+						err += 1;
+					}
+				}
+
+				if ($("#a-check-stud").is(':checked')) {
+					if ($("#a-sel-stud").val() == null) {
+						err += 1;
+					}
+				}
+
+				if (err > 0) {
+					alert("Please select a recipient.");
+				} else if ($("#a-message").val().trim() == "") {
+					alert("Please compose a message.");
+				} else {
+					sendAnnouncement("include/send_announcement.php");
+				}
 			});
 		});
 		function checkPassword() {
