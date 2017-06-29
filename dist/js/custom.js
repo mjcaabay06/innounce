@@ -11,12 +11,23 @@ function sendAnnouncement(url) {
 	students = !$("#a-check-stud").is(':checked') ? null : $("#a-sel-stud").val();
 	message = $("#a-message").val();
 
+	$(".preloader").show();
 	$.ajax({
 		url: url,
 		type: "post",
 		data: { prof: prof, students: students, message: message },
 		success: function(response){
-			console.log(response);
+			//console.log(response);
+			var result = jQuery.parseJSON(response);
+			console.log(result["status"]);
+
+			$("#a-alert-message").html('');
+			if (result["status"] == 'true') {
+				$("#a-alert-message").html('<div class="alert alert-success">' + result['message'] + '</div>');
+			} else {
+				$("#a-alert-message").html('<div class="alert alert-danger">' + result['message'] + '</div>');
+			}
+			$(".preloader").hide();
 		}
 	});
 }

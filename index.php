@@ -1046,6 +1046,7 @@
 											<div  id="announcement_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? 'in active' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
 													<div class="pt-20">
+														<div class="form-group" id="a-alert-message"></div>
 														<div class="form-group">
 															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
 															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">

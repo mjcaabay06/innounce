@@ -173,4 +173,39 @@
 
 	//echo phpMailer();
 
+	function getStudentReceivers($section) {
+		global $mysqli;
+
+		$selStud = "select students.first_name, students.last_name, students.mobile_number, year_sections.section from students inner join year_sections on students.year_section_id = year_sections.id where students.year_section_id = " . $section;
+		$rsStud = mysqli_query($mysqli, $selStud);
+
+		$data = array();
+		while($studNumber = mysqli_fetch_assoc($rsStud)) {
+			$studData = array(
+					'name' => '[' . $studNumber['last_name'] . ',' . $studNumber['first_name'] . '(' . $studNumber['section'] . ')]',
+					'mobile_number' => $studNumber['mobile_number']
+					);
+			array_push($data, $studData);
+		}
+
+		return $data;
+	}
+
+	function getProfReceivers($id) {
+		global $mysqli;
+
+		$selProf = "select user_infos.first_name, user_infos.last_name, user_infos.mobile_number from users inner join user_infos on users.id = user_infos.user_id where users.id = " . $id;
+		$rsProf = mysqli_query($mysqli, $selProf);
+
+		$data = array();
+		while($profNumber = mysqli_fetch_assoc($rsProf)) {
+			$profData = array(
+					'name' => '[' . $profNumber['last_name'] . ',' . $profNumber['first_name'] . '(Prof)]',
+					'mobile_number' => $profNumber['mobile_number']
+					);
+			array_push($data, $profData);
+		}
+
+		return $data;
+	}
 ?>
