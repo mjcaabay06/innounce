@@ -1112,10 +1112,11 @@
 											<div  id="grouping_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 2 ? 'in active' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
 													<div class="pt-20">
+														<div class="form-group" id="g-alert-message"></div>
 														<div class="form-group">
 															<label class="control-label mb-10 text-left col-xs-12">Students:</label>
 															<div class="form-group col-md-4 col-sm-12 col-xs-12">
-																<select multiple class="form-control" id="g-stud" style="height: 200px">
+																<select multiple class="form-control" id="g-sel-stud" style="height: 200px">
 																	<?php
 																		$selCourse = "select courses.* from courses inner join year_sections on courses.id = year_sections.course_id where year_sections.prof_id = " . $_SESSION['authId'] . " group by courses.id";
 																		$rsCourse = mysqli_query($mysqli, $selCourse);
@@ -1617,6 +1618,21 @@
 					alert("Please compose a message.");
 				} else {
 					sendAnnouncement("include/send_announcement.php");
+				}
+			});
+
+			$("#g-send").on("click", function(){
+				var err = 0;
+				if ($("#g-sel-stud").val() == null) {
+					err += 1;
+				}
+
+				if (err > 0) {
+					alert("Please select a recipient.");
+				} else if ($("#g-message").val().trim() == "") {
+					alert("Please compose a message.");
+				} else {
+					sendGrouping("include/send_grouping.php");
 				}
 			});
 		});

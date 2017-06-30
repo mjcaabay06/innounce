@@ -15,9 +15,6 @@
 					$response = sendViaSemaphore($studNumber['mobile_number'], $message);
 
 					if(empty($response) || !isset($response[0]->status)){
-						// if(isset($response[0])){ //different error
-						// 	$diffError = $response[0];
-						// }
 						$errorSending[] = $studNumber['name'];
 					}
 				}
@@ -28,9 +25,6 @@
 				foreach(getProfReceivers($prof) as $profNumber) {
 					$response = sendViaSemaphore($profNumber['mobile_number'], $message);
 					if(empty($response) || !isset($response[0]->status)){
-						// if(isset($response[0])){ //different error
-						// 	$diffError = $response[0];
-						// }
 						$errorSending[] = $profNumber['name'];
 					}
 					

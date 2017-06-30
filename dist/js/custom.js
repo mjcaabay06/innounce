@@ -64,3 +64,32 @@ function isCheckStud() {
 		}
 	});
 }
+
+/* ----- Send Grouping ----- */
+function sendGrouping(url) {
+	students = $("#g-sel-stud").val();
+	message = $("#g-message").val();
+
+	$(".preloader").show();
+	$.ajax({
+		url: url,
+		type: 'post',
+		data: { students: students, message: message},
+		success: function(response) {
+			console.log(response);
+			var result = $.parseJSON(response);
+			console.log(result["status"]);
+
+			$("#g-alert-message").html('');
+			if (result["status"]) {
+				$("#g-alert-message").html('<div class="alert alert-success">' + result['message'] + '</div>');
+				$("#g-sel-stud option:selected").removeAttr('selected');
+				$("#g-message").val('');
+			} else {
+				$("#g-alert-message").html('<div class="alert alert-danger">' + result['message'] + '</div>');
+			}
+			$(".preloader").hide();
+		}
+
+	});
+}
