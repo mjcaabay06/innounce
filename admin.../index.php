@@ -1,7 +1,7 @@
 <?php
 	session_start();
-	include "include/configurations.php";
-	include "include/general_functions.php";
+	include "../include/configurations.php";
+	include "../include/general_functions.php";
 
 	if(!isset($_SESSION['authId']) || empty($_SESSION['authId'])){
 		header("Location: login.php");
@@ -40,16 +40,16 @@
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 	
 	<!-- Morris Charts CSS -->
-    <link href="vendors/bower_components/morris.js/morris.css" rel="stylesheet" type="text/css"/>
+    <link href="../vendors/bower_components/morris.js/morris.css" rel="stylesheet" type="text/css"/>
 	
 	<!-- Data table CSS -->
-	<link href="vendors/bower_components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+	<link href="../vendors/bower_components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
 	
-	<link href="vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css" rel="stylesheet" type="text/css">
+	<link href="../vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css" rel="stylesheet" type="text/css">
 		
 	<!-- Custom CSS -->
-	<link href="dist/css/style.css" rel="stylesheet" type="text/css">
-	<link href="dist/css/custom.css" rel="stylesheet" type="text/css">
+	<link href="../dist/css/style.css" rel="stylesheet" type="text/css">
+	<link href="../dist/css/custom.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -63,7 +63,7 @@
 				<div class="nav-header pull-left">
 					<div class="logo-wrap">
 						<a href="index.html">
-							<img class="brand-img" src="dist/img/logo.png" alt="brand"/>
+							<img class="brand-img" src="../dist/img/logo.png" alt="brand"/>
 							<span class="brand-text" style="text-transform:none">iNnounce</span>
 						</a>
 					</div>
@@ -324,7 +324,7 @@
 						</ul>
 					</li> -->
 					<li class="dropdown auth-drp">
-						<a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown"><img src="dist/img/user1.png" alt="user_auth" class="user-auth-img img-circle"/><span class="user-online-status"></span></a>
+						<a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown"><img src="../dist/img/user1.png" alt="user_auth" class="user-auth-img img-circle"/><span class="user-online-status"></span></a>
 						<ul class="dropdown-menu user-auth-dropdown" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
 							<!-- <li>
 								<a href="profile.html"><i class="zmdi zmdi-account"></i><span>Profile</span></a>
@@ -358,7 +358,7 @@
 							</li>
 							<li class="divider"></li>
 							<li>
-								<a href="logout.php"><i class="zmdi zmdi-power"></i><span>Log Out</span></a>
+								<a href="admin/logout.php"><i class="zmdi zmdi-power"></i><span>Log Out</span></a>
 							</li>
 						</ul>
 					</li>
@@ -419,7 +419,7 @@
 														<div class="chat-body">
 															<a  href="javascript:void(0)">
 																<div class="chat-data">
-																	<img class="user-img img-circle"  src="dist/img/user.png" alt="user"/>
+																	<img class="user-img img-circle"  src="../dist/img/user.png" alt="user"/>
 																	<div class="user-data">
 																		<span class="name block capitalize-font">Clay Masse</span>
 																		<span class="time block truncate txt-grey">No one saves us but ourselves.</span>
@@ -430,7 +430,7 @@
 															</a>
 															<a  href="javascript:void(0)">
 																<div class="chat-data">
-																	<img class="user-img img-circle"  src="dist/img/user1.png" alt="user"/>
+																	<img class="user-img img-circle"  src="../dist/img/user1.png" alt="user"/>
 																	<div class="user-data">
 																		<span class="name block capitalize-font">Evie Ono</span>
 																		<span class="time block truncate txt-grey">Unity is strength</span>
@@ -441,7 +441,7 @@
 															</a>
 															<a  href="javascript:void(0)">
 																<div class="chat-data">
-																	<img class="user-img img-circle"  src="dist/img/user2.png" alt="user"/>
+																	<img class="user-img img-circle"  src="../dist/img/user2.png" alt="user"/>
 																	<div class="user-data">
 																		<span class="name block capitalize-font">Madalyn Rascon</span>
 																		<span class="time block truncate txt-grey">Respect yourself if you would have others respect you.</span>
@@ -452,7 +452,7 @@
 															</a>
 															<a  href="javascript:void(0)">
 																<div class="chat-data">
-																	<img class="user-img img-circle"  src="dist/img/user3.png" alt="user"/>
+																	<img class="user-img img-circle"  src="../dist/img/user3.png" alt="user"/>
 																	<div class="user-data">
 																		<span class="name block capitalize-font">Mitsuko Heid</span>
 																		<span class="time block truncate txt-grey">I’m thankful.</span>
@@ -463,7 +463,7 @@
 															</a>
 															<a  href="javascript:void(0)">
 																<div class="chat-data">
-																	<img class="user-img img-circle"  src="dist/img/user.png" alt="user"/>
+																	<img class="user-img img-circle"  src="../dist/img/user.png" alt="user"/>
 																	<div class="user-data">
 																		<span class="name block capitalize-font">Ezequiel Merideth</span>
 																		<span class="time block truncate txt-grey">Patience is bitter.</span>
@@ -474,7 +474,7 @@
 															</a>
 															<a  href="javascript:void(0)">
 																<div class="chat-data">
-																	<img class="user-img img-circle"  src="dist/img/user1.png" alt="user"/>
+																	<img class="user-img img-circle"  src="../dist/img/user1.png" alt="user"/>
 																	<div class="user-data">
 																		<span class="name block capitalize-font">Jonnie Metoyer</span>
 																		<span class="time block truncate txt-grey">Genius is eternal patience.</span>
@@ -485,7 +485,7 @@
 															</a>
 															<a  href="javascript:void(0)">
 																<div class="chat-data">
-																	<img class="user-img img-circle"  src="dist/img/user2.png" alt="user"/>
+																	<img class="user-img img-circle"  src="../dist/img/user2.png" alt="user"/>
 																	<div class="user-data">
 																		<span class="name block capitalize-font">Angelic Lauver</span>
 																		<span class="time block truncate txt-grey">Every burden is a blessing.</span>
@@ -496,7 +496,7 @@
 															</a>
 															<a  href="javascript:void(0)">
 																<div class="chat-data">
-																	<img class="user-img img-circle"  src="dist/img/user3.png" alt="user"/>
+																	<img class="user-img img-circle"  src="../dist/img/user3.png" alt="user"/>
 																	<div class="user-data">
 																		<span class="name block capitalize-font">Priscila Shy</span>
 																		<span class="time block truncate txt-grey">Wise to resolve, and patient to perform.</span>
@@ -507,7 +507,7 @@
 															</a>
 															<a  href="javascript:void(0)">
 																<div class="chat-data">
-																	<img class="user-img img-circle"  src="dist/img/user4.png" alt="user"/>
+																	<img class="user-img img-circle"  src="../dist/img/user4.png" alt="user"/>
 																	<div class="user-data">
 																		<span class="name block capitalize-font">Linda Stack</span>
 																		<span class="time block truncate txt-grey">Our patience will achieve more than our force.</span>
@@ -540,7 +540,7 @@
 														<ul class="nicescroll-bar pt-20">
 															<li class="friend">
 																<div class="friend-msg-wrap">
-																	<img class="user-img img-circle block pull-left"  src="dist/img/user.png" alt="user"/>
+																	<img class="user-img img-circle block pull-left"  src="../dist/img/user.png" alt="user"/>
 																	<div class="msg pull-left">
 																		<p>Hello Jason, how are you, it's been a long time since we last met?</p>
 																		<div class="msg-per-detail text-right">
@@ -572,7 +572,7 @@
 															</li>
 															<li class="friend">
 																<div class="friend-msg-wrap">
-																	<img class="user-img img-circle block pull-left"  src="dist/img/user.png" alt="user"/>
+																	<img class="user-img img-circle block pull-left"  src="../dist/img/user.png" alt="user"/>
 																	<div class="msg pull-left"> 
 																		<p>Not too bad.</p>
 																		<div class="msg-per-detail  text-right">
@@ -625,7 +625,7 @@
 											<a href="javascript:void(0)">
 												<div class="sl-item unread-message">
 													<div class="sl-avatar avatar avatar-sm avatar-circle">
-														<img class="img-responsive img-circle" src="dist/img/user.png" alt="avatar"/>
+														<img class="img-responsive img-circle" src="../dist/img/user.png" alt="avatar"/>
 													</div>
 													<div class="sl-content">
 														<span class="inline-block capitalize-font   pull-left message-per">Clay Masse</span>
@@ -639,7 +639,7 @@
 											<a href="javascript:void(0)">
 												<div class="sl-item">
 													<div class="sl-avatar avatar avatar-sm avatar-circle">
-														<img class="img-responsive img-circle" src="dist/img/user1.png" alt="avatar"/>
+														<img class="img-responsive img-circle" src="../dist/img/user1.png" alt="avatar"/>
 													</div>
 													<div class="sl-content">
 														<span class="inline-block capitalize-font   pull-left message-per">Evie Ono</span>
@@ -653,7 +653,7 @@
 											<a href="javascript:void(0)">
 												<div class="sl-item">
 													<div class="sl-avatar avatar avatar-sm avatar-circle">
-														<img class="img-responsive img-circle" src="dist/img/user2.png" alt="avatar"/>
+														<img class="img-responsive img-circle" src="../dist/img/user2.png" alt="avatar"/>
 													</div>
 													<div class="sl-content">
 														<span class="inline-block capitalize-font   pull-left message-per">Madalyn Rascon</span>
@@ -667,7 +667,7 @@
 											<a href="javascript:void(0)">
 												<div class="sl-item unread-message">
 													<div class="sl-avatar avatar avatar-sm avatar-circle">
-														<img class="img-responsive img-circle" src="dist/img/user3.png" alt="avatar"/>
+														<img class="img-responsive img-circle" src="../dist/img/user3.png" alt="avatar"/>
 													</div>
 													<div class="sl-content">
 														<span class="inline-block capitalize-font   pull-left message-per">Ezequiel Merideth</span>
@@ -681,7 +681,7 @@
 											<a href="javascript:void(0)">
 												<div class="sl-item unread-message">
 													<div class="sl-avatar avatar avatar-sm avatar-circle">
-														<img class="img-responsive img-circle" src="dist/img/user4.png" alt="avatar"/>
+														<img class="img-responsive img-circle" src="../dist/img/user4.png" alt="avatar"/>
 													</div>
 													<div class="sl-content">
 														<span class="inline-block capitalize-font   pull-left message-per">Jonnie Metoyer</span>
@@ -695,7 +695,7 @@
 											<a href="javascript:void(0)">
 												<div class="sl-item">
 													<div class="sl-avatar avatar avatar-sm avatar-circle">
-														<img class="img-responsive img-circle" src="dist/img/user.png" alt="avatar"/>
+														<img class="img-responsive img-circle" src="../dist/img/user.png" alt="avatar"/>
 													</div>
 													<div class="sl-content">
 														<span class="inline-block capitalize-font   pull-left message-per">Priscila Shy</span>
@@ -709,7 +709,7 @@
 											<a href="javascript:void(0)">
 												<div class="sl-item">
 													<div class="sl-avatar avatar avatar-sm avatar-circle">
-														<img class="img-responsive img-circle" src="dist/img/user1.png" alt="avatar"/>
+														<img class="img-responsive img-circle" src="../dist/img/user1.png" alt="avatar"/>
 													</div>
 													<div class="sl-content">
 														<span class="inline-block capitalize-font   pull-left message-per">Linda Stack</span>
@@ -876,7 +876,7 @@
 										</div>
 										<div class="profile-info text-center">
 											<div class="profile-img-wrap">
-												<img class="inline-block mb-10" src="dist/img/mock1.jpg" alt="user"/>
+												<img class="inline-block mb-10" src="../dist/img/mock1.jpg" alt="user"/>
 												<div class="fileupload btn btn-default">
 													<span class="btn-text">edit</span>
 													<input class="upload" type="file">
@@ -1006,27 +1006,22 @@
 								<div  class="panel-body pb-0">
 									<div  class="tab-struct custom-tab-1">
 										<ul role="tablist" class="nav nav-tabs nav-tabs-responsive" id="myTabs_8">
-											<li class="<?php echo $_SESSION['userType'] == 1 ? 'active' : 'hidden' ?>" role="presentation">
+											<li class="active" role="presentation">
 												<a  data-toggle="tab" id="announcement_tab_8" role="tab" href="#announcement_8" aria-expanded="false">
 													<span>announcement</span>
 												</a>
 											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] == 2 ? 'active' : 'hidden' ?>">
-												<a data-toggle="tab" id="grouping_tab_8" role="tab" href="#grouping_8" aria-expanded="false">
-													<span>grouping</span>
-												</a>
-											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
+											<li role="presentation" class="">
 												<a data-toggle="tab" id="emergency_tab_8" role="tab" href="#emergency_8" aria-expanded="false">
 													<span>emergency</span>
 												</a>
 											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
+											<li role="presentation" class="">
 												<a data-toggle="tab" id="survey_tab_8" role="tab" href="#survey_8" aria-expanded="false">
 													<span>survey</span>
 												</a>
 											</li>
-											<li role="presentation" class="next <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
+											<li role="presentation" class="next">
 												<a aria-expanded="true"  data-toggle="tab" role="tab" id="reports_tab_8" href="#reports_8">
 													<span>reports</span>
 												</a>
@@ -1043,119 +1038,82 @@
 											</li> -->
 										</ul>
 										<div class="tab-content" id="myTabContent_8">
-											<div  id="announcement_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? 'in active' : 'hidden' ?>" role="tabpanel">
+											<div  id="announcement_8" class="tab-pane fade active in" role="tabpanel">
 												<div class="col-md-12">
 													<div class="pt-20">
-														<div class="form-group" id="a-alert-message"></div>
-														<div class="form-group">
-															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
-															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
-																<div class="checkbox checkbox-success">
-																	<input id="a-check-prof" type="checkbox">
-																	<label for="a-check-prof" class="control-label mb-5 text-left">
-																		Professors
-																	</label>
-																</div>
-																<!-- <label class="control-label mb-5 text-left">Professors</label> -->
-																<select multiple class="form-control" id="a-sel-prof" style="height: 200px" disabled>
-																	<?php
-																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.status_id = 1 and users.id != " . $_SESSION["authId"] . " order by user_infos.last_name";
-																		$rsProf = mysqli_query($mysqli, $selProf);
-
-																		while($prof = mysqli_fetch_assoc($rsProf)):
-																	?>
-																		<option value="<?php echo $prof['user_id'] ?>"><?php echo $prof['last_name'] . ', ' . $prof['first_name'] ?></option>
-																	<?php endwhile; ?>
-																</select>
-															</div>
-															<div class="form-group col-md-4 col-sm-12 col-xs-12">
-																<div class="checkbox checkbox-success">
-																	<input id="a-check-stud" type="checkbox">
-																	<label for="a-check-stud" class="control-label mb-5 text-left">
-																		Students
-																	</label>
-																</div>
-																<!-- <label class="control-label mb-5 text-left">Students</label> -->
-																<select multiple class="form-control" id="a-sel-stud" style="height: 200px" disabled>
-																	<?php
-																		$selCourse = "select * from courses";
-																		$rsCourse = mysqli_query($mysqli, $selCourse);
-																		while($course = mysqli_fetch_assoc($rsCourse)):
-																	?>
-																		<optgroup label="<?php echo $course['description'] ?>">
-																			<?php
-																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'];
-																				$rsYS = mysqli_query($mysqli, $selYS);
-
-																				while($ys = mysqli_fetch_assoc($rsYS)):
-																			?>
-																				<option value="<?php echo $ys['id'] ?>"><?php echo $ys['section'] ?></option>
-																			<?php endwhile; ?>		
-																		</optgroup>
-																	<?php endwhile; ?>
-																	
-																</select>
-															</div>
-														</div>
-														
-														<div class="form-group col-xs-12">
-															<label class="control-label mb-10 text-left">Message:</label>
-															<textarea class="form-control" rows="5" id="a-message"></textarea>
-														</div>
-														<div class="form-group col-xs-12">
-															<button type="button" id="a-send" class="btn btn-info pull-right">Send</button>
-															<div class="clearfix"></div>
-														</div>
+														<select multiple id="optgroup" name="optgroup[]">
+															<optgroup label="Friends">
+																<option value="1">Yoda</option>
+																<option value="2" selected disabled>Obiwan</option>
+															</optgroup>
+															<optgroup label="Enemies">
+																<option value="3">Palpatine</option>
+																<option value="4" disabled>Darth Vader</option>
+															</optgroup>
+														</select>
 													</div>
 												</div>
 											</div>
-											<div  id="grouping_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 2 ? 'in active' : 'hidden' ?>" role="tabpanel">
-												<div class="col-md-12">
-													<div class="pt-20">
-														<div class="form-group">
-															<label class="control-label mb-10 text-left col-xs-12">Students:</label>
-															<div class="form-group col-md-4 col-sm-12 col-xs-12">
-																<select multiple class="form-control" id="g-stud" style="height: 200px">
-																	<?php
-																		$selCourse = "select courses.* from courses inner join year_sections on courses.id = year_sections.course_id where year_sections.prof_id = " . $_SESSION['authId'] . " group by courses.id";
-																		$rsCourse = mysqli_query($mysqli, $selCourse);
-																		while($course = mysqli_fetch_assoc($rsCourse)):
-																	?>
-																		<optgroup label="<?php echo $course['description'] ?>">
-																			<?php
-																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'] . " and year_sections.prof_id = " . $_SESSION['authId'];
-																				$rsYS = mysqli_query($mysqli, $selYS);
-
-																				while($ys = mysqli_fetch_assoc($rsYS)):
-																			?>
-																				<option value="<?php echo $ys['id'] ?>"><?php echo $ys['section'] ?></option>
-																			<?php endwhile; ?>		
-																		</optgroup>
-																	<?php endwhile; ?>
-																	
-																</select>
-															</div>
-														</div>
-														
-														<div class="form-group col-xs-12">
-															<label class="control-label mb-10 text-left">Message:</label>
-															<textarea class="form-control" rows="5" id="g-message"></textarea>
-														</div>
-														<div class="form-group col-xs-12">
-															<button type="button" id="g-send" class="btn btn-info pull-right">Send</button>
-															<div class="clearfix"></div>
+											<div  id="emergency_8" class="tab-pane fade" role="tabpanel">
+												<div class="col-md-12 pb-20">
+													<div class="gallery-wrap">
+														<div class="portfolio-wrap project-gallery">
+															<ul id="portfolio_1" class="portf auto-construct  project-gallery" data-col="4">
+																<li  class="item"   data-src="../dist/img/gallery/equal-size/mock1.jpg" data-sub-html="<h6>Bagwati</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>" >
+																	<a href="">
+																	<img class="img-responsive" src="../dist/img/gallery/equal-size/mock1.jpg"  alt="Image description" />
+																	<span class="hover-cap">Bagwati</span>
+																	</a>
+																</li>
+																<li class="item" data-src="../dist/img/gallery/equal-size/mock2.jpg"   data-sub-html="<h6>Not a Keyboard</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
+																	<a href="">
+																	<img class="img-responsive" src="../dist/img/gallery/equal-size/mock2.jpg"  alt="Image description" />
+																	<span class="hover-cap">Not a Keyboard</span>
+																	</a>
+																</li>
+																<li class="item" data-src="../dist/img/gallery/equal-size/mock3.jpg" data-sub-html="<h6>Into the Woods</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
+																	<a href="">
+																	<img class="img-responsive" src="../dist/img/gallery/equal-size/mock3.jpg"  alt="Image description" />
+																	<span class="hover-cap">Into the Woods</span>
+																	</a>
+																</li>
+																<li class="item" data-src="../dist/img/gallery/equal-size/mock4.jpg"  data-sub-html="<h6>Ultra Saffire</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
+																	<a href="">
+																	<img class="img-responsive" src="../dist/img/gallery/equal-size/mock4.jpg"  alt="Image description" />
+																	<span class="hover-cap"> Ultra Saffire</span>
+																	</a>
+																</li>
+																
+																<li class="item" data-src="../dist/img/gallery/equal-size/mock5.jpg" data-sub-html="<h6>Happy Puppy</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
+																	<a href="">
+																	<img class="img-responsive" src="../dist/img/gallery/equal-size/mock5.jpg"  alt="Image description" />	
+																	<span class="hover-cap">Happy Puppy</span>
+																	</a>
+																</li>
+																<li class="item" data-src="../dist/img/gallery/equal-size/mock6.jpg"  data-sub-html="<h6>Wooden Closet</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
+																	<a href="">
+																	<img class="img-responsive" src="../dist/img/gallery/equal-size/mock6.jpg"  alt="Image description" />
+																	<span class="hover-cap">Wooden Closet</span>
+																	</a>
+																</li>
+																<li class="item" data-src="../dist/img/gallery/equal-size/mock7.jpg" data-sub-html="<h6>Happy Puppy</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
+																	<a href="">
+																	<img class="img-responsive" src="../dist/img/gallery/equal-size/mock7.jpg"  alt="Image description" />	
+																	<span class="hover-cap">Happy Puppy</span>
+																	</a>
+																</li>
+																<li class="item" data-src="../dist/img/gallery/equal-size/mock8.jpg"  data-sub-html="<h6>Wooden Closet</h6><p>Classic view from Rigwood Jetty on Coniston Water an old archive shot similar to an old post but a little later on.</p>">
+																	<a href="">
+																	<img class="img-responsive" src="../dist/img/gallery/equal-size/mock8.jpg"  alt="Image description" />
+																	<span class="hover-cap">Wooden Closet</span>
+																	</a>
+																</li>
+															</ul>
 														</div>
 													</div>
-												</div>
+												</div>	
 											</div>
-											<div  id="emergency_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
-												<div class="col-md-12">
-													<div class="pt-20">
-														emergency
-													</div>
-												</div>
-											</div>
-											<div  id="survey_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
+											<div  id="survey_8" class="tab-pane fade" role="tabpanel">
 												<!-- Row -->
 												<div class="row">
 													<div class="col-lg-12">
@@ -1249,7 +1207,7 @@
 												</div>
 											</div>
 											
-											<div  id="reports_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
+											<div  id="reports_8" class="tab-pane fade" role="tabpanel">
 												<div class="row">
 													<div class="col-lg-12">
 														<div class="followers-wrap">
@@ -1257,7 +1215,7 @@
 																<li class="follow-list">
 																	<div class="follo-body">
 																		<div class="follo-data">
-																			<img class="user-img img-circle"  src="dist/img/user.png" alt="user"/>
+																			<img class="user-img img-circle"  src="../dist/img/user.png" alt="user"/>
 																			<div class="user-data">
 																				<span class="name block capitalize-font">Clay Masse</span>
 																				<span class="time block truncate txt-grey">No one saves us but ourselves.</span>
@@ -1266,7 +1224,7 @@
 																			<div class="clearfix"></div>
 																		</div>
 																		<div class="follo-data">
-																			<img class="user-img img-circle"  src="dist/img/user1.png" alt="user"/>
+																			<img class="user-img img-circle"  src="../dist/img/user1.png" alt="user"/>
 																			<div class="user-data">
 																				<span class="name block capitalize-font">Evie Ono</span>
 																				<span class="time block truncate txt-grey">Unity is strength</span>
@@ -1275,7 +1233,7 @@
 																			<div class="clearfix"></div>
 																		</div>
 																		<div class="follo-data">
-																			<img class="user-img img-circle"  src="dist/img/user2.png" alt="user"/>
+																			<img class="user-img img-circle"  src="../dist/img/user2.png" alt="user"/>
 																			<div class="user-data">
 																				<span class="name block capitalize-font">Madalyn Rascon</span>
 																				<span class="time block truncate txt-grey">Respect yourself if you would have others respect you.</span>
@@ -1284,7 +1242,7 @@
 																			<div class="clearfix"></div>
 																		</div>
 																		<div class="follo-data">
-																			<img class="user-img img-circle"  src="dist/img/user3.png" alt="user"/>
+																			<img class="user-img img-circle"  src="../dist/img/user3.png" alt="user"/>
 																			<div class="user-data">
 																				<span class="name block capitalize-font">Mitsuko Heid</span>
 																				<span class="time block truncate txt-grey">I’m thankful.</span>
@@ -1293,7 +1251,7 @@
 																			<div class="clearfix"></div>
 																		</div>
 																		<div class="follo-data">
-																			<img class="user-img img-circle"  src="dist/img/user.png" alt="user"/>
+																			<img class="user-img img-circle"  src="../dist/img/user.png" alt="user"/>
 																			<div class="user-data">
 																				<span class="name block capitalize-font">Ezequiel Merideth</span>
 																				<span class="time block truncate txt-grey">Patience is bitter.</span>
@@ -1302,7 +1260,7 @@
 																			<div class="clearfix"></div>
 																		</div>
 																		<div class="follo-data">
-																			<img class="user-img img-circle"  src="dist/img/user1.png" alt="user"/>
+																			<img class="user-img img-circle"  src="../dist/img/user1.png" alt="user"/>
 																			<div class="user-data">
 																				<span class="name block capitalize-font">Jonnie Metoyer</span>
 																				<span class="time block truncate txt-grey">Genius is eternal patience.</span>
@@ -1480,49 +1438,49 @@
 	<!-- JavaScript -->
 	
     <!-- jQuery -->
-    <script src="vendors/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../vendors/bower_components/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     
 	<!-- Data table JavaScript -->
-	<script src="vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+	<script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
 	
 	<!-- Slimscroll JavaScript -->
-	<script src="dist/js/jquery.slimscroll.js"></script>
+	<script src="../dist/js/jquery.slimscroll.js"></script>
 	
 	<!-- simpleWeather JavaScript -->
-	<script src="vendors/bower_components/moment/min/moment.min.js"></script>
-	<script src="vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js"></script>
-	<script src="dist/js/simpleweather-data.js"></script>
+	<script src="../vendors/bower_components/moment/min/moment.min.js"></script>
+	<script src="../vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js"></script>
+	<script src="../dist/js/simpleweather-data.js"></script>
 	
 	<!-- Progressbar Animation JavaScript -->
-	<script src="vendors/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
-	<script src="vendors/bower_components/jquery.counterup/jquery.counterup.min.js"></script>
+	<script src="../vendors/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
+	<script src="../vendors/bower_components/jquery.counterup/jquery.counterup.min.js"></script>
 	
 	<!-- Fancy Dropdown JS -->
-	<script src="dist/js/dropdown-bootstrap-extended.js"></script>
+	<script src="../dist/js/dropdown-bootstrap-extended.js"></script>
 	
 	<!-- Sparkline JavaScript -->
-	<script src="vendors/jquery.sparkline/dist/jquery.sparkline.min.js"></script>
+	<script src="../vendors/jquery.sparkline/dist/jquery.sparkline.min.js"></script>
 	
 	<!-- Owl JavaScript -->
-	<script src="vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
+	<script src="../vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
 	
 	<!-- ChartJS JavaScript -->
-	<script src="vendors/chart.js/Chart.min.js"></script>
+	<script src="../vendors/chart.js/Chart.min.js"></script>
 	
 	<!-- Morris Charts JavaScript -->
-    <script src="vendors/bower_components/raphael/raphael.min.js"></script>
-    <script src="vendors/bower_components/morris.js/morris.min.js"></script>
-    <script src="vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
+    <script src="../vendors/bower_components/raphael/raphael.min.js"></script>
+    <script src="../vendors/bower_components/morris.js/morris.min.js"></script>
+    <script src="../vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
 	
 	<!-- Switchery JavaScript -->
-	<script src="vendors/bower_components/switchery/dist/switchery.min.js"></script>
+	<script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
 	
 	<!-- Init JavaScript -->
-	<script src="dist/js/init.js"></script>
-	<script src="dist/js/custom.js"></script>
+	<script src="../dist/js/init.js"></script>
+	<script src="../dist/js/custom.js"></script>
 	<!--<script src="dist/js/dashboard-data.js"></script>-->
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -1587,37 +1545,6 @@
 						$(".preloader").hide();
 					}
 				});
-			});
-
-			isCheckProf();
-			isCheckStud();
-
-			$("#a-send").on("click", function(){
-				var err = 0;
-				if (!$("#a-check-prof").is(':checked') && !$("#a-check-stud").is(':checked')) {
-					//alert("Please select a recipient.");
-					err += 1;
-				}
-
-				if ($("#a-check-prof").is(':checked')) {
-					if ($("#a-sel-prof").val() == null) {
-						err += 1;
-					}
-				}
-
-				if ($("#a-check-stud").is(':checked')) {
-					if ($("#a-sel-stud").val() == null) {
-						err += 1;
-					}
-				}
-
-				if (err > 0) {
-					alert("Please select a recipient.");
-				} else if ($("#a-message").val().trim() == "") {
-					alert("Please compose a message.");
-				} else {
-					sendAnnouncement("include/send_announcement.php");
-				}
 			});
 		});
 		function checkPassword() {

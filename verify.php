@@ -40,13 +40,14 @@
 		
 		<!-- Custom CSS -->
 		<link href="dist/css/style.css" rel="stylesheet" type="text/css">
+		<link href="dist/css/custom.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<!--Preloader-->
-		<div class="preloader-it">
+		<!-- <div class="preloader-it">
 			<div class="la-anim-1"></div>
-		</div>
-		<div class="preloader"></div>
+		</div> -->
+		<div class="preloader" style="display: none"></div>
 		<!--/Preloader-->
 		
 		<div class="wrapper pa-0">
@@ -189,6 +190,7 @@
 		
 		<!-- Init JavaScript -->
 		<script src="dist/js/init.js"></script>
+		<script src="dist/js/custom.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				checkRadio();
@@ -198,6 +200,7 @@
 
 				$("#btn-send").on("click", function(){
 					if ($("#radio1").is(':checked')) {
+						$(".preloader").show();
 						$.ajax({
 							url: "include/send_sms.php",
 							type: "post",
@@ -214,9 +217,11 @@
 									$("#alert-success").addClass('hidden');
 									$("#alert-success").html('');
 								},1000);
+								$(".preloader").hide();
 							}
 						});
 					} else if ($("#radio2").is(':checked')) {
+						$(".preloader").show();
 						$.ajax({
 							url: "include/send_email.php",
 							type: "post",
@@ -233,6 +238,7 @@
 									$("#alert-success").addClass('hidden');
 									$("#alert-success").html('');
 								},1000);
+								$(".preloader").hide();
 							}
 						});
 					}
