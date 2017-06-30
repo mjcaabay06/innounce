@@ -39,7 +39,7 @@
 		}
 
 		if(empty($errorSending)){
-			$data['message'] = "Announcement sent to all recipients.";
+			$data['message'] = "Announcement was sent to all recipients.";
 			$data['status'] = true;
 		}else{
 			$name = '';

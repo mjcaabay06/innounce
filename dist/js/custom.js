@@ -24,12 +24,25 @@ function sendAnnouncement(url) {
 			$("#a-alert-message").html('');
 			if (result["status"]) {
 				$("#a-alert-message").html('<div class="alert alert-success">' + result['message'] + '</div>');
+				resetAnnouncement();
 			} else {
 				$("#a-alert-message").html('<div class="alert alert-danger">' + result['message'] + '</div>');
 			}
 			$(".preloader").hide();
 		}
 	});
+}
+
+function resetAnnouncement() {
+	$("#a-sel-stud option:selected").removeAttr('selected');
+	$("#a-check-stud").prop('checked', false);
+	$("#a-sel-stud").attr('disabled', '');
+
+	$("#a-check-prof").prop('checked', false);
+	$("#a-sel-prof option:selected").removeAttr('selected');
+	$("#a-sel-prof").attr('disabled', '');
+
+	$("#a-message").val('');
 }
 
 function isCheckProf() {
