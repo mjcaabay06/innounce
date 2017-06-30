@@ -17,12 +17,12 @@ function sendAnnouncement(url) {
 		type: "post",
 		data: { prof: prof, students: students, message: message },
 		success: function(response){
-			//console.log(response);
-			var result = jQuery.parseJSON(response);
+			console.log(response);
+			var result = $.parseJSON(response);
 			console.log(result["status"]);
 
 			$("#a-alert-message").html('');
-			if (result["status"] == 'true') {
+			if (result["status"]) {
 				$("#a-alert-message").html('<div class="alert alert-success">' + result['message'] + '</div>');
 			} else {
 				$("#a-alert-message").html('<div class="alert alert-danger">' + result['message'] + '</div>');

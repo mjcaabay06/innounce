@@ -55,7 +55,8 @@
 
 	function sendViaSemaphore($mobile, $message){
 		$parameters = array(
-		    'apikey' => 'b72b4e690594d982c5b56fe6ee4270ab',
+			'apikey' => '8850815abd71634b42f382b5a02ac7d6',
+		    //'apikey' => 'b72b4e690594d982c5b56fe6ee4270ab',
 		    'number' => $mobile,
 		    'message' => $message,
 		    'sendername' => 'SEMAPHORE'

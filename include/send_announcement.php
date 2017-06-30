@@ -12,12 +12,12 @@
 		if (!empty($_POST['students'])) {
 			foreach($_POST['students'] as $student) {
 				foreach(getStudentReceivers($student) as $studNumber) {
-					$response = sendViaSemaphore($studNumber, $message);
+					$response = sendViaSemaphore($studNumber['mobile_number'], $message);
 
 					if(empty($response) || !isset($response[0]->status)){
-						if(isset($response[0])){ //different error
-							$diffError = $response[0];
-						}
+						// if(isset($response[0])){ //different error
+						// 	$diffError = $response[0];
+						// }
 						$errorSending[] = $studNumber['name'];
 					}
 				}
@@ -26,14 +26,14 @@
 		if (!empty($_POST['prof'])) {
 			foreach($_POST['prof'] as $prof) {
 				foreach(getProfReceivers($prof) as $profNumber) {
-					$response = sendViaSemaphore($profNumber, $message);
-
+					$response = sendViaSemaphore($profNumber['mobile_number'], $message);
 					if(empty($response) || !isset($response[0]->status)){
-						if(isset($response[0])){ //different error
-							$diffError = $response[0];
-						}
+						// if(isset($response[0])){ //different error
+						// 	$diffError = $response[0];
+						// }
 						$errorSending[] = $profNumber['name'];
 					}
+					
 				}
 			}
 		}
