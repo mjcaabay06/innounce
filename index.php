@@ -1152,7 +1152,15 @@
 											<div  id="emergency_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
 													<div class="pt-20">
-														emergency
+														<div class="form-group" id="e-alert-message"></div>
+														<div class="form-group col-xs-12">
+															<label class="control-label mb-10 text-left">Message:</label>
+															<textarea class="form-control" rows="5" id="e-message"></textarea>
+														</div>
+														<div class="form-group col-xs-12">
+															<button type="button" id="e-send" class="btn btn-info pull-right">Send</button>
+															<div class="clearfix"></div>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -1633,6 +1641,14 @@
 					alert("Please compose a message.");
 				} else {
 					sendGrouping("include/send_grouping.php");
+				}
+			});
+
+			$("#e-send").on("click", function(){
+				if ($("#e-message").val().trim() == "") {
+					alert("Please compose a message.");
+				} else {
+					sendEmergency("include/send_emergency.php");
 				}
 			});
 		});

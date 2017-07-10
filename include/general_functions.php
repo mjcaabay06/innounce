@@ -209,4 +209,33 @@
 
 		return $data;
 	}
+
+	function getAllReceivers() {
+		global $mysqli;
+		$data = array();
+
+		//select students
+		$selStud = "select students.first_name, students.last_name, students.mobile_number, year_sections.section from students inner join year_sections on students.year_section_id = year_sections.id";
+		$rsStud = mysqli_query($mysqli, $selStud);
+		while($studNumber = mysqli_fetch_assoc($rsStud)) {
+			$studData = array(
+					'name' => '[' . $studNumber['last_name'] . ',' . $studNumber['first_name'] . '(' . $studNumber['section'] . ')]',
+					'mobile_number' => $studNumber['mobile_number']
+					);
+			array_push($data, $studData);
+		}
+
+		//select prof
+		$selProf = "select user_infos.first_name, user_infos.last_name, user_infos.mobile_number from users inner join user_infos on users.id = user_infos.user_id";
+		$rsProf = mysqli_query($mysqli, $selProf);
+		while($profNumber = mysqli_fetch_assoc($rsProf)) {
+			$profData = array(
+					'name' => '[' . $profNumber['last_name'] . ',' . $profNumber['first_name'] . '(Prof)]',
+					'mobile_number' => $profNumber['mobile_number']
+					);
+			array_push($data, $profData);
+		}
+
+		return $data;
+	}
 ?>
