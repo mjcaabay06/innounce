@@ -93,3 +93,30 @@ function sendGrouping(url) {
 
 	});
 }
+
+/* ----- Send Emergency ----- */
+function sendEmergency(url) {
+	message = $("#e-message").val();
+
+	$(".preloader").show();
+	$.ajax({
+		url: url,
+		type: 'post',
+		data: { message: message},
+		success: function(response) {
+			console.log(response);
+			var result = $.parseJSON(response);
+			console.log(result["status"]);
+
+			$("#e-alert-message").html('');
+			if (result["status"]) {
+				$("#e-alert-message").html('<div class="alert alert-success">' + result['message'] + '</div>');
+				$("#e-message").val('');
+			} else {
+				$("#e-alert-message").html('<div class="alert alert-danger">' + result['message'] + '</div>');
+			}
+			$(".preloader").hide();
+		}
+
+	});
+}
