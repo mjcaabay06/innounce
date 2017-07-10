@@ -1166,94 +1166,68 @@
 											</div>
 											<div  id="survey_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
 												<!-- Row -->
-												<div class="row">
-													<div class="col-lg-12">
-														<form id="example-advanced-form" action="#">
-															<div class="table-wrap">
-																<div class="table-responsive">
-																	<table class="table table-striped display product-overview" id="datable_1">
-																		<thead>
-																			<tr>
-																				<th>Date</th>
-																				<th>Item Sales Colunt</th>
-																				<th>Earnings</th>
-																			</tr>
-																		</thead>
-																		<tfoot>
-																			<tr>
-																				<th colspan="2">total:</th>
-																				<th></th>
-																			</tr>
-																		</tfoot>
-																		<tbody>
-																			<tr>
-																				<td>monday, 12</td>
-																				<td>
-																				 3
-																				</td>
-																				<td>$400</td>
-																			</tr>
-																			<tr>
-																				<td>tuesday, 13</td>
-																				<td>
-																				 2
-																				</td>
-																				<td>$400</td>
-																			</tr>
-																			<tr>
-																				<td>wednesday, 14</td>
-																				<td>
-																				 3
-																				</td>
-																				<td>$420</td>
-																			</tr>
-																			<tr>
-																				<td>thursday, 15</td>
-																				<td>
-																				 5
-																				</td>
-																				<td>$500</td>
-																			</tr>
-																			<tr>
-																				<td>friday, 15</td>
-																				<td>
-																				 3
-																				</td>
-																				<td>$400</td>
-																			</tr>
-																			<tr>
-																				<td>saturday, 16</td>
-																				<td>
-																				 3
-																				</td>
-																				<td>$400</td>
-																			</tr>
-																			<tr>
-																				<td>sunday, 17</td>
-																				<td>
-																				 3
-																				</td>
-																				<td>$400</td>
-																			</tr>
-																			<tr>
-																				<td>monday, 18</td>
-																				<td>
-																				 3
-																				</td>
-																				<td>$500</td>
-																			</tr>
-																			<tr>
-																				<td>tuesday, 19</td>
-																				<td>
-																				 3
-																				</td>
-																				<td>$400</td>
-																			</tr>
-																		</tbody>
-																	</table>
+												<div class="col-md-12">
+													<div class="pt-20">
+														<div class="form-group" id="s-alert-message"></div>
+														<div class="form-group">
+															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
+															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
+																<div class="checkbox checkbox-success">
+																	<input id="s-check-prof" type="checkbox">
+																	<label for="s-check-prof" class="control-label mb-5 text-left">
+																		Professors
+																	</label>
 																</div>
+																<!-- <label class="control-label mb-5 text-left">Professors</label> -->
+																<select multiple class="form-control" id="s-sel-prof" style="height: 200px" disabled>
+																	<?php
+																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.status_id = 1 and users.id != " . $_SESSION["authId"] . " order by user_infos.last_name";
+																		$rsProf = mysqli_query($mysqli, $selProf);
+
+																		while($prof = mysqli_fetch_assoc($rsProf)):
+																	?>
+																		<option value="<?php echo $prof['user_id'] ?>"><?php echo $prof['last_name'] . ', ' . $prof['first_name'] ?></option>
+																	<?php endwhile; ?>
+																</select>
 															</div>
-														</form>
+															<div class="form-group col-md-4 col-sm-12 col-xs-12">
+																<div class="checkbox checkbox-success">
+																	<input id="s-check-stud" type="checkbox">
+																	<label for="s-check-stud" class="control-label mb-5 text-left">
+																		Students
+																	</label>
+																</div>
+																<!-- <label class="control-label mb-5 text-left">Students</label> -->
+																<select multiple class="form-control" id="s-sel-stud" style="height: 200px" disabled>
+																	<?php
+																		$selCourse = "select * from courses";
+																		$rsCourse = mysqli_query($mysqli, $selCourse);
+																		while($course = mysqli_fetch_assoc($rsCourse)):
+																	?>
+																		<optgroup label="<?php echo $course['description'] ?>">
+																			<?php
+																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'];
+																				$rsYS = mysqli_query($mysqli, $selYS);
+
+																				while($ys = mysqli_fetch_assoc($rsYS)):
+																			?>
+																				<option value="<?php echo $ys['id'] ?>"><?php echo $ys['section'] ?></option>
+																			<?php endwhile; ?>		
+																		</optgroup>
+																	<?php endwhile; ?>
+																	
+																</select>
+															</div>
+														</div>
+														
+														<div class="form-group col-xs-12">
+															<label class="control-label mb-10 text-left">Message:</label>
+															<textarea class="form-control" rows="5" id="s-message"></textarea>
+														</div>
+														<div class="form-group col-xs-12">
+															<button type="button" id="s-send" class="btn btn-info pull-right">Send</button>
+															<div class="clearfix"></div>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -1649,6 +1623,34 @@
 					alert("Please compose a message.");
 				} else {
 					sendEmergency("include/send_emergency.php");
+				}
+			});
+
+			$("#s-send").on("click", function(){
+				var err = 0;
+				if (!$("#s-check-prof").is(':checked') && !$("#s-check-stud").is(':checked')) {
+					//alert("Please select a recipient.");
+					err += 1;
+				}
+
+				if ($("#s-check-prof").is(':checked')) {
+					if ($("#s-sel-prof").val() == null) {
+						err += 1;
+					}
+				}
+
+				if ($("#s-check-stud").is(':checked')) {
+					if ($("#s-sel-stud").val() == null) {
+						err += 1;
+					}
+				}
+
+				if (err > 0) {
+					alert("Please select a recipient.");
+				} else if ($("#s-message").val().trim() == "") {
+					alert("Please compose a message.");
+				} else {
+					sendSurvey("include/send_survey.php");
 				}
 			});
 		});

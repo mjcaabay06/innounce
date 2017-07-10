@@ -53,6 +53,14 @@ function isCheckProf() {
 			$("#a-sel-prof").attr('disabled', '');
 		}
 	});
+
+	$("#s-check-prof").on("change", function(){
+		if ($(this).is(':checked')) {
+			$("#s-sel-prof").removeAttr('disabled');
+		} else {
+			$("#s-sel-prof").attr('disabled', '');
+		}
+	});
 }
 
 function isCheckStud() {
@@ -61,6 +69,14 @@ function isCheckStud() {
 			$("#a-sel-stud").removeAttr('disabled');
 		} else {
 			$("#a-sel-stud").attr('disabled', '');
+		}
+	});
+
+	$("#s-check-stud").on("change", function(){
+		if ($(this).is(':checked')) {
+			$("#s-sel-stud").removeAttr('disabled');
+		} else {
+			$("#s-sel-stud").attr('disabled', '');
 		}
 	});
 }
@@ -119,4 +135,44 @@ function sendEmergency(url) {
 		}
 
 	});
+}
+
+/* ----- Send Survey ----- */
+function sendSurvey(url) {
+	prof = !$("#s-check-prof").is(':checked') ? null :$("#s-sel-prof").val();
+	students = !$("#s-check-stud").is(':checked') ? null : $("#s-sel-stud").val();
+	message = $("#s-message").val();
+
+	$(".preloader").show();
+	$.ajax({
+		url: url,
+		type: "post",
+		data: { prof: prof, students: students, message: message },
+		success: function(response){
+			console.log(response);
+			var result = $.parseJSON(response);
+			console.log(result["status"]);
+
+			$("#s-alert-message").html('');
+			if (result["status"]) {
+				$("#s-alert-message").html('<div class="alert alert-success">' + result['message'] + '</div>');
+				resetSurvey();
+			} else {
+				$("#s-alert-message").html('<div class="alert alert-danger">' + result['message'] + '</div>');
+			}
+			$(".preloader").hide();
+		}
+	});
+}
+
+function resetSurvey() {
+	$("#s-sel-stud option:selected").removeAttr('selected');
+	$("#s-check-stud").prop('checked', false);
+	$("#s-sel-stud").attr('disabled', '');
+
+	$("#s-check-prof").prop('checked', false);
+	$("#s-sel-prof option:selected").removeAttr('selected');
+	$("#s-sel-prof").attr('disabled', '');
+
+	$("#s-message").val('');
 }
