@@ -80,7 +80,7 @@
 			echo mysqli_error($mysqli);die();
 		}
 	} else {
-		include "/src/Captcha/simple-php-captcha.php";
+		include "src/Captcha/simple-php-captcha.php";
 		$_SESSION['captcha'] = simple_php_captcha();
 	}
 ?>
