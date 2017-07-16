@@ -73,6 +73,20 @@
 		return json_decode($output);
 	}
 
+	function sendViaBulksms($mobile, $message) {
+		require 'bulksms.php';
+
+		$post_body = seven_bit_sms($message, $mobile);
+		$result = send_message($post_body);
+		if( $result['success'] ) {
+			print_ln( formatted_server_response( $result ) );
+		}
+		else {
+			print_ln( formatted_server_response( $result ) );
+		}
+		#return send_message($post_body);
+	}
+
 	function sendEmail() {
 		$message = 'Someone trying to force a login. IP Address is <b>' . getClientIp() . '</b>';
 		$adminEmail = 'doodledummy617@gmail.com';
@@ -238,4 +252,6 @@
 
 		return $data;
 	}
+
+	#sendViaBulksms('639177629194', 'This is just a test message.');
 ?>

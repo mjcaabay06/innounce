@@ -3,7 +3,7 @@
 	include "include/configurations.php";
 	include "include/general_functions.php";
 
-	if(!isset($_SESSION['authId']) || empty($_SESSION['authId'])){
+	if(!isset($_SESSION['authId']) || empty($_SESSION['authId']) || $_SESSION['userType'] != 1){
 		header("Location: login.php");
 		exit;
 	}
@@ -98,15 +98,15 @@
 					<i class="zmdi zmdi-more"></i>
 				</li>
 				<li>
-					<a class="active" href="#"><div class="pull-left"><i class="zmdi zmdi-landscape mr-20"></i><span class="right-nav-text">Dashboard</span></div><div class="clearfix"></div></a>
+					<a href="#"><div class="pull-left"><i class="zmdi zmdi-landscape mr-20"></i><span class="right-nav-text">Dashboard</span></div><div class="clearfix"></div></a>
 					<?php if ($_SESSION['userType'] == 1) : ?>
-						<a href="javascript:void(0);" data-toggle="collapse" data-target="#users_dr"><div class="pull-left"><i class="zmdi zmdi-accounts mr-20"></i><span class="right-nav-text">Users</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+						<a class="active" href="javascript:void(0);" data-toggle="collapse" data-target="#users_dr"><div class="pull-left"><i class="zmdi zmdi-accounts mr-20"></i><span class="right-nav-text">Users</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
 						<ul id="users_dr" class="collapse collapse-level-1">
 							<li>
 								<a href="staffs.php">Staff</a>
 							</li>
 							<li>
-								<a href="students.php">Students</a>
+								<a class="active-page" href="students.php">Students</a>
 							</li>
 						</ul>
 					<?php endif; ?>
