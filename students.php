@@ -98,7 +98,7 @@
 					<i class="zmdi zmdi-more"></i>
 				</li>
 				<li>
-					<a href="#"><div class="pull-left"><i class="zmdi zmdi-landscape mr-20"></i><span class="right-nav-text">Dashboard</span></div><div class="clearfix"></div></a>
+					<a href="index.php"><div class="pull-left"><i class="zmdi zmdi-landscape mr-20"></i><span class="right-nav-text">Dashboard</span></div><div class="clearfix"></div></a>
 					<?php if ($_SESSION['userType'] == 1) : ?>
 						<a class="active" href="javascript:void(0);" data-toggle="collapse" data-target="#users_dr"><div class="pull-left"><i class="zmdi zmdi-accounts mr-20"></i><span class="right-nav-text">Users</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
 						<ul id="users_dr" class="collapse collapse-level-1">
@@ -172,508 +172,56 @@
 				
 				<!-- Row -->
 				<div class="row">
-					<div class="col-lg-3 col-xs-12">
-						<div class="panel panel-default card-view  pa-0">
-							<div class="panel-wrapper collapse in">
-								<div class="panel-body  pa-0">
-									<div class="profile-box">
-										<div class="profile-cover-pic">
-											<div class="fileupload btn btn-default">
-												<span class="btn-text">edit</span>
-												<input class="upload" type="file">
-											</div>
-											<div class="profile-image-overlay"></div>
-										</div>
-										<div class="profile-info text-center">
-											<div class="profile-img-wrap">
-												<img class="inline-block mb-10" src="dist/img/mock1.jpg" alt="user"/>
-												<div class="fileupload btn btn-default">
-													<span class="btn-text">edit</span>
-													<input class="upload" type="file">
-												</div>
-											</div>	
-											<h5 class="block mt-10 mb-5 weight-500 capitalize-font txt-danger"><?php echo $rowUser['first_name'] . ' ' . $rowUser['last_name'] ?></h5>
-										</div>	
-										<div class="social-info">
-											<button class="btn btn-default btn-block btn-outline btn-anim" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil"></i><span class="btn-text">edit profile</span></button>
-											<div id="myModal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-												<div class="modal-dialog">
-													<div class="modal-content">
-														<div class="modal-header">
-															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-															<h5 class="modal-title" id="myModalLabel">Edit Profile</h5>
-														</div>
-														<div class="modal-body">
-															<!-- Row -->
-															<div class="row">
-																<div class="col-lg-12">
-																	<div class="">
-																		<div class="panel-wrapper collapse in">
-																			<div class="panel-body pa-0">
-																				<div class="col-sm-12 col-xs-12">
-																					<div class="form-wrap">
-																						<form action="#">
-																							<div class="form-body overflow-hide">
-																								<div class="form-group">
-																									<label class="control-label mb-10" for="exampleInputuname_1">Name</label>
-																									<div class="input-group">
-																										<div class="input-group-addon"><i class="icon-user"></i></div>
-																										<input type="text" class="form-control" id="exampleInputuname_1" placeholder="willard bryant">
-																									</div>
-																								</div>
-																								<div class="form-group">
-																									<label class="control-label mb-10" for="exampleInputEmail_1">Email address</label>
-																									<div class="input-group">
-																										<div class="input-group-addon"><i class="icon-envelope-open"></i></div>
-																										<input type="email" class="form-control" id="exampleInputEmail_1" placeholder="xyz@gmail.com">
-																									</div>
-																								</div>
-																								<div class="form-group">
-																									<label class="control-label mb-10" for="exampleInputContact_1">Contact number</label>
-																									<div class="input-group">
-																										<div class="input-group-addon"><i class="icon-phone"></i></div>
-																										<input type="email" class="form-control" id="exampleInputContact_1" placeholder="+102 9388333">
-																									</div>
-																								</div>
-																								<div class="form-group">
-																									<label class="control-label mb-10" for="exampleInputpwd_1">Password</label>
-																									<div class="input-group">
-																										<div class="input-group-addon"><i class="icon-lock"></i></div>
-																										<input type="password" class="form-control" id="exampleInputpwd_1" placeholder="Enter pwd" value="password">
-																									</div>
-																								</div>
-																								<div class="form-group">
-																									<label class="control-label mb-10">Gender</label>
-																									<div>
-																										<div class="radio">
-																											<input type="radio" name="radio1" id="radio_1" value="option1" checked="">
-																											<label for="radio_1">
-																											M
-																											</label>
-																										</div>
-																										<div class="radio">
-																											<input type="radio" name="radio1" id="radio_2" value="option2">
-																											<label for="radio_2">
-																											F
-																											</label>
-																										</div>
-																									</div>
-																								</div>
-																								<div class="form-group">
-																									<label class="control-label mb-10">Country</label>
-																									<select class="form-control" data-placeholder="Choose a Category" tabindex="1">
-																										<option value="Category 1">USA</option>
-																										<option value="Category 2">Austrailia</option>
-																										<option value="Category 3">India</option>
-																										<option value="Category 4">UK</option>
-																									</select>
-																								</div>
-																							</div>
-																							<div class="form-actions mt-10">			
-																								<button type="submit" class="btn btn-success mr-10 mb-30">Update profile</button>
-																							</div>				
-																						</form>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-success waves-effect" data-dismiss="modal">Save</button>
-															<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
-														</div>
-													</div>
-													<!-- /.modal-content -->
-												</div>
-												<!-- /.modal-dialog -->
-											</div>
-										</div>
-									</div>
+					<div class="col-sm-12">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Students</h6>
 								</div>
+								<a href="add-student.php" class="pull-right btn btn-primary btn-circle btn-sm" title="Add Student"><i class="zmdi zmdi-account-add" style="color: #fff"></i></a>
+								<div class="clearfix"></div>
 							</div>
-						</div>
-					</div>
-					<div class="col-lg-9 col-xs-12">
-						<div class="panel panel-default card-view pa-0">
 							<div class="panel-wrapper collapse in">
-								<div  class="panel-body pb-0">
-									<div  class="tab-struct custom-tab-1">
-										<ul role="tablist" class="nav nav-tabs nav-tabs-responsive" id="myTabs_8">
-											<li class="<?php echo $_SESSION['userType'] == 1 ? 'active' : 'hidden' ?>" role="presentation">
-												<a  data-toggle="tab" id="announcement_tab_8" role="tab" href="#announcement_8" aria-expanded="false">
-													<span>announcement</span>
-												</a>
-											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] == 2 ? 'active' : 'hidden' ?>">
-												<a data-toggle="tab" id="grouping_tab_8" role="tab" href="#grouping_8" aria-expanded="false">
-													<span>grouping</span>
-												</a>
-											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
-												<a data-toggle="tab" id="emergency_tab_8" role="tab" href="#emergency_8" aria-expanded="false">
-													<span>emergency</span>
-												</a>
-											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
-												<a data-toggle="tab" id="survey_tab_8" role="tab" href="#survey_8" aria-expanded="false">
-													<span>survey</span>
-												</a>
-											</li>
-											<li role="presentation" class="next <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
-												<a aria-expanded="true"  data-toggle="tab" role="tab" id="reports_tab_8" href="#reports_8">
-													<span>reports</span>
-												</a>
-											</li>
-											<!-- <li role="presentation" class=""><a  data-toggle="tab" id="settings_tab_8" role="tab" href="#settings_8" aria-expanded="false"><span>settings</span></a></li>
-											<li class="dropdown" role="presentation">
-												<a  data-toggle="dropdown" class="dropdown-toggle" id="myTabDrop_7" href="#" aria-expanded="false"><span>More</span> <span class="caret"></span></a>
-												<ul id="myTabDrop_7_contents"  class="dropdown-menu">
-													<li class=""><a  data-toggle="tab" id="dropdown_13_tab" role="tab" href="#dropdown_13" aria-expanded="true">About</a></li>
-													<li class=""><a  data-toggle="tab" id="dropdown_14_tab" role="tab" href="#dropdown_14" aria-expanded="false">Followings</a></li>
-													<li class=""><a  data-toggle="tab" id="dropdown_15_tab" role="tab" href="#dropdown_15" aria-expanded="false">Likes</a></li>
-													<li class=""><a  data-toggle="tab" id="dropdown_16_tab" role="tab" href="#dropdown_16" aria-expanded="false">Reviews</a></li>
-												</ul>
-											</li> -->
-										</ul>
-										<div class="tab-content" id="myTabContent_8">
-											<div  id="announcement_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? 'in active' : 'hidden' ?>" role="tabpanel">
-												<div class="col-md-12">
-													<div class="pt-20">
-														<div class="form-group" id="a-alert-message"></div>
-														<div class="form-group">
-															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
-															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
-																<div class="checkbox checkbox-success">
-																	<input id="a-check-prof" type="checkbox">
-																	<label for="a-check-prof" class="control-label mb-5 text-left">
-																		Professors
-																	</label>
-																</div>
-																<!-- <label class="control-label mb-5 text-left">Professors</label> -->
-																<select multiple class="form-control" id="a-sel-prof" style="height: 200px" disabled>
-																	<?php
-																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.status_id = 1 and users.id != " . $_SESSION["authId"] . " order by user_infos.last_name";
-																		$rsProf = mysqli_query($mysqli, $selProf);
+								<div class="panel-body">
+									<div class="table-wrap">
+										<div class="table-responsive">
+											<table class="table mb-0">
+												<thead>
+													<tr>
+														<th>#</th>
+														<th>First Name</th>
+														<th>Middle Name</th>
+														<th>Last Name</th>
+														<th>Email</th>
+														<th>Mobile</th>
+														<th>Course</th>
+														<th>Year and Section</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													<?php
+														$selStudent = "select students.id as student_id, students.*, year_sections.*, courses.* from students inner join year_sections on students.year_section_id = year_sections.id inner join courses on year_sections.course_id = courses.id";
+														$rsStudent = mysqli_query($mysqli, $selStudent);
 
-																		while($prof = mysqli_fetch_assoc($rsProf)):
-																	?>
-																		<option value="<?php echo $prof['user_id'] ?>"><?php echo $prof['last_name'] . ', ' . $prof['first_name'] ?></option>
-																	<?php endwhile; ?>
-																</select>
-															</div>
-															<div class="form-group col-md-4 col-sm-12 col-xs-12">
-																<div class="checkbox checkbox-success">
-																	<input id="a-check-stud" type="checkbox">
-																	<label for="a-check-stud" class="control-label mb-5 text-left">
-																		Students
-																	</label>
-																</div>
-																<!-- <label class="control-label mb-5 text-left">Students</label> -->
-																<select multiple class="form-control" id="a-sel-stud" style="height: 200px" disabled>
-																	<?php
-																		$selCourse = "select * from courses";
-																		$rsCourse = mysqli_query($mysqli, $selCourse);
-																		while($course = mysqli_fetch_assoc($rsCourse)):
-																	?>
-																		<optgroup label="<?php echo $course['description'] ?>">
-																			<?php
-																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'];
-																				$rsYS = mysqli_query($mysqli, $selYS);
-
-																				while($ys = mysqli_fetch_assoc($rsYS)):
-																			?>
-																				<option value="<?php echo $ys['id'] ?>"><?php echo $ys['section'] ?></option>
-																			<?php endwhile; ?>		
-																		</optgroup>
-																	<?php endwhile; ?>
-																	
-																</select>
-															</div>
-														</div>
-														
-														<div class="form-group col-xs-12">
-															<label class="control-label mb-10 text-left">Message:</label>
-															<textarea class="form-control" rows="5" id="a-message"></textarea>
-														</div>
-														<div class="form-group col-xs-12">
-															<button type="button" id="a-send" class="btn btn-info pull-right">Send</button>
-															<div class="clearfix"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div  id="grouping_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 2 ? 'in active' : 'hidden' ?>" role="tabpanel">
-												<div class="col-md-12">
-													<div class="pt-20">
-														<div class="form-group" id="g-alert-message"></div>
-														<div class="form-group">
-															<label class="control-label mb-10 text-left col-xs-12">Students:</label>
-															<div class="form-group col-md-4 col-sm-12 col-xs-12">
-																<select multiple class="form-control" id="g-sel-stud" style="height: 200px">
-																	<?php
-																		$selCourse = "select courses.* from courses inner join year_sections on courses.id = year_sections.course_id where year_sections.prof_id = " . $_SESSION['authId'] . " group by courses.id";
-																		$rsCourse = mysqli_query($mysqli, $selCourse);
-																		while($course = mysqli_fetch_assoc($rsCourse)):
-																	?>
-																		<optgroup label="<?php echo $course['description'] ?>">
-																			<?php
-																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'] . " and year_sections.prof_id = " . $_SESSION['authId'];
-																				$rsYS = mysqli_query($mysqli, $selYS);
-
-																				while($ys = mysqli_fetch_assoc($rsYS)):
-																			?>
-																				<option value="<?php echo $ys['id'] ?>"><?php echo $ys['section'] ?></option>
-																			<?php endwhile; ?>		
-																		</optgroup>
-																	<?php endwhile; ?>
-																	
-																</select>
-															</div>
-														</div>
-														
-														<div class="form-group col-xs-12">
-															<label class="control-label mb-10 text-left">Message:</label>
-															<textarea class="form-control" rows="5" id="g-message"></textarea>
-														</div>
-														<div class="form-group col-xs-12">
-															<button type="button" id="g-send" class="btn btn-info pull-right">Send</button>
-															<div class="clearfix"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div  id="emergency_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
-												<div class="col-md-12">
-													<div class="pt-20">
-														<div class="form-group" id="e-alert-message"></div>
-														<div class="form-group col-xs-12">
-															<label class="control-label mb-10 text-left">Message:</label>
-															<textarea class="form-control" rows="5" id="e-message"></textarea>
-														</div>
-														<div class="form-group col-xs-12">
-															<button type="button" id="e-send" class="btn btn-info pull-right">Send</button>
-															<div class="clearfix"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div  id="survey_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
-												<!-- Row -->
-												<div class="col-md-12">
-													<div class="pt-20">
-														<div class="form-group" id="s-alert-message"></div>
-														<div class="form-group">
-															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
-															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
-																<div class="checkbox checkbox-success">
-																	<input id="s-check-prof" type="checkbox">
-																	<label for="s-check-prof" class="control-label mb-5 text-left">
-																		Professors
-																	</label>
-																</div>
-																<!-- <label class="control-label mb-5 text-left">Professors</label> -->
-																<select multiple class="form-control" id="s-sel-prof" style="height: 200px" disabled>
-																	<?php
-																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.status_id = 1 and users.id != " . $_SESSION["authId"] . " order by user_infos.last_name";
-																		$rsProf = mysqli_query($mysqli, $selProf);
-
-																		while($prof = mysqli_fetch_assoc($rsProf)):
-																	?>
-																		<option value="<?php echo $prof['user_id'] ?>"><?php echo $prof['last_name'] . ', ' . $prof['first_name'] ?></option>
-																	<?php endwhile; ?>
-																</select>
-															</div>
-															<div class="form-group col-md-4 col-sm-12 col-xs-12">
-																<div class="checkbox checkbox-success">
-																	<input id="s-check-stud" type="checkbox">
-																	<label for="s-check-stud" class="control-label mb-5 text-left">
-																		Students
-																	</label>
-																</div>
-																<!-- <label class="control-label mb-5 text-left">Students</label> -->
-																<select multiple class="form-control" id="s-sel-stud" style="height: 200px" disabled>
-																	<?php
-																		$selCourse = "select * from courses";
-																		$rsCourse = mysqli_query($mysqli, $selCourse);
-																		while($course = mysqli_fetch_assoc($rsCourse)):
-																	?>
-																		<optgroup label="<?php echo $course['description'] ?>">
-																			<?php
-																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'];
-																				$rsYS = mysqli_query($mysqli, $selYS);
-
-																				while($ys = mysqli_fetch_assoc($rsYS)):
-																			?>
-																				<option value="<?php echo $ys['id'] ?>"><?php echo $ys['section'] ?></option>
-																			<?php endwhile; ?>		
-																		</optgroup>
-																	<?php endwhile; ?>
-																	
-																</select>
-															</div>
-														</div>
-														
-														<div class="form-group col-xs-12">
-															<label class="control-label mb-10 text-left">Message:</label>
-															<textarea class="form-control" rows="5" id="s-message"></textarea>
-														</div>
-														<div class="form-group col-xs-12">
-															<button type="button" id="s-send" class="btn btn-info pull-right">Send</button>
-															<div class="clearfix"></div>
-														</div>
-													</div>
-												</div>
-											</div>
-											
-											<div  id="reports_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
-												<div class="row">
-													<div class="col-lg-12">
-														<div class="followers-wrap">
-															<ul class="followers-list-wrap">
-																<li class="follow-list">
-																	<div class="follo-body">
-																		<div class="follo-data">
-																			<img class="user-img img-circle"  src="dist/img/user.png" alt="user"/>
-																			<div class="user-data">
-																				<span class="name block capitalize-font">Clay Masse</span>
-																				<span class="time block truncate txt-grey">No one saves us but ourselves.</span>
-																			</div>
-																			<button class="btn btn-success pull-right btn-xs fixed-btn">Follow</button>
-																			<div class="clearfix"></div>
-																		</div>
-																		<div class="follo-data">
-																			<img class="user-img img-circle"  src="dist/img/user1.png" alt="user"/>
-																			<div class="user-data">
-																				<span class="name block capitalize-font">Evie Ono</span>
-																				<span class="time block truncate txt-grey">Unity is strength</span>
-																			</div>
-																			<button class="btn btn-success btn-outline pull-right btn-xs fixed-btn">following</button>
-																			<div class="clearfix"></div>
-																		</div>
-																		<div class="follo-data">
-																			<img class="user-img img-circle"  src="dist/img/user2.png" alt="user"/>
-																			<div class="user-data">
-																				<span class="name block capitalize-font">Madalyn Rascon</span>
-																				<span class="time block truncate txt-grey">Respect yourself if you would have others respect you.</span>
-																			</div>
-																			<button class="btn btn-success btn-outline pull-right btn-xs fixed-btn">following</button>
-																			<div class="clearfix"></div>
-																		</div>
-																		<div class="follo-data">
-																			<img class="user-img img-circle"  src="dist/img/user3.png" alt="user"/>
-																			<div class="user-data">
-																				<span class="name block capitalize-font">Mitsuko Heid</span>
-																				<span class="time block truncate txt-grey">I’m thankful.</span>
-																			</div>
-																			<button class="btn btn-success pull-right btn-xs fixed-btn">Follow</button>
-																			<div class="clearfix"></div>
-																		</div>
-																		<div class="follo-data">
-																			<img class="user-img img-circle"  src="dist/img/user.png" alt="user"/>
-																			<div class="user-data">
-																				<span class="name block capitalize-font">Ezequiel Merideth</span>
-																				<span class="time block truncate txt-grey">Patience is bitter.</span>
-																			</div>
-																			<button class="btn btn-success pull-right btn-xs fixed-btn">Follow</button>
-																			<div class="clearfix"></div>
-																		</div>
-																		<div class="follo-data">
-																			<img class="user-img img-circle"  src="dist/img/user1.png" alt="user"/>
-																			<div class="user-data">
-																				<span class="name block capitalize-font">Jonnie Metoyer</span>
-																				<span class="time block truncate txt-grey">Genius is eternal patience.</span>
-																			</div>
-																			<button class="btn btn-success btn-outline pull-right btn-xs fixed-btn">following</button>
-																			<div class="clearfix"></div>
-																		</div>
-																	</div>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-											
-											<!-- <div  id="settings_8" class="tab-pane fade" role="tabpanel">
-												<div class="row">
-													<div class="col-lg-12">
-														<div class="">
-															<div class="panel-wrapper collapse in">
-																<div class="panel-body pa-0">
-																	<div class="col-sm-12 col-xs-12">
-																		<div class="form-wrap">
-																			<form action="#">
-																				<div class="form-body overflow-hide">
-																					<div class="form-group">
-																						<label class="control-label mb-10" for="exampleInputuname_01">Name</label>
-																						<div class="input-group">
-																							<div class="input-group-addon"><i class="icon-user"></i></div>
-																							<input type="text" class="form-control" id="exampleInputuname_01" placeholder="willard bryant">
-																						</div>
-																					</div>
-																					<div class="form-group">
-																						<label class="control-label mb-10" for="exampleInputEmail_01">Email address</label>
-																						<div class="input-group">
-																							<div class="input-group-addon"><i class="icon-envelope-open"></i></div>
-																							<input type="email" class="form-control" id="exampleInputEmail_01" placeholder="xyz@gmail.com">
-																						</div>
-																					</div>
-																					<div class="form-group">
-																						<label class="control-label mb-10" for="exampleInputContact_01">Contact number</label>
-																						<div class="input-group">
-																							<div class="input-group-addon"><i class="icon-phone"></i></div>
-																							<input type="email" class="form-control" id="exampleInputContact_01" placeholder="+102 9388333">
-																						</div>
-																					</div>
-																					<div class="form-group">
-																						<label class="control-label mb-10" for="exampleInputpwd_01">Password</label>
-																						<div class="input-group">
-																							<div class="input-group-addon"><i class="icon-lock"></i></div>
-																							<input type="password" class="form-control" id="exampleInputpwd_01" placeholder="Enter pwd" value="password">
-																						</div>
-																					</div>
-																					<div class="form-group">
-																						<label class="control-label mb-10">Gender</label>
-																						<div>
-																							<div class="radio">
-																								<input type="radio" name="radio1" id="radio_01" value="option1" checked="">
-																								<label for="radio_01">
-																								M
-																								</label>
-																							</div>
-																							<div class="radio">
-																								<input type="radio" name="radio1" id="radio_02" value="option2">
-																								<label for="radio_02">
-																								F
-																								</label>
-																							</div>
-																						</div>
-																					</div>
-																					<div class="form-group">
-																						<label class="control-label mb-10">Country</label>
-																						<select class="form-control" data-placeholder="Choose a Category" tabindex="1">
-																							<option value="Category 1">USA</option>
-																							<option value="Category 2">Austrailia</option>
-																							<option value="Category 3">India</option>
-																							<option value="Category 4">UK</option>
-																						</select>
-																					</div>
-																				</div>
-																				<div class="form-actions mt-10">			
-																					<button type="submit" class="btn btn-success mr-10 mb-30">Update profile</button>
-																				</div>				
-																			</form>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div> -->
+														while($student = mysqli_fetch_assoc($rsStudent)):
+													?>
+													<tr id="row-student<?php echo $student['student_id'] ?>" class="txt-dark">
+														<input type="hidden" id="course-id-<?php echo $student['student_id'] ?>" value="<?php echo $student['course_id'] ?>">
+														<input type="hidden" id="section-id-<?php echo $student['student_id'] ?>" value="<?php echo $student['year_section_id'] ?>">
+														<td id=""><?php echo $student['student_id'] ?></td>
+														<td id="fname-<?php echo $student['student_id'] ?>"><?php echo $student['first_name'] ?></td>
+														<td id="mname-<?php echo $student['student_id'] ?>"><?php echo $student['middle_name'] ?></td>
+														<td id="lname-<?php echo $student['student_id'] ?>"><?php echo $student['last_name'] ?></td>
+														<td id="email-<?php echo $student['student_id'] ?>"><?php echo $student['email_address'] ?></td>
+														<td id="mobile-<?php echo $student['student_id'] ?>"><?php echo $student['mobile_number'] ?></td>
+														<td id="course-<?php echo $student['student_id'] ?>"><?php echo $student['description'] ?></td>
+														<td id="section-<?php echo $student['student_id'] ?>"><?php echo $student['section'] ?></td>
+														<td><button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $student['student_id'] ?>"><i class="fa fa-pencil"></i></button></td>
+													</tr>
+													<?php endwhile; ?>
+												</tbody>
+											</table>
 										</div>
 									</div>
 								</div>
@@ -754,6 +302,74 @@
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
+
+	<div id="edit-student-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h5 class="modal-title" id="myModalLabel">Edit Student</h5>
+				</div>
+				<div class="modal-body">
+					<!-- Row -->
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="">
+								<div class="panel-wrapper collapse in">
+									<div class="panel-body pa-0">
+										<div class="col-sm-12 col-xs-12">
+											<div class="form-wrap">
+												<form action="#">
+													<div class="form-group" id="edit-alert-message"></div>
+													<div class="form-group">
+														<label class="control-label mb-10" for="tb-firstname">First Name</label>
+														<input type="text" class="form-control" name="tb-firstname" required="" id="tb-firstname" placeholder="First Name">
+													</div>
+													<div class="form-group">
+														<label class="control-label mb-10" for="tb-middlename">Middle Name</label>
+														<input type="text" class="form-control" required="" name="tb-middlename" id="tb-middlename" placeholder="Middle Name">
+													</div>
+													<div class="form-group">
+														<label class="control-label mb-10" for="tb-lastname">Last Name</label>
+														<input type="text" class="form-control" required="" name="tb-lastname" id="tb-lastname" placeholder="Last Name">
+													</div>
+													<div class="form-group" id="div-email">
+														<label class="control-label mb-10" for="tb-email">Email address</label>
+														<input type="email" class="form-control" required="" name="tb-email" id="tb-email" placeholder="Email Address">
+														<div style="color: #cc0000; display: none" id="error">&bull; Email Address already exist.</div>
+													</div>
+													<div class="form-group">
+														<label class="control-label mb-10" for="tb-mobile">Mobile Number</label>
+														<input type="text" class="form-control" required="" name="tb-mobile" id="tb-mobile" placeholder="Mobile Number" maxlength="11">
+													</div>
+													<div class="form-group">
+														<label class="control-label mb-10" for="sel-course">Course</label>
+														<select class="form-control" id="sel-course">
+														</select>
+													</div>
+													<div class="form-group">
+														<label class="control-label mb-10" for="sel-section">Section</label>
+														<select class="form-control" id="sel-section">
+														</select>
+													</div>	
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success waves-effect" id="btn-save-edit" data-id="">Save</button>
+					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
 	<!-- <button data-toggle="modal" data-target="#responsive-modal" class="model_img img-responsive hidden" id="btn-modal">modal<button> -->
 	
 	<!-- JavaScript -->
@@ -805,6 +421,7 @@
 	<!--<script src="dist/js/dashboard-data.js"></script>-->
 	<script type="text/javascript">
 		$(document).ready(function(){
+			keyNumber();
 			<?php if($cntPasswordDate > 0 || $rowLogs == 1): ?>
 				$("#responsive-modal").modal('show');
 			<?php endif; ?>
@@ -867,87 +484,74 @@
 					}
 				});
 			});
+			
 
-			isCheckProf();
-			isCheckStud();
+			$(".btn-edit").on("click",function(){
+				$("#edit-alert-message").html('');
+				var id = $(this).data('id');
 
-			$("#a-send").on("click", function(){
-				var err = 0;
-				if (!$("#a-check-prof").is(':checked') && !$("#a-check-stud").is(':checked')) {
-					//alert("Please select a recipient.");
-					err += 1;
-				}
+				$("#tb-firstname").val($("#fname-" + id).html());
+				$("#tb-middlename").val($("#mname-" + id).html());
+				$("#tb-lastname").val($("#lname-" + id).html());
+				$("#tb-email").val($("#email-" + id).html());
+				$("#tb-mobile").val($("#mobile-" + id).html());
+				$("#btn-save-edit").attr("data-id", id);
+				console.log($("#course-id-" + id).val());
+				fetchCourse($("#course-id-" + id).val());
+				fetchSection($("#course-id-" + id).val(),$("#section-id-" + id).val());
 
-				if ($("#a-check-prof").is(':checked')) {
-					if ($("#a-sel-prof").val() == null) {
-						err += 1;
-					}
-				}
-
-				if ($("#a-check-stud").is(':checked')) {
-					if ($("#a-sel-stud").val() == null) {
-						err += 1;
-					}
-				}
-
-				if (err > 0) {
-					alert("Please select a recipient.");
-				} else if ($("#a-message").val().trim() == "") {
-					alert("Please compose a message.");
-				} else {
-					sendAnnouncement("include/send_announcement.php");
-				}
+				$("#edit-student-modal").modal('show');
 			});
 
-			$("#g-send").on("click", function(){
-				var err = 0;
-				if ($("#g-sel-stud").val() == null) {
-					err += 1;
-				}
-
-				if (err > 0) {
-					alert("Please select a recipient.");
-				} else if ($("#g-message").val().trim() == "") {
-					alert("Please compose a message.");
-				} else {
-					sendGrouping("include/send_grouping.php");
-				}
+			$("#sel-course").on('change', function(){
+				fetchSection($(this).val(),0);
 			});
 
-			$("#e-send").on("click", function(){
-				if ($("#e-message").val().trim() == "") {
-					alert("Please compose a message.");
-				} else {
-					sendEmergency("include/send_emergency.php");
-				}
-			});
+			$("#btn-save-edit").on("click", function(){
+				var id = $(this).data('id');
 
-			$("#s-send").on("click", function(){
-				var err = 0;
-				if (!$("#s-check-prof").is(':checked') && !$("#s-check-stud").is(':checked')) {
-					//alert("Please select a recipient.");
-					err += 1;
-				}
+				var data = new Object();
+				data.first_name = $("#tb-firstname").val();
+				data.middle_name = $("#tb-middlename").val();
+				data.last_name = $("#tb-lastname").val();
+				data.email_address = $("#tb-email").val();
+				data.mobile_number = $("#tb-mobile").val();
+				data.course = $("#sel-course").val();
+				data.section = $("#sel-section").val();
 
-				if ($("#s-check-prof").is(':checked')) {
-					if ($("#s-sel-prof").val() == null) {
-						err += 1;
+				$(".preloader").show();
+				$.ajax({
+					url: 'include/edit_student.php',
+					type: 'post',
+					data: { action: 'get', studentId: id, params: data  },
+					success: function(response){
+						$(".preloader").hide();
+						console.log(response);
+						var result = $.parseJSON(response);
+						console.log(result["status"]);
+
+						if (result["status"] == 'success'){
+							$("#fname-" + id).html($("#tb-firstname").val());
+							$("#mname-" + id).html($("#tb-middlename").val());
+							$("#lname-" + id).html($("#tb-lastname").val());
+							$("#email-" + id).html($("#tb-email").val());
+							$("#mobile-" + id).html($("#tb-mobile").val());
+							$("#course-" + id).html($("#sel-course").find(":selected").text());
+							$("#section-" + id).html($("#sel-section").find(":selected").text());
+							
+							$("#course-id-" + id).val($("#sel-course").val());
+							$("#section-id-" + id).val($("#sel-section").val());
+
+							$("#edit-alert-message").html('<div class="alert alert-success">Student successfully updated.</div>');
+							setTimeout(function(){
+								$("#edit-student-modal").modal('hide');
+							},1500);
+						} else {
+							$("#edit-alert-message").html('<div class="alert alert-danger">There was and error updating the student.</div>');
+						}
+
 					}
-				}
-
-				if ($("#s-check-stud").is(':checked')) {
-					if ($("#s-sel-stud").val() == null) {
-						err += 1;
-					}
-				}
-
-				if (err > 0) {
-					alert("Please select a recipient.");
-				} else if ($("#s-message").val().trim() == "") {
-					alert("Please compose a message.");
-				} else {
-					sendSurvey("include/send_survey.php");
-				}
+				});
 			});
 		});
 		function checkPassword() {
@@ -988,6 +592,48 @@
 				$("#panel-error").addClass("hidden");
 				return 1;
 			}
+		}
+
+		function fetchCourse(courseId) {
+			var cid = courseId ? courseId : 1;
+			$.ajax({
+				url: 'include/admin_functions.php',
+				type: 'post',
+				data: { action: 'fetch-course' },
+				success: function(response){
+					var result = $.parseJSON(response);
+					var html = '';
+
+					for(var prod in result){
+						html += '<option value="' + result[prod].id + '">' + result[prod].description + '</option>';
+					}
+					$('#sel-course').html(html);
+					$('#sel-course').val(cid);
+					//fetchSection(cid);
+				}
+			});
+		}
+
+		function fetchSection(courseId,sectionId) {
+			var cid = courseId ? courseId : 1;
+
+			$.ajax({
+				url: 'include/admin_functions.php',
+				type: 'post',
+				data: { action: 'fetch-section', courseId: cid },
+				success: function(response){
+					var result = $.parseJSON(response);
+					var html = '';
+
+					for(var prod in result){
+						html += '<option value="' + result[prod].id + '">' + result[prod].section + '</option>';
+					}
+					$('#sel-section').html(html);
+
+					var sid = sectionId != 0 ? sectionId : $('#sel-section option:first').val();
+					$('#sel-section').val(sid);
+				}
+			});
 		}
 	</script>
 </body>

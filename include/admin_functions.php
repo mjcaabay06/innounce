@@ -40,6 +40,28 @@
 					echo '<div class="alert alert-success">Changes done.</div>';
 				}
 				break;
+			case 'fetch-course':
+				$data = array();
+				$selCourse = 'select * from courses';
+				$rsCourse = mysqli_query($mysqli, $selCourse);
+				if ($rsCourse !== false){
+					while ($course = mysqli_fetch_assoc($rsCourse)){
+						array_push($data,$course);
+					}
+				}
+				echo json_encode($data);
+				break;
+			case 'fetch-section':
+				$data = array();
+				$selSection = 'select * from year_sections where course_id = ' . $_POST['courseId'];
+				$rsSection = mysqli_query($mysqli, $selSection);
+				if ($rsSection !== false){
+					while ($section = mysqli_fetch_assoc($rsSection)){
+						array_push($data,$section);
+					}
+				}
+				echo json_encode($data);
+				break;
 			default:
 				break;
 		}

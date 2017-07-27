@@ -103,10 +103,10 @@
 						<a class="active" href="javascript:void(0);" data-toggle="collapse" data-target="#users_dr"><div class="pull-left"><i class="zmdi zmdi-accounts mr-20"></i><span class="right-nav-text">Users</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
 						<ul id="users_dr" class="collapse collapse-level-1">
 							<li>
-								<a class="active-page" href="staffs.php">Staff</a>
+								<a href="staffs.php">Staff</a>
 							</li>
 							<li>
-								<a href="students.php">Students</a>
+								<a class="active-page" href="students.php">Students</a>
 							</li>
 						</ul>
 					<?php endif; ?>
@@ -175,53 +175,84 @@
 					<div class="col-sm-12">
 						<div class="panel panel-default card-view">
 							<div class="panel-heading">
-								<div class="pull-left">
-									<h6 class="panel-title txt-dark">Staffs</h6>
+								<div class="col-sm-12">
+									<a href="staffs.php" class="pull-left" title="Back to staffs"><i class="zmdi zmdi-chevron-left" style="color: rgba(23, 126, 193, 0.85);font-weight: bold;font-size: 25px;margin-right: 10px;"></i></a>
+									<div class="pull-left">
+										<h6 class="panel-title txt-dark">Add Student</h6>
+									</div>
 								</div>
-								<a href="add-staff.php" class="pull-right btn btn-primary btn-circle btn-sm" title="Add Staff"><i class="zmdi zmdi-account-add" style="color: #fff"></i></a>
 								<div class="clearfix"></div>
 							</div>
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
-									<div class="table-wrap">
-										<div class="table-responsive">
-											<table class="table mb-0">
-												<thead>
-													<tr>
-														<th>#</th>
-														<th>First Name</th>
-														<th>Middle Name</th>
-														<th>Last Name</th>
-														<th>Email</th>
-														<th>Mobile</th>
-														<th>User Type</th>
-														<th></th>
-													</tr>
-												</thead>
-												<tbody>
-													<?php
-														$selStaff = "select * from users inner join user_infos on users.id = user_infos.user_id inner join user_types on users.user_type_id = user_types.id where users.id != " . $_SESSION['authId'];
-														$rsStaff = mysqli_query($mysqli, $selStaff);
-
-														while($staff = mysqli_fetch_assoc($rsStaff)):
-													?>
-													<tr id="row-staff<?php echo $staff['user_id'] ?>" class="<?php echo $staff['status_id'] == 2 ? 'success' : 'txt-dark' ?>">
-														<input type="hidden" id="type-<?php echo $staff['user_id'] ?>" value="<?php echo $staff['user_type_id'] ?>">
-														<input type="hidden" id="status-<?php echo $staff['user_id'] ?>" value="<?php echo $staff['status_id'] ?>">
-														<td id=""><?php echo $staff['user_id'] ?></td>
-														<td id="fname-<?php echo $staff['user_id'] ?>"><?php echo $staff['first_name'] ?></td>
-														<td id="mname-<?php echo $staff['user_id'] ?>"><?php echo $staff['middle_name'] ?></td>
-														<td id="lname-<?php echo $staff['user_id'] ?>"><?php echo $staff['last_name'] ?></td>
-														<td id="email-<?php echo $staff['user_id'] ?>"><?php echo $staff['email_address'] ?></td>
-														<td id="mobile-<?php echo $staff['user_id'] ?>"><?php echo $staff['mobile_number'] ?></td>
-														<td id="user-type-<?php echo $staff['user_id'] ?>"><?php echo $staff['type'] ?></td>
-														<td><button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $staff['user_id'] ?>"><i class="fa fa-pencil"></i></button></td>
-													</tr>
-													<?php endwhile; ?>
-												</tbody>
-											</table>
+									<form action="" id="form-sign-up" method="post">
+										<input type="hidden" name="hidden-identifier" value="1" />
+										<div class="col-sm-12">
+											<div id="add-alert-message"></div>
 										</div>
-									</div>
+										<div class="col-md-6 col-sm-12">
+											<div class="panel panel-default border-panel card-view">
+												<div class="panel-heading">
+													<div class="text-center">
+														<h6 class="panel-title txt-dark">Personal Information</h6>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+												<div class="panel-wrapper">
+													<div class="panel-body">
+														<div class="form-group">
+															<label class="control-label mb-10" for="tb-firstname">First Name</label>
+															<input type="text" class="form-control" name="tb-firstname" required="" id="tb-firstname" placeholder="First Name">
+														</div>
+														<div class="form-group">
+															<label class="control-label mb-10" for="tb-middlename">Middle Name</label>
+															<input type="text" class="form-control" required="" name="tb-middlename" id="tb-middlename" placeholder="Middle Name">
+														</div>
+														<div class="form-group">
+															<label class="control-label mb-10" for="tb-lastname">Last Name</label>
+															<input type="text" class="form-control" required="" name="tb-lastname" id="tb-lastname" placeholder="Last Name">
+														</div>
+														<div class="form-group" id="div-email">
+															<label class="control-label mb-10" for="tb-email">Email address</label>
+															<input type="email" class="form-control" required="" name="tb-email" id="tb-email" placeholder="Email Address">
+														</div>
+														<div class="form-group">
+															<label class="control-label mb-10" for="tb-mobile">Mobile Number</label>
+															<input type="text" class="form-control" required="" name="tb-mobile" id="tb-mobile" placeholder="Mobile Number" maxlength="11">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-md-6 col-sm-12">
+											<div class="panel panel-default border-panel card-view">
+												<div class="panel-heading">
+													<div class="text-center">
+														<h6 class="panel-title txt-dark">School Information</h6>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+												<div class="panel-wrapper">
+													<div class="panel-body">
+														<div class="form-group">
+															<label class="control-label mb-10" for="sel-course">Course</label>
+															<select class="form-control" id="sel-course">
+															</select>
+														</div>
+														<div class="form-group">
+															<label class="control-label mb-10" for="sel-section">Section</label>
+															<select class="form-control" id="sel-section">
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group text-center">
+											<button type="button" id="btn-save-add" class="btn btn-info btn-rounded">Save</button>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -301,77 +332,7 @@
 		<!-- /.modal-dialog -->
 	</div>
 
-	<div id="edit-staff-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h5 class="modal-title" id="myModalLabel">Edit Staff</h5>
-				</div>
-				<div class="modal-body">
-					<!-- Row -->
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="">
-								<div class="panel-wrapper collapse in">
-									<div class="panel-body pa-0">
-										<div class="col-sm-12 col-xs-12">
-											<div class="form-wrap">
-												<form action="#">
-													<div class="form-group" id="edit-alert-message"></div>
-													<div class="form-group">
-														<label class="control-label mb-10" for="tb-firstname">First Name</label>
-														<input type="text" class="form-control" name="tb-firstname" required="" id="tb-firstname" placeholder="First Name">
-													</div>
-													<div class="form-group">
-														<label class="control-label mb-10" for="tb-middlename">Middle Name</label>
-														<input type="text" class="form-control" required="" name="tb-middlename" id="tb-middlename" placeholder="Middle Name">
-													</div>
-													<div class="form-group">
-														<label class="control-label mb-10" for="tb-lastname">Last Name</label>
-														<input type="text" class="form-control" required="" name="tb-lastname" id="tb-lastname" placeholder="Last Name">
-													</div>
-													<div class="form-group" id="div-email">
-														<label class="control-label mb-10" for="tb-email">Email address</label>
-														<input type="email" class="form-control" required="" name="tb-email" id="tb-email" placeholder="Email Address">
-														<div style="color: #cc0000; display: none" id="error">&bull; Email Address already exist.</div>
-													</div>
-													<div class="form-group">
-														<label class="control-label mb-10" for="tb-mobile">Mobile Number</label>
-														<input type="text" class="form-control" required="" name="tb-mobile" id="tb-mobile" placeholder="Mobile Number" maxlength="11">
-													</div>
-													<div class="form-group">
-														<label class="control-label mb-10" for="sel-type">User Type</label>
-														<select class="form-control" id="sel-type">
-															<option value="1">Admin</option>
-															<option value="2">Professor</option>
-														</select>
-													</div>
-													<div class="form-group">
-														<label class="control-label mb-10" for="sel-status">Status</label>
-														<select class="form-control" id="sel-status">
-															<option value="1">Active</option>
-															<option value="2">Inactive</option>
-														</select>
-													</div>	
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-success waves-effect" id="btn-save-edit" data-id="">Save</button>
-					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
+	
 	<!-- <button data-toggle="modal" data-target="#responsive-modal" class="model_img img-responsive hidden" id="btn-modal">modal<button> -->
 	
 	<!-- JavaScript -->
@@ -486,75 +447,44 @@
 					}
 				});
 			});
-			
 
-			$(".btn-edit").on("click",function(){
-				$("#edit-alert-message").html('');
-				var id = $(this).data('id');
-
-				$("#tb-firstname").val($("#fname-" + id).html());
-				$("#tb-middlename").val($("#mname-" + id).html());
-				$("#tb-lastname").val($("#lname-" + id).html());
-				$("#tb-email").val($("#email-" + id).html());
-				$("#tb-mobile").val($("#mobile-" + id).html());
-				$("#sel-type").val($("#type-" + id).val());
-				$("#sel-status").val($("#status-" + id).val());
-				$("#btn-save-edit").attr("data-id", id);
-				$("#edit-staff-modal").modal('show');
-				
-			});
-
-			$("#btn-save-edit").on("click", function(){
-				var id = $(this).data('id');
-
+			$("#btn-save-add").on('click', function(){
 				var data = new Object();
 				data.first_name = $("#tb-firstname").val();
 				data.middle_name = $("#tb-middlename").val();
 				data.last_name = $("#tb-lastname").val();
 				data.email_address = $("#tb-email").val();
 				data.mobile_number = $("#tb-mobile").val();
-				data.user_type = $("#sel-type").val();
-				data.status = $("#sel-status").val();
+				data.course = $("#sel-course").val();
+				data.section = $("#sel-section").val();
 
 				$(".preloader").show();
 				$.ajax({
-					url: 'include/edit_staff.php',
+					url: 'include/add_student.php',
 					type: 'post',
-					data: { action: 'get', userId: id, params: data  },
+					data: { action: 'post', params: data  },
 					success: function(response){
 						$(".preloader").hide();
 						console.log(response);
 						var result = $.parseJSON(response);
 						console.log(result["status"]);
 
-						if (result["status"] == 'success'){
-							var userType = $("#sel-type").val() == 1 ? 'Admin' : 'Professor';
-							$("#fname-" + id).html($("#tb-firstname").val());
-							$("#mname-" + id).html($("#tb-middlename").val());
-							$("#lname-" + id).html($("#tb-lastname").val());
-							$("#email-" + id).html($("#tb-email").val());
-							$("#mobile-" + id).html($("#tb-mobile").val());
-							$("#user-type-" + id).html(userType);
-							$("#type-" + id).val($("#sel-type").val());
-							$("#status-" + id).val($("#sel-status").val());
-
-							if ($("#sel-status").val() == '1') {
-								$("#row-staff" + id).removeClass('success');
-								$("#row-staff" + id).addClass('txt-dark');
-							} else {
-								$("#row-staff" + id).addClass('success');
-								$("#row-staff" + id).removeClass('txt-dark');
-							}
-							$("#edit-alert-message").html('<div class="alert alert-success">Staff successfully updated.</div>');
+						if (result["status"] == 'success') {
+							$("#add-alert-message").html('<div class="alert alert-success">You have successfully created a student.</div>');
 							setTimeout(function(){
-								$("#edit-staff-modal").modal('hide');
+								window.location.href = 'students.php';
 							},1500);
 						} else {
-							$("#edit-alert-message").html('<div class="alert alert-danger">There was and error updating the staff.</div>');
+							$("#add-alert-message").html('<div class="alert alert-danger">There was an error creating a student.</div>');
 						}
-
+						
 					}
-				});
+				});	
+			});
+
+			fetchCourse();
+			$("#sel-course").on('change', function(){
+				fetchSection($(this).val());
 			});
 		});
 		function checkPassword() {
@@ -595,6 +525,44 @@
 				$("#panel-error").addClass("hidden");
 				return 1;
 			}
+		}
+
+		function fetchCourse() {
+			$.ajax({
+				url: 'include/admin_functions.php',
+				type: 'post',
+				data: { action: 'fetch-course' },
+				success: function(response){
+					var result = $.parseJSON(response);
+					var html = '';
+
+					for(var prod in result){
+						html += '<option value="' + result[prod].id + '">' + result[prod].description + '</option>';
+					}
+					$('#sel-course').html(html);
+					fetchSection($('#sel-course option:first').val());
+				}
+			});
+		}
+
+		function fetchSection(courseId) {
+			var cid = courseId;
+
+			$.ajax({
+				url: 'include/admin_functions.php',
+				type: 'post',
+				data: { action: 'fetch-section', courseId: cid },
+				success: function(response){
+					var result = $.parseJSON(response);
+					var html = '';
+
+					for(var prod in result){
+						html += '<option value="' + result[prod].id + '">' + result[prod].section + '</option>';
+					}
+					$('#sel-section').html(html);
+					$('#sel-section').val($('#sel-section option:first').val());
+				}
+			});
 		}
 	</script>
 </body>

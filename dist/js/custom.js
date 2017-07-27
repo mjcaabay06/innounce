@@ -176,3 +176,11 @@ function resetSurvey() {
 
 	$("#s-message").val('');
 }
+
+function keyNumber(){
+	$("#tb-mobile").keydown(function(e){
+		if (!((e.keyCode >= 48 && e.keyCode <= 57) || e.keyCode == 8)) {
+			e.preventDefault();
+		}
+	});
+}

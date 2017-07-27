@@ -214,7 +214,7 @@
 														</div>
 														<div class="form-group">
 															<label class="control-label mb-10" for="tb-mobile">Mobile Number</label>
-															<input type="text" class="form-control" required="" name="tb-mobile" id="tb-mobile" placeholder="Mobile Number">
+															<input type="text" class="form-control" required="" name="tb-mobile" id="tb-mobile" placeholder="Mobile Number" maxlength="11">
 														</div>
 													</div>
 												</div>
@@ -387,6 +387,7 @@
 	<!--<script src="dist/js/dashboard-data.js"></script>-->
 	<script type="text/javascript">
 		$(document).ready(function(){
+			keyNumber();
 			<?php if($cntPasswordDate > 0 || $rowLogs == 1): ?>
 				$("#responsive-modal").modal('show');
 			<?php endif; ?>
