@@ -445,5 +445,6 @@
 				}
 			}
 		</script>
+		<?php include('_common-js.php'); ?>
 	</body>
 </html>
