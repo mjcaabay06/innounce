@@ -253,5 +253,5 @@
 		return $data;
 	}
 
-	#sendViaBulksms('639177629194', 'This is just a test message.');
+	#sendViaBulksms('639176710089', 'This is just a test message.');
 ?>
