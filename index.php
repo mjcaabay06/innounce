@@ -309,7 +309,7 @@
 											</li>
 											<li role="presentation" class="<?php echo $_SESSION['userType'] == 2 ? 'active' : 'hidden' ?>">
 												<a data-toggle="tab" id="grouping_tab_8" role="tab" href="#grouping_8" aria-expanded="false">
-													<span>grouping</span>
+													<span>announcement</span>
 												</a>
 											</li>
 											<li role="presentation" class="<?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
@@ -346,49 +346,39 @@
 														<div class="form-group">
 															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
 															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
-																<div class="checkbox checkbox-success">
+																<!-- <div class="checkbox checkbox-success">
 																	<input id="a-check-prof" type="checkbox">
-																	<label for="a-check-prof" class="control-label mb-5 text-left">
-																		Professors
-																	</label>
-																</div>
+																	
+																</div> -->
 																<!-- <label class="control-label mb-5 text-left">Professors</label> -->
-																<select multiple class="form-control" id="a-sel-prof" style="height: 200px" disabled>
-																	<?php
-																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.status_id = 1 and users.id != " . $_SESSION["authId"] . " order by user_infos.last_name";
-																		$rsProf = mysqli_query($mysqli, $selProf);
+																<label for="a-sel-course" class="control-label mb-5 text-left">Courses</label>
+																<select class="form-control" id="a-sel-course">
+																	<?php 
+																		$selCourses = "select * from school_courses";
+																		$rsCourse = mysqli_query($mysqli, $selCourses);
 
-																		while($prof = mysqli_fetch_assoc($rsProf)):
+																		while($course = mysqli_fetch_assoc($rsCourse)):
 																	?>
-																		<option value="<?php echo $prof['user_id'] ?>"><?php echo $prof['last_name'] . ', ' . $prof['first_name'] ?></option>
+																		<option value="<?php echo $course['id'] ?>"><?php echo $course['description'] ?></option>
 																	<?php endwhile; ?>
 																</select>
 															</div>
 															<div class="form-group col-md-4 col-sm-12 col-xs-12">
-																<div class="checkbox checkbox-success">
+																<!-- <div class="checkbox checkbox-success">
 																	<input id="a-check-stud" type="checkbox">
-																	<label for="a-check-stud" class="control-label mb-5 text-left">
-																		Students
-																	</label>
-																</div>
+																	
+																</div> -->
+																<label for="a-sel-year" class="control-label mb-5 text-left">Year Levels</label>
 																<!-- <label class="control-label mb-5 text-left">Students</label> -->
-																<select multiple class="form-control" id="a-sel-stud" style="height: 200px" disabled>
-																	<?php
-																		$selCourse = "select * from courses";
-																		$rsCourse = mysqli_query($mysqli, $selCourse);
-																		while($course = mysqli_fetch_assoc($rsCourse)):
-																	?>
-																		<optgroup label="<?php echo $course['description'] ?>">
-																			<?php
-																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'];
-																				$rsYS = mysqli_query($mysqli, $selYS);
+																<select multiple class="form-control" id="a-sel-year" style="height: 200px">
+																	<!-- <?php
+																		$selYearLevel = "select school_levels.* from school_levels inner join (school_sections inner join enrollees on enrollees.school_section_id = school_sections.id ) on school_sections.school_level_id = school_levels.id  group by school_levels.id order by school_levels.id";
+																		$rsYearLevel = mysqli_query($mysqli, $selYearLevel);
 
-																				while($ys = mysqli_fetch_assoc($rsYS)):
-																			?>
-																				<option value="<?php echo $ys['id'] ?>"><?php echo $ys['section'] ?></option>
-																			<?php endwhile; ?>		
-																		</optgroup>
-																	<?php endwhile; ?>
+																		while($yearLevel = mysqli_fetch_assoc($rsYearLevel)):
+																	?>
+																		<option value="<?php echo $yearLevel['id'] ?>"><?php echo $yearLevel['description'] ?></option>
+																	<?php endwhile; ?> -->
 																	
 																</select>
 															</div>
@@ -410,29 +400,24 @@
 													<div class="pt-20">
 														<div class="form-group" id="g-alert-message"></div>
 														<div class="form-group">
-															<label class="control-label mb-10 text-left col-xs-12">Students:</label>
-															<div class="form-group col-md-4 col-sm-12 col-xs-12">
-																<select multiple class="form-control" id="g-sel-stud" style="height: 200px">
-																	<?php
-																		$selCourse = "select courses.* from courses inner join year_sections on courses.id = year_sections.course_id where year_sections.prof_id = " . $_SESSION['authId'] . " group by courses.id";
-																		$rsCourse = mysqli_query($mysqli, $selCourse);
+															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
+																<label for="g-sel-course" class="control-label mb-5 text-left">Courses</label>
+																<select class="form-control" id="g-sel-course">
+																	<?php 
+																		$selCourses = "select school_courses.* from users inner join (professor_subjects inner join (enrolled_subjects inner join (enrollees inner join school_courses on school_courses.id = enrollees.school_course_id) on enrollees.id = enrolled_subjects.enrollee_id) on enrolled_subjects.subject_id = professor_subjects.school_subject_id) on professor_subjects.professor_id = users.id where users.id = " . $_SESSION['authId'] . " group by school_courses.id";
+																		$rsCourse = mysqli_query($mysqli, $selCourses);
+
 																		while($course = mysqli_fetch_assoc($rsCourse)):
 																	?>
-																		<optgroup label="<?php echo $course['description'] ?>">
-																			<?php
-																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'] . " and year_sections.prof_id = " . $_SESSION['authId'];
-																				$rsYS = mysqli_query($mysqli, $selYS);
-
-																				while($ys = mysqli_fetch_assoc($rsYS)):
-																			?>
-																				<option value="<?php echo $ys['id'] ?>"><?php echo $ys['section'] ?></option>
-																			<?php endwhile; ?>		
-																		</optgroup>
+																		<option value="<?php echo $course['id'] ?>"><?php echo $course['description'] ?></option>
 																	<?php endwhile; ?>
-																	
 																</select>
 															</div>
-														</div>
+															<div class="form-group col-md-4 col-sm-12 col-xs-12">
+																<label for="g-sel-section" class="control-label mb-5 text-left">Sections Handled</label>
+																<select multiple class="form-control" id="g-sel-section" style="height: 200px">
+																</select>
+															</div>
 														
 														<div class="form-group col-xs-12">
 															<label class="control-label mb-10 text-left">Message:</label>
@@ -468,50 +453,35 @@
 														<div class="form-group">
 															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
 															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
-																<div class="checkbox checkbox-success">
+																<!-- <div class="checkbox checkbox-success">
 																	<input id="s-check-prof" type="checkbox">
 																	<label for="s-check-prof" class="control-label mb-5 text-left">
 																		Professors
 																	</label>
-																</div>
+																</div> -->
+																<label for="s-sel-course" class="control-label mb-5 text-left">Courses</label>
 																<!-- <label class="control-label mb-5 text-left">Professors</label> -->
-																<select multiple class="form-control" id="s-sel-prof" style="height: 200px" disabled>
-																	<?php
-																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.status_id = 1 and users.id != " . $_SESSION["authId"] . " order by user_infos.last_name";
-																		$rsProf = mysqli_query($mysqli, $selProf);
+																<select class="form-control" id="s-sel-course">
+																	<?php 
+																		$selCourses = "select * from school_courses";
+																		$rsCourse = mysqli_query($mysqli, $selCourses);
 
-																		while($prof = mysqli_fetch_assoc($rsProf)):
+																		while($course = mysqli_fetch_assoc($rsCourse)):
 																	?>
-																		<option value="<?php echo $prof['user_id'] ?>"><?php echo $prof['last_name'] . ', ' . $prof['first_name'] ?></option>
+																		<option value="<?php echo $course['id'] ?>"><?php echo $course['description'] ?></option>
 																	<?php endwhile; ?>
 																</select>
 															</div>
 															<div class="form-group col-md-4 col-sm-12 col-xs-12">
-																<div class="checkbox checkbox-success">
+																<!-- <div class="checkbox checkbox-success">
 																	<input id="s-check-stud" type="checkbox">
 																	<label for="s-check-stud" class="control-label mb-5 text-left">
 																		Students
 																	</label>
-																</div>
+																</div> -->
 																<!-- <label class="control-label mb-5 text-left">Students</label> -->
-																<select multiple class="form-control" id="s-sel-stud" style="height: 200px" disabled>
-																	<?php
-																		$selCourse = "select * from courses";
-																		$rsCourse = mysqli_query($mysqli, $selCourse);
-																		while($course = mysqli_fetch_assoc($rsCourse)):
-																	?>
-																		<optgroup label="<?php echo $course['description'] ?>">
-																			<?php
-																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'];
-																				$rsYS = mysqli_query($mysqli, $selYS);
-
-																				while($ys = mysqli_fetch_assoc($rsYS)):
-																			?>
-																				<option value="<?php echo $ys['id'] ?>"><?php echo $ys['section'] ?></option>
-																			<?php endwhile; ?>		
-																		</optgroup>
-																	<?php endwhile; ?>
-																	
+																<label for="s-sel-year" class="control-label mb-5 text-left">Year Levels</label>
+																<select multiple class="form-control" id="s-sel-year" style="height: 200px">
 																</select>
 															</div>
 														</div>
@@ -871,24 +841,30 @@
 			isCheckProf();
 			isCheckStud();
 
+			$("#a-sel-course").val(1);
+			fetchYear(1);
+			$("#a-sel-course").on('change', function(){
+				fetchYear($(this).val());
+			});
+
 			$("#a-send").on("click", function(){
 				var err = 0;
-				if (!$("#a-check-prof").is(':checked') && !$("#a-check-stud").is(':checked')) {
-					//alert("Please select a recipient.");
-					err += 1;
-				}
+				// if (!$("#a-check-prof").is(':checked') && !$("#a-check-stud").is(':checked')) {
+				// 	//alert("Please select a recipient.");
+				// 	err += 1;
+				// }
 
-				if ($("#a-check-prof").is(':checked')) {
-					if ($("#a-sel-prof").val() == null) {
-						err += 1;
-					}
-				}
+				// if ($("#a-check-prof").is(':checked')) {
+				// 	if ($("#a-sel-prof").val() == null) {
+				// 		err += 1;
+				// 	}
+				// }
 
-				if ($("#a-check-stud").is(':checked')) {
-					if ($("#a-sel-stud").val() == null) {
-						err += 1;
-					}
-				}
+				// if ($("#a-check-stud").is(':checked')) {
+				// 	if ($("#a-sel-stud").val() == null) {
+				// 		err += 1;
+				// 	}
+				// }
 
 				if (err > 0) {
 					alert("Please select a recipient.");
@@ -899,11 +875,17 @@
 				}
 			});
 
+			fetchSections(1);
+			$("#g-sel-course").val(1);
+			$("#g-sel-course").on('change', function(){
+				fetchSections($(this).val());
+			});
+
 			$("#g-send").on("click", function(){
 				var err = 0;
-				if ($("#g-sel-stud").val() == null) {
-					err += 1;
-				}
+				// if ($("#g-sel-stud").val() == null) {
+				// 	err += 1;
+				// }
 
 				if (err > 0) {
 					alert("Please select a recipient.");
@@ -922,18 +904,24 @@
 				}
 			});
 
+
+			$("#s-sel-course").val(1);
+			fetchYearS(1);
+			$("#s-sel-course").on('change', function(){
+				fetchYearS($(this).val());
+			});
 			$("#s-send").on("click", function(){
 				var err = 0;
-				if (!$("#s-check-prof").is(':checked') && !$("#s-check-stud").is(':checked')) {
-					//alert("Please select a recipient.");
-					err += 1;
-				}
+				// if (!$("#s-check-prof").is(':checked') && !$("#s-check-stud").is(':checked')) {
+				// 	//alert("Please select a recipient.");
+				// 	err += 1;
+				// }
 
-				if ($("#s-check-prof").is(':checked')) {
-					if ($("#s-sel-prof").val() == null) {
-						err += 1;
-					}
-				}
+				// if ($("#s-check-prof").is(':checked')) {
+				// 	if ($("#s-sel-prof").val() == null) {
+				// 		err += 1;
+				// 	}
+				// }
 
 				if ($("#s-check-stud").is(':checked')) {
 					if ($("#s-sel-stud").val() == null) {
@@ -989,7 +977,61 @@
 				return 1;
 			}
 		}
+
+		function fetchYear(courseId){
+			$.ajax({
+				url: '_fetch.php',
+				type: 'post',
+				data: { action: 'fetch-year-level', courseId: courseId },
+				success: function(response) {
+					var result = $.parseJSON(response);
+
+					if (result['status'] == 'success') {
+						$("#a-sel-year").removeAttr('disabled', '');
+					} else {
+						$("#a-sel-year").attr('disabled','');
+					}
+					$("#a-sel-year").html(result['output']);
+				}
+			});
+		}
+		function fetchYearS(courseId){
+			$.ajax({
+				url: '_fetch.php',
+				type: 'post',
+				data: { action: 'fetch-year-level', courseId: courseId },
+				success: function(response) {
+					var result = $.parseJSON(response);
+
+					if (result['status'] == 'success') {
+						$("#s-sel-year").removeAttr('disabled', '');
+					} else {
+						$("#s-sel-year").attr('disabled','');
+					}
+					$("#s-sel-year").html(result['output']);
+				}
+			});
+		}
+
+		function fetchSections(courseId){
+			$.ajax({
+				url: '_fetch.php',
+				type: 'post',
+				data: { action: 'fetch-sections', courseId: courseId, profId: <?php echo $_SESSION['authId'] ?> },
+				success: function(response) {
+					var result = $.parseJSON(response);
+
+					if (result['status'] == 'success') {
+						$("#g-sel-section").removeAttr('disabled', '');
+					} else {
+						$("#g-sel-section").attr('disabled','');
+					}
+					$("#g-sel-section").html(result['output']);
+				}
+			});
+		}
 	</script>
+
 </body>
 
 </html>

@@ -3,8 +3,8 @@
 	include "include/configurations.php";
 	include "include/general_functions.php";
 
-	$userLogout = "update users set last_access = NOW() where id = " . $_SESSION['authId'];
-	$rsLogout = mysqli_query($mysqli, $userLogout);
+	$insertLogout = "insert into logout_logs(user_id,ip_address,remarks) values(" . $_SESSION['authId'] . ", '" . getClientIp() . "', '')";
+	$rsLogout = mysqli_query($mysqli, $insertLogout);
 
 	if ($rsLogout !== false) {
 		session_destroy();

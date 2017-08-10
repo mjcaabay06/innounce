@@ -17,9 +17,10 @@
 			}
 		}
 
-		saveEmergency($message);
+		#saveEmergency($message);
 
 		if(empty($errorSending)){
+			insertMessage($_SESSION['authId'],$message,3);
 			$data['message'] = "Emergency message was sent to all recipients.";
 			$data['status'] = true;
 		}else{

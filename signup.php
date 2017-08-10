@@ -372,7 +372,7 @@
 					checkPassword();
 				});
 				$("#tb-confirm-password").focusout(function(){
-					checkPassword();
+					confirmPassword();
 				});
 				$("#tb-captcha").focusout(function(){
 					if ($('input[name="tb-hidden-captcha"]').val().toLowerCase() != $('input[name="tb-captcha"]').val().toLowerCase()){

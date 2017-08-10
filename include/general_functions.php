@@ -8,7 +8,7 @@
 		$row = mysqli_fetch_assoc($rsLogin);
 
 		if (!empty($row)) {
-			$insertLogs = "insert into login_logs(user_id,remarks,status_id) values(" . $row['id'] . ",'Successful', 1)";
+			$insertLogs = "insert into login_logs(user_id,ip_address,remarks,status_id) values(" . $row['id'] . ",'" . getClientIp() . "','Successful', 1)";
 			$rsLogs = mysqli_query($mysqli, $insertLogs);
 			if ($rsLogs !== false) {
 				if ($row['disable_login_failure'] == 0) {
@@ -188,14 +188,32 @@
 
 	//echo phpMailer();
 
-	function getStudentReceivers($section) {
+	function getStudentReceivers($year, $course) {
 		global $mysqli;
 
-		$selStud = "select students.first_name, students.last_name, students.mobile_number, year_sections.section from students inner join year_sections on students.year_section_id = year_sections.id where students.year_section_id = " . $section;
+		$selStud = "select students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on enrollees.school_section_id = school_sections.id) on enrollees.student_id = students.id where enrollees.school_course_id = " . $course . " and school_sections.school_level_id = " . $year;
 		$rsStud = mysqli_query($mysqli, $selStud);
 
 		$data = array();
 		while($studNumber = mysqli_fetch_assoc($rsStud)) {
+			$studData = array(
+					'name' => '[' . $studNumber['last_name'] . ',' . $studNumber['first_name'] . '(' . $studNumber['section'] . ')]',
+					'mobile_number' => $studNumber['mobile_number']
+					);
+			array_push($data, $studData);
+		}
+
+		return $data;
+	}
+
+	function getStudentViaSection($section) {
+		global $mysqli;
+
+		$selSection = "select students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id where school_sections.id = " . $section;
+		$rsSection = mysqli_query($mysqli, $selSection);
+
+		$data = array();
+		while($studNumber = mysqli_fetch_assoc($rsSection)) {
 			$studData = array(
 					'name' => '[' . $studNumber['last_name'] . ',' . $studNumber['first_name'] . '(' . $studNumber['section'] . ')]',
 					'mobile_number' => $studNumber['mobile_number']
@@ -251,6 +269,17 @@
 		}
 
 		return $data;
+	}
+
+	function insertMessage($userId, $message, $typeId) {
+		global $mysqli;
+
+		$insertMessage = "insert into sent_messages(user_id,message,message_type_id) values(".$userId.",'".$message."',".$typeId.")";
+		$rsInsertMessage = mysqli_query($mysqli, $insertMessage);
+
+		if ($rsInsertMessage !== false) {
+
+		}
 	}
 
 	#sendViaBulksms('639176710089', 'This is just a test message.');

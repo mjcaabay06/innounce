@@ -7,15 +7,19 @@ function preloaderLoad() {
 
 /* ----- Send Announcement ----- */
 function sendAnnouncement(url) {
-	prof = !$("#a-check-prof").is(':checked') ? null :$("#a-sel-prof").val();
-	students = !$("#a-check-stud").is(':checked') ? null : $("#a-sel-stud").val();
+	course = $("#a-sel-course").val();
+	year = $("#a-sel-year").val();
+
+
+	// prof = !$("#a-check-prof").is(':checked') ? null :$("#a-sel-prof").val();
+	// students = !$("#a-check-stud").is(':checked') ? null : $("#a-sel-stud").val();
 	message = $("#a-message").val();
 
 	$(".preloader").show();
 	$.ajax({
 		url: url,
 		type: "post",
-		data: { prof: prof, students: students, message: message },
+		data: { course: course, year: year, message: message },
 		success: function(response){
 			console.log(response);
 			var result = $.parseJSON(response);
@@ -83,14 +87,14 @@ function isCheckStud() {
 
 /* ----- Send Grouping ----- */
 function sendGrouping(url) {
-	students = $("#g-sel-stud").val();
+	sections = $("#g-sel-section").val();
 	message = $("#g-message").val();
 
 	$(".preloader").show();
 	$.ajax({
 		url: url,
 		type: 'post',
-		data: { students: students, message: message},
+		data: { sections: sections, message: message},
 		success: function(response) {
 			console.log(response);
 			var result = $.parseJSON(response);
@@ -139,15 +143,15 @@ function sendEmergency(url) {
 
 /* ----- Send Survey ----- */
 function sendSurvey(url) {
-	prof = !$("#s-check-prof").is(':checked') ? null :$("#s-sel-prof").val();
-	students = !$("#s-check-stud").is(':checked') ? null : $("#s-sel-stud").val();
+	course = $("#s-sel-course").val();
+	year = $("#s-sel-year").val();
 	message = $("#s-message").val();
 
 	$(".preloader").show();
 	$.ajax({
 		url: url,
 		type: "post",
-		data: { prof: prof, students: students, message: message },
+		data: { course: course, year: year, message: message },
 		success: function(response){
 			console.log(response);
 			var result = $.parseJSON(response);

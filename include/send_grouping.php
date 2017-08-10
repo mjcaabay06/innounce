@@ -5,13 +5,13 @@
 
 	if ($_POST) {
 		$message = $_POST['message'];
-		$students = $_POST['students'];
+		$sections = $_POST['sections'];
 		$errorSending = array();
 		$data = array();
 		$num = '';
 
-		foreach($students as $student) {
-			foreach (getStudentReceivers($student) as $studNumber) {
+		foreach($sections as $section) {
+			foreach (getStudentViaSection($section) as $studNumber) {
 				$response = sendViaSemaphore($studNumber['mobile_number'], $message);
 
 				if(empty($response) || !isset($response[0]->status)){
@@ -21,6 +21,7 @@
 		}
 
 		if(empty($errorSending)){
+			insertMessage($_SESSION['authId'],$message,4);
 			$data['message'] = "Announcement was sent to all recipients.";
 			$data['status'] = true;
 		}else{
