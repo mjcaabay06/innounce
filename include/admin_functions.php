@@ -42,7 +42,7 @@
 				break;
 			case 'fetch-course':
 				$data = array();
-				$selCourse = 'select * from courses';
+				$selCourse = 'select * from school_courses';
 				$rsCourse = mysqli_query($mysqli, $selCourse);
 				if ($rsCourse !== false){
 					while ($course = mysqli_fetch_assoc($rsCourse)){
@@ -53,7 +53,7 @@
 				break;
 			case 'fetch-section':
 				$data = array();
-				$selSection = 'select * from year_sections where course_id = ' . $_POST['courseId'];
+				$selSection = 'select * from school_fix_sections where school_course_id = ' . $_POST['courseId'];
 				$rsSection = mysqli_query($mysqli, $selSection);
 				if ($rsSection !== false){
 					while ($section = mysqli_fetch_assoc($rsSection)){

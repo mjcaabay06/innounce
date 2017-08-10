@@ -16,14 +16,27 @@
 				last_name = '".$data['last_name']."',
 				email_address = '".$data['email_address']."',
 				mobile_number = '".$data['mobile_number']."',
-				year_section_id = ".$data['section'].",
 				updated_at = NOW()
 			where
 				id = ".$id."
 		";
 		$rsUpStud = mysqli_query($mysqli, $upStud);
 		if ($rsUpStud !== false) {
-			$out['status'] = 'success';
+			$upEnrollees = "
+				update enrollees
+				set
+					school_course_id = ".$data['course'].",
+					school_section_id = ".$data['section']."
+				where
+					student_id = ".$id." and school_year_id = 1
+			";
+			$rsEnrollees = mysqli_query($mysqli, $upEnrollees);
+			if ($rsEnrollees !== false) {
+				$out['status'] = 'success';
+			} else {
+				$out['status'] = 'error';
+				$out['message'] = mysqli_error($mysqli);
+			}	
 		} else {
 			$out['status'] = 'error';
 			$out['message'] = mysqli_error($mysqli);
