@@ -11,12 +11,13 @@
 	$startdate = date('Y-m-d',strtotime($_GET['startdate']));
 	$enddate = date('Y-m-d',strtotime($_GET['enddate']));
 	
-	$selCountLogin = "select * from login_logs where date_format(login_logs.created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by login_logs.created_at";
+	$table = $_GET['type'] == 'login' ? 'login_logs' : 'logout_logs';
+	$selCountLogin = "select * from " . $table . " as l where date_format(l.created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by l.created_at";
 	$rsCountLogin = mysqli_query($mysqli, $selCountLogin);
 	$numCountLogin = mysqli_num_rows($rsCountLogin);
 	$rowPerPage = 10;
 	$pageCount = intval($numCountLogin) == 0 ? 1 : ceil(intval($numCountLogin) / intval($rowPerPage));
-
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,7 +111,7 @@
 							<tbody style="color: #333">
 								<?php
 									$limit = ($x - 1) * $rowPerPage;
-									$selLogin = "select user_infos.*,user_types.type, login_logs.*, date_format(login_logs.created_at, '%b %e, %Y [ %H:%i:%s ]') as login_date from login_logs left join (users inner join user_infos on user_infos.user_id = users.id inner join user_types on user_types.id = users.user_type_id) on users.id = login_logs.user_id where date_format(login_logs.created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by login_logs.created_at limit " . $limit . "," . $rowPerPage;
+									$selLogin = "select user_infos.*,user_types.type, l.*, date_format(l.created_at, '%b %e, %Y [ %H:%i:%s ]') as login_date from " . $table . " as l left join (users inner join user_infos on user_infos.user_id = users.id inner join user_types on user_types.id = users.user_type_id) on users.id = l.user_id where date_format(l.created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by l.created_at limit " . $limit . "," . $rowPerPage;
 									$rsLogin = mysqli_query($mysqli, $selLogin);
 
 									while($user = mysqli_fetch_assoc($rsLogin)):
