@@ -41,6 +41,8 @@
 
 <!-- Init JavaScript -->
 <script src="dist/js/init.js"></script>
+
+<script src="dist/js/bootstrap-datepicker.min.js"></script>
 <script src="dist/js/custom.js"></script>
 
 <script type="text/javascript">
@@ -108,6 +110,26 @@
 			});
 		});
 
+		$(".a-reports").on("click", function(){
+			var type = $(this).data('value');
+
+			if (type == 'login') {
+				$("#report-title").html('Generate Login Report');
+			} else {
+				$("#report-title").html('Generate Logout Report');
+			}
+			$("input[name=type]").val(type);
+			$("#report-from").val('');
+			$("#report-to").val('');
+			$("#reportsModal").modal('show');
+		});
+
+		$("#btn-generate").on('click', function(){
+			$("#reportsModal").modal('hide');
+		});
+
+		$("#report-from").datepicker();
+		$("#report-to").datepicker();
 	});
 	function checkPassword() {
 		var pwd = $("#tb-password").val();

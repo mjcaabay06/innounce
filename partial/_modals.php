@@ -50,3 +50,34 @@
 		</div>
 	</div>
 </div>
+
+
+<div id="reportsModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="report-title" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<form action="reports.php" target="_blank" method="get">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h5 class="modal-title" id="report-title"></h5>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="type" value="">
+					<div class="form-group">
+						<div class="col-sm-12 col-md-6">
+							<label class="control-label mb-10 text-left">From:</label>
+							<input class="form-control" id="report-from" name="startdate" type="text" data-mask="99/99/9999" value=""/>
+						</div>
+						<div class="col-sm-12 col-md-6">
+							<label class="control-label mb-10 text-left">To:</label>
+							<input class="form-control" id="report-to" name="enddate" type="text" data-mask="99/99/9999" value=""/>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-info" id="btn-generate" data-value="">Generate</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

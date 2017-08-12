@@ -3,18 +3,18 @@
 	include "include/configurations.php";
 	include "include/general_functions.php";
 
-	// if(!isset($_SESSION['authId']) || empty($_SESSION['authId'])){
-	// 	header("Location: login.php");
-	// 	exit;
-	// }
+	if(!isset($_SESSION['authId']) || empty($_SESSION['authId'])){
+		header("Location: login.php");
+		exit;
+	}
 
-	$startdate = $_GET['startdate'];
-	$enddate = $_GET['enddate'];
+	$startdate = date('Y-m-d',strtotime($_GET['startdate']));
+	$enddate = date('Y-m-d',strtotime($_GET['enddate']));
 	
 	$selCountLogin = "select * from login_logs where date_format(login_logs.created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by login_logs.created_at";
 	$rsCountLogin = mysqli_query($mysqli, $selCountLogin);
 	$numCountLogin = mysqli_num_rows($rsCountLogin);
-	$rowPerPage = 3;
+	$rowPerPage = 10;
 	$pageCount = intval($numCountLogin) == 0 ? 1 : ceil(intval($numCountLogin) / intval($rowPerPage));
 
 ?>
@@ -92,7 +92,10 @@
 			<?php for($x = 1; $x <= $pageCount; $x++): ?>
 
 				<div class="per-page">
-					<div>asd</div>
+					<div class="text-center">
+						<h1 class="mb-10"><?php echo $_GET['type'] == 'login' ? 'Login Report' : 'Logout Report' ?></h1>
+						<div class="mb-20"><?php echo date('M j, Y',strtotime($_GET['startdate'])) . '  -  ' . date('M j, Y',strtotime($_GET['enddate'])) ?></div>
+					</div>
 					<div class="col-sm-12">
 						<table class="table">
 							<thead>
@@ -104,7 +107,7 @@
 									<th>Login Date</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody style="color: #333">
 								<?php
 									$limit = ($x - 1) * $rowPerPage;
 									$selLogin = "select user_infos.*,user_types.type, login_logs.*, date_format(login_logs.created_at, '%b %e, %Y [ %H:%i:%s ]') as login_date from login_logs left join (users inner join user_infos on user_infos.user_id = users.id inner join user_types on user_types.id = users.user_type_id) on users.id = login_logs.user_id where date_format(login_logs.created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by login_logs.created_at limit " . $limit . "," . $rowPerPage;
