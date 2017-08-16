@@ -62,6 +62,17 @@
 				}
 				echo json_encode($data);
 				break;
+			case 'fetch-school-level':
+				$data = array();
+				$selLevels = 'select * from school_levels';
+				$rsLevels = mysqli_query($mysqli, $selLevels);
+				if ($rsLevels !== false){
+					while ($level = mysqli_fetch_assoc($rsLevels)){
+						array_push($data,$level);
+					}
+				}
+				echo json_encode($data);
+				break;
 			default:
 				break;
 		}
