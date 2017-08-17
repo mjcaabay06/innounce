@@ -362,6 +362,14 @@
 																<!-- <label class="control-label mb-5 text-left">Students</label> -->
 																<label for="s-sel-year" class="control-label mb-5 text-left">Year Levels</label>
 																<select multiple class="form-control" id="s-sel-year" style="height: 200px">
+																<?php
+																	$selLevel= "select * from school_levels";
+																	$rsLevel = mysqli_query($mysqli, $selLevel);
+
+																	while($level = mysqli_fetch_assoc($rsLevel)):
+																?>
+																	<option value="<?php echo $level['id'] ?>"><?php echo $level['description'] ?></option>
+																<?php endwhile; ?>
 																</select>
 															</div>
 														</div>
@@ -630,11 +638,11 @@
 			});
 
 
-			$("#s-sel-course").val(1);
-			fetchYearS(1);
-			$("#s-sel-course").on('change', function(){
-				fetchYearS($(this).val());
-			});
+			// $("#s-sel-course").val(1);
+			// fetchYearS(1);
+			// $("#s-sel-course").on('change', function(){
+			// 	fetchYearS($(this).val());
+			// });
 			$("#s-send").on("click", function(){
 				var err = 0;
 				// if (!$("#s-check-prof").is(':checked') && !$("#s-check-stud").is(':checked')) {
