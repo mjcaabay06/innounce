@@ -253,15 +253,14 @@
 																<label for="a-sel-year" class="control-label mb-5 text-left">Year Levels</label>
 																<!-- <label class="control-label mb-5 text-left">Students</label> -->
 																<select multiple class="form-control" id="a-sel-year" style="height: 200px">
-																	<!-- <?php
-																		$selYearLevel = "select school_levels.* from school_levels inner join (school_sections inner join enrollees on enrollees.school_section_id = school_sections.id ) on school_sections.school_level_id = school_levels.id  group by school_levels.id order by school_levels.id";
-																		$rsYearLevel = mysqli_query($mysqli, $selYearLevel);
+																	<?php
+																		$selLevel= "select * from school_levels";
+																		$rsLevel = mysqli_query($mysqli, $selLevel);
 
-																		while($yearLevel = mysqli_fetch_assoc($rsYearLevel)):
+																		while($level = mysqli_fetch_assoc($rsLevel)):
 																	?>
-																		<option value="<?php echo $yearLevel['id'] ?>"><?php echo $yearLevel['description'] ?></option>
-																	<?php endwhile; ?> -->
-																	
+																		<option value="<?php echo $level['id'] ?>"><?php echo $level['description'] ?></option>
+																	<?php endwhile; ?>
 																</select>
 															</div>
 														</div>
@@ -567,11 +566,11 @@
 			isCheckProf();
 			isCheckStud();
 
-			$("#a-sel-course").val(1);
-			fetchYear(1);
-			$("#a-sel-course").on('change', function(){
-				fetchYear($(this).val());
-			});
+			// $("#a-sel-course").val(1);
+			// fetchYear(1);
+			// $("#a-sel-course").on('change', function(){
+			// 	fetchYear($(this).val());
+			// });
 
 			$("#a-send").on("click", function(){
 				var err = 0;

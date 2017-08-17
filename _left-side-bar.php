@@ -55,7 +55,7 @@
 			</a>
 			<a <?php echo in_array($page, $schoolSection) ? 'class="active"' : '' ?> href="school-section.php">
 				<div class="pull-left">
-					<i class="zmdi zmdi-calendar mr-20"></i>
+					<i class="fa fa-bookmark mr-20"></i>
 					<span class="right-nav-text">School Sections</span>
 				</div>
 				<div class="clearfix"></div>
@@ -69,14 +69,14 @@
 			</a>
 			<a <?php echo in_array($page, $subject) ? 'class="active"' : '' ?> href="subject.php">
 				<div class="pull-left">
-					<i class="zmdi zmdi-calendar mr-20"></i>
+					<i class="zmdi zmdi-book mr-20"></i>
 					<span class="right-nav-text">Subjects</span>
 				</div>
 				<div class="clearfix"></div>
 			</a>
 			<a <?php echo in_array($page, $course) ? 'class="active"' : '' ?> href="course.php">
 				<div class="pull-left">
-					<i class="zmdi zmdi-calendar mr-20"></i>
+					<i class="fa fa-folder-o mr-20"></i>
 					<span class="right-nav-text">Courses</span>
 				</div>
 				<div class="clearfix"></div>
