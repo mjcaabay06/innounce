@@ -69,6 +69,47 @@
 					$out['message'] = mysqli_error($mysqli);
 				}
 				break;
+			case 'add-enrollee':
+				$insEnrollee = "
+					insert into
+					enrollees(
+						student_id,
+						school_year_id,
+						school_course_id,
+						school_section_id
+					)
+					values(
+						" . $data['studentId'] . ",
+						1,
+						" . $data['courseId'] . ",
+						" . $data['sectionId'] . "
+					)
+				";
+				$rsInsEnrolle = mysqli_query($mysqli, $insEnrollee);
+				if ($rsInsEnrolle !== false) {
+					$enrolleeId = mysqli_insert_id($mysqli);
+
+					if (!empty($data['subjects'])) {
+						$subArr = array();
+						foreach ($data['subjects'] as $subject) {
+							$aa = "(" . $enrolleeId . "," . $subject . ")";
+							array_push($subArr, $aa);
+						}
+
+						$insSubject = "insert into enrolled_subjects(enrollee_id, subject_id) values" . implode(',', $subArr);
+						$rsInsSubject = mysqli_query($mysqli, $insSubject);
+						if ($rsInsSubject !== false) {
+							$out['status'] = 'success';
+						} else {
+							$out['status'] = 'failed';
+							$out['message'] = mysqli_error($mysqli);
+						}
+					}
+				} else {
+					$out['status'] = 'failed';
+					$out['message'] = mysqli_error($mysqli);
+				}
+				break;
 			default:
 				# code...
 				break;

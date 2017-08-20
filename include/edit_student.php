@@ -22,21 +22,22 @@
 		";
 		$rsUpStud = mysqli_query($mysqli, $upStud);
 		if ($rsUpStud !== false) {
-			$upEnrollees = "
-				update enrollees
-				set
-					school_course_id = ".$data['course'].",
-					school_section_id = ".$data['section']."
-				where
-					student_id = ".$id." and school_year_id = 1
-			";
-			$rsEnrollees = mysqli_query($mysqli, $upEnrollees);
-			if ($rsEnrollees !== false) {
-				$out['status'] = 'success';
-			} else {
-				$out['status'] = 'error';
-				$out['message'] = mysqli_error($mysqli);
-			}	
+			// $upEnrollees = "
+			// 	update enrollees
+			// 	set
+			// 		school_course_id = ".$data['course'].",
+			// 		school_section_id = ".$data['section']."
+			// 	where
+			// 		student_id = ".$id." and school_year_id = 1
+			// ";
+			// $rsEnrollees = mysqli_query($mysqli, $upEnrollees);
+			// if ($rsEnrollees !== false) {
+			// 	$out['status'] = 'success';
+			// } else {
+			// 	$out['status'] = 'error';
+			// 	$out['message'] = mysqli_error($mysqli);
+			// }
+			$out['status'] = 'success';
 		} else {
 			$out['status'] = 'error';
 			$out['message'] = mysqli_error($mysqli);

@@ -14,14 +14,16 @@
 				middle_name,
 				last_name,
 				email_address,
-				mobile_number
+				mobile_number,
+				course_id
 			)
 			values(
 				'".$params['first_name']."',
 				'".$params['middle_name']."',
 				'".$params['last_name']."',
 				'".$params['email_address']."',
-				'".$params['mobile_number']."'
+				'".$params['mobile_number']."',
+				".$params['course']."
 			)
 		";
 		$rsInStud = mysqli_query($mysqli,$inStud);
@@ -29,23 +31,10 @@
 		if ($rsInStud !== false) {
 			$studentId = mysqli_insert_id($mysqli);
 			
-			$insertEnrolee = "
-				insert into
-				enrollees(
-					student_id,
-					school_year_id,
-					school_course_id,
-					school_section_id
-				)
-				values(
-					".$studentId.",
-					1,
-					".$params['course'].",
-					".$params['section']."
-				)
-			";
-			$rsEnrollee = mysqli_query($mysqli, $insertEnrolee);
-			if ($rsEnrollee !== false) {
+			$studentCode = $params['acronym'] . '-' . str_pad($studentId, 5, '0', STR_PAD_LEFT);
+			$upStudent = "update students set student_code = '" . $studentCode . "' where id = " . $studentId;
+			$rsUpStudent = mysqli_query($mysqli, $upStudent);
+			if ($rsUpStudent !== false) {
 				$data['status'] = 'success';
 			} else {
 				$data['status'] = 'error';

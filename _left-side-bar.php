@@ -9,6 +9,8 @@
 	$yearLevel = array('year-level.php', 'add-year-level.php');
 	$subject = array('subject.php', 'add-subject.php');
 	$course = array('course.php', 'add-course.php');
+
+	$enroll = array('enroll.php', 'add-enrollee.php', 'update-enrollee-subjects.php');
 ?>
 
 <div class="fixed-sidebar-left">
@@ -38,6 +40,13 @@
 						<a href="#" class="a-reports" data-value="logout">Logouts</a>
 					</li>
 				</ul>
+				<a <?php echo in_array($page, $enroll) ? 'class="active"' : '' ?> href="enroll.php">
+					<div class="pull-left">
+						<i class="fa fa-sitemap mr-20"></i>
+						<span class="right-nav-text">Enrolled</span>
+					</div>
+					<div class="clearfix"></div>
+				</a>
 			<?php endif; ?>
 		</li>
 		<li><hr class="light-grey-hr mb-10"></li>

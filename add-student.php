@@ -122,11 +122,11 @@
 															<select class="form-control" id="sel-course">
 															</select>
 														</div>
-														<div class="form-group">
+														<!-- <div class="form-group">
 															<label class="control-label mb-10" for="sel-section">Section</label>
 															<select class="form-control" id="sel-section">
 															</select>
-														</div>
+														</div> -->
 													</div>
 												</div>
 											</div>
@@ -183,7 +183,7 @@
 				data.email_address = $("#tb-email").val();
 				data.mobile_number = $("#tb-mobile").val();
 				data.course = $("#sel-course").val();
-				data.section = $("#sel-section").val();
+				data.acronym = $('#sel-course option:selected').data('acronym');
 
 				$(".preloader").show();
 				$.ajax({
@@ -210,9 +210,9 @@
 			});
 
 			fetchCourse();
-			$("#sel-course").on('change', function(){
-				fetchSection($(this).val());
-			});
+			// $("#sel-course").on('change', function(){
+			// 	fetchSection($(this).val());
+			// });
 		});
 		function checkPassword() {
 			var pwd = $("#tb-password").val();
@@ -264,33 +264,33 @@
 					var html = '';
 
 					for(var prod in result){
-						html += '<option value="' + result[prod].id + '">' + result[prod].description + '</option>';
+						html += '<option value="' + result[prod].id + '" data-acronym="' + result[prod].acronym + '">' + result[prod].description + '</option>';
 					}
 					$('#sel-course').html(html);
-					fetchSection($('#sel-course option:first').val());
+					//fetchSection($('#sel-course option:first').val());
 				}
 			});
 		}
 
-		function fetchSection(courseId) {
-			var cid = courseId;
+		// function fetchSection(courseId) {
+		// 	var cid = courseId;
 
-			$.ajax({
-				url: 'include/admin_functions.php',
-				type: 'post',
-				data: { action: 'fetch-section', courseId: cid },
-				success: function(response){
-					var result = $.parseJSON(response);
-					var html = '';
+		// 	$.ajax({
+		// 		url: 'include/admin_functions.php',
+		// 		type: 'post',
+		// 		data: { action: 'fetch-section', courseId: cid },
+		// 		success: function(response){
+		// 			var result = $.parseJSON(response);
+		// 			var html = '';
 
-					for(var prod in result){
-						html += '<option value="' + result[prod].id + '">' + result[prod].section + '</option>';
-					}
-					$('#sel-section').html(html);
-					$('#sel-section').val($('#sel-section option:first').val());
-				}
-			});
-		}
+		// 			for(var prod in result){
+		// 				html += '<option value="' + result[prod].id + '">' + result[prod].section + '</option>';
+		// 			}
+		// 			$('#sel-section').html(html);
+		// 			$('#sel-section').val($('#sel-section option:first').val());
+		// 		}
+		// 	});
+		// }
 	</script>
 	<?php include('_common-js.php'); ?>
 </body>

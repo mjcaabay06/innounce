@@ -4,7 +4,7 @@
 	include("general_functions.php");
 
 	if ($_POST) {
-		$id = $_POST['id'];
+		$id = empty($_POST['id']) ? 0 : $_POST['id'];
 		$data = $_POST['params'];
 		$out = array();
 
@@ -66,6 +66,39 @@
 					$out['status'] = 'success';
 				} else {
 					$out['status'] = 'error';
+					$out['message'] = mysqli_error($mysqli);
+				}
+				break;
+			case 'enrollee-subject':
+				$delSubjects = "delete from enrolled_subjects where enrollee_id = " . $data['enrolleeId'];
+				$rsDelSubjects = mysqli_query($mysqli, $delSubjects);
+				if ($rsDelSubjects !== false) {
+					$subArr = array();
+					foreach ($data['subjects'] as $subject) {
+						$aa = "(" . $data['enrolleeId'] . "," . $subject . ")";
+						array_push($subArr, $aa);
+					}
+
+					$insSubject = "insert into enrolled_subjects(enrollee_id, subject_id) values" . implode(',', $subArr);
+					$rsInsSubject = mysqli_query($mysqli, $insSubject);
+					if ($rsInsSubject !== false) {
+						$out['status'] = 'success';
+					} else {
+						$out['status'] = 'failed';
+						$out['message'] = mysqli_error($mysqli);
+					}
+				} else {
+					$out['status'] = 'failed';
+					$out['message'] = mysqli_error($mysqli);
+				}
+				break;
+			case 'enrollee-section':
+				$upSection = "update enrollees set school_section_id = " . $data['section'] . " where id = " . $data['id'];
+				$rsSection = mysqli_query($mysqli, $upSection);
+				if ($rsSection !== false) {
+					$out['status'] = 'success';
+				} else {
+					$out['status'] = 'failed';
 					$out['message'] = mysqli_error($mysqli);
 				}
 				break;

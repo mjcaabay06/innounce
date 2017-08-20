@@ -53,7 +53,7 @@
 				break;
 			case 'fetch-section':
 				$data = array();
-				$selSection = 'select * from school_fix_sections where school_course_id = ' . $_POST['courseId'];
+				$selSection = 'select * from school_fix_sections where school_course_id = ' . $_POST['courseId'] . ' order by section';
 				$rsSection = mysqli_query($mysqli, $selSection);
 				if ($rsSection !== false){
 					while ($section = mysqli_fetch_assoc($rsSection)){

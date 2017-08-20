@@ -77,20 +77,18 @@
 														<th>Email</th>
 														<th>Mobile</th>
 														<th>Course</th>
-														<th>Year and Section</th>
 														<th></th>
 													</tr>
 												</thead>
 												<tbody>
 													<?php
-														$selStudent = "select students.id as student_id, students.*, school_sections.*, school_courses.*, enrollees.* from students inner join (enrollees inner join school_courses on school_courses.id = enrollees.school_course_id inner join school_sections on school_sections.id = enrollees.school_section_id ) on enrollees.student_id = students.id";
+														$selStudent = "select students.id as student_id, students.*, school_courses.*, school_courses.id as school_course_id from students inner join school_courses on school_courses.id = students.course_id";
 														$rsStudent = mysqli_query($mysqli, $selStudent);
 
 														while($student = mysqli_fetch_assoc($rsStudent)):
 													?>
 													<tr id="row-student<?php echo $student['student_id'] ?>" class="txt-dark">
 														<input type="hidden" id="course-id-<?php echo $student['student_id'] ?>" value="<?php echo $student['school_course_id'] ?>">
-														<input type="hidden" id="section-id-<?php echo $student['student_id'] ?>" value="<?php echo $student['school_section_id'] ?>">
 														<td id=""><?php echo $student['student_id'] ?></td>
 														<td id="fname-<?php echo $student['student_id'] ?>"><?php echo $student['first_name'] ?></td>
 														<td id="mname-<?php echo $student['student_id'] ?>"><?php echo $student['middle_name'] ?></td>
@@ -98,7 +96,6 @@
 														<td id="email-<?php echo $student['student_id'] ?>"><?php echo $student['email_address'] ?></td>
 														<td id="mobile-<?php echo $student['student_id'] ?>"><?php echo $student['mobile_number'] ?></td>
 														<td id="course-<?php echo $student['student_id'] ?>"><?php echo $student['description'] ?></td>
-														<td id="section-<?php echo $student['student_id'] ?>"><?php echo $student['section'] ?></td>
 														<td><button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $student['student_id'] ?>"><i class="fa fa-pencil"></i></button></td>
 													</tr>
 													<?php endwhile; ?>
@@ -177,11 +174,6 @@
 														<select class="form-control" id="sel-course">
 														</select>
 													</div>
-													<div class="form-group">
-														<label class="control-label mb-10" for="sel-section">Section</label>
-														<select class="form-control" id="sel-section">
-														</select>
-													</div>	
 												</form>
 											</div>
 										</div>
@@ -224,14 +216,14 @@
 				$("#btn-save-edit").attr("data-id", id);
 				console.log($("#course-id-" + id).val());
 				fetchCourse($("#course-id-" + id).val());
-				fetchSection($("#course-id-" + id).val(),$("#section-id-" + id).val());
+				//fetchSection($("#course-id-" + id).val(),$("#section-id-" + id).val());
 
 				$("#edit-student-modal").modal('show');
 			});
 
-			$("#sel-course").on('change', function(){
-				fetchSection($(this).val(),0);
-			});
+			// $("#sel-course").on('change', function(){
+			// 	fetchSection($(this).val(),0);
+			// });
 
 			$("#btn-save-edit").on("click", function(){
 				var id = $(this).data('id');
@@ -243,7 +235,7 @@
 				data.email_address = $("#tb-email").val();
 				data.mobile_number = $("#tb-mobile").val();
 				data.course = $("#sel-course").val();
-				data.section = $("#sel-section").val();
+				// data.section = $("#sel-section").val();
 
 				$(".preloader").show();
 				$.ajax({
@@ -263,10 +255,10 @@
 							$("#email-" + id).html($("#tb-email").val());
 							$("#mobile-" + id).html($("#tb-mobile").val());
 							$("#course-" + id).html($("#sel-course").find(":selected").text());
-							$("#section-" + id).html($("#sel-section").find(":selected").text());
+							//$("#section-" + id).html($("#sel-section").find(":selected").text());
 							
 							$("#course-id-" + id).val($("#sel-course").val());
-							$("#section-id-" + id).val($("#sel-section").val());
+							//$("#section-id-" + id).val($("#sel-section").val());
 
 							$("#edit-alert-message").html('<div class="alert alert-success">Student successfully updated.</div>');
 							setTimeout(function(){
