@@ -158,6 +158,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
+					<input type="hidden" value="" name="hidden-sid">
 					<button type="button" class="btn btn-success waves-effect" id="btn-save-edit" data-id="">Save</button>
 					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
 				</div>
@@ -185,13 +186,14 @@
 
 				$("#tb-code").val($("#code-" + id).html());
 				$("#tb-description").val($("#description-" + id).html());
+				$('input[name=hidden-sid]').val(id);
 				$("#btn-save-edit").attr("data-id", id);
 				$("#edit-modal").modal('show');
 				
 			});
 
 			$("#btn-save-edit").on("click", function(){
-				var id = $(this).data('id');
+				var id = $('input[name=hidden-sid]').val();
 
 				var data = new Object();
 				data.code = $("#tb-code").val();

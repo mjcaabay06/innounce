@@ -110,6 +110,42 @@
 					$out['message'] = mysqli_error($mysqli);
 				}
 				break;
+			case 'handle-course':
+				$selType = "select * from user_types where type = '" . trim($data['type']) . "'";
+				$rsType = mysqli_query($mysqli, $selType);
+				$cntType = mysqli_num_rows($rsType);
+
+				if ($cntType > 0) {
+					$out['status'] = 'failed';
+					$out['message'] = "User role already exist.";
+				} else {
+					$insType = "insert into user_types(type) values('" . trim($data['type']) . "')";
+					$rsInsType = mysqli_query($mysqli, $insType);
+
+					if ($rsInsType !== false) {
+						$typeId = mysqli_insert_id($mysqli);
+
+						if (!empty($data['courses'])) {
+							$subArr = array();
+							foreach ($data['courses'] as $course) {
+								$aa = "(" . $typeId . "," . $course . ")";
+								array_push($subArr, $aa);
+							}
+							$insHandleCourse = "insert into handle_courses(user_type_id,school_course_id) values " . implode(',', $subArr);
+							$rsHandleCourse = mysqli_query($mysqli, $insHandleCourse);
+							if ($rsHandleCourse !== false) {
+								$out['status'] = 'success';
+							} else {
+								$out['status'] = 'failed';
+								$out['message'] = mysqli_error($mysqli);
+							}
+						}
+					} else {
+						$out['status'] = 'failed';
+						$out['message'] = mysqli_error($mysqli);
+					}
+				}
+				break;
 			default:
 				# code...
 				break;

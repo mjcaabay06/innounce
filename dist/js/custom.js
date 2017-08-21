@@ -85,18 +85,17 @@ function isCheckStud() {
 
 /* ----- Send Grouping ----- */
 function sendGrouping(url) {
-	sections = $("#g-sel-section").val();
+	// sections = $("#g-sel-section").val();
+	students = $("#g-sel-students").val();
 	message = $("#g-message").val();
 
 	$(".preloader").show();
 	$.ajax({
 		url: url,
 		type: 'post',
-		data: { sections: sections, message: message},
+		data: { students: students, message: message},
 		success: function(response) {
-			console.log(response);
 			var result = $.parseJSON(response);
-			console.log(result["status"]);
 
 			$("#g-alert-message").html('');
 			if (result["status"]) {

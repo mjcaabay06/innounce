@@ -4,9 +4,9 @@
 	include("include/general_functions.php");
 
 	if ($_POST) {
+		$data = array();
 		switch (strtolower($_POST['action'])) {
 			case 'fetch-year-level':
-				$data = [];
 				$selYearLevel = "
 						select
 							school_levels.*
@@ -40,12 +40,9 @@
 				}
 				$data['output'] = $result;
 
-				echo json_encode($data);
-
 				break;
 			
 			case 'fetch-sections':
-				$data = [];
 				$course = $_POST['courseId'];
 				$prof = $_POST['profId'];
 
@@ -77,12 +74,83 @@
 
 				$data['output'] = $result;
 
-				echo json_encode($data);
 
+				break;
+			case 'fetch-students':
+				$params = $_POST['params'];
+				$selStudents = "select students.* from enrollees inner join students on students.id = enrollees.student_id where enrollees.school_section_id in (" . implode(',' , $params['sections']) . ") order by students.last_name";
+				$rsStudents = mysqli_query($mysqli, $selStudents);
+				if ($rsStudents !== false) {
+					$result = '';
+
+					while ($stud = mysqli_fetch_assoc($rsStudents)) {
+						$result .= '<option value="' . $stud['id'] . '">' . $stud['last_name'] . ', ' . $stud['first_name'] . '</option>';
+					}
+
+					$data['status'] = 'success';
+					$data['output'] = $result;
+				} else {
+					$data['status'] = 'failed';
+					$data['output'] = mysqli_error($mysqli);
+				}
+				break;
+			case 'handled-sections':
+				$selSection = "select school_sections.*, school_levels.description from professor_subjects inner join (enrolled_subjects inner join (enrollees inner join (school_sections inner join school_levels on school_levels.id = school_sections.school_level_id) on school_sections.id = enrollees.school_section_id) on enrollees.id = enrolled_subjects.enrollee_id) on enrolled_subjects.subject_id = professor_subjects.school_subject_id where professor_subjects.professor_id = " . $_POST['id'] . " group by enrollees.school_section_id";
+				$rsSection = mysqli_query($mysqli, $selSection);
+				if ($rsSection !== false) {
+					$result = '';
+
+					while ($section = mysqli_fetch_assoc($rsSection)) {
+						$result .= '<tr><td>' . $section['section'] . '</td><td>' . $section['description'] . '</td></tr>';
+					}
+					$data['status'] = 'success';
+					$data['output'] = $result;
+				} else {
+					$data['status'] = 'failed';
+					$data['output'] = mysqli_error($mysqli);
+				}
+				break;
+			case 'role-section':
+				$selHandleCourse = "select * from handle_courses where user_type_id = " . $_POST['id'];
+				$rsHandleCourse = mysqli_query($mysqli, $selHandleCourse);
+				
+				$hc_arr = array();
+				while ($hc = mysqli_fetch_assoc($rsHandleCourse)) {
+					array_push($hc_arr, $hc['school_course_id']);
+				}
+
+				$selCourse = "select * from school_courses";
+				$rsCourse = mysqli_query($mysqli, $selCourse);
+
+				$result = '';
+				while ($course = mysqli_fetch_assoc($rsCourse)) {
+					if (in_array($course['id'], $hc_arr)) {
+						$result .= '<option selected="selected" value="' . $course['id'] . '">' . $course['description'] . '</option>';
+					} else {
+						$result .= '<option value="' . $course['id'] . '">' . $course['description'] . '</option>';
+					}
+				}
+				$data['output'] = $result;
+				break;
+			case 'user-type':
+				$selType = "select * from user_types order by type";
+				$rsType = mysqli_query($mysqli, $selType);
+				if ($rsType !== false) {
+					$result = '';
+					while ($type = mysqli_fetch_assoc($rsType)) {
+						if ($_POST['id'] == $type['id']) {
+							$result .= '<option value="' . $type['id'] . '" selected="selected">' . $type['type'] . '</option>';
+						} else {
+							$result .= '<option value="' . $type['id'] . '">' . $type['type'] . '</option>';
+						}
+					}
+				}
+				$data['output'] = $result;
 				break;
 			default:
 				# code...
 				break;
 		}
+		echo json_encode($data);
 	}
 ?>

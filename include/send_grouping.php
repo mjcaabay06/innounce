@@ -5,13 +5,14 @@
 
 	if ($_POST) {
 		$message = $_POST['message'];
-		$sections = $_POST['sections'];
+		#$sections = $_POST['sections'];
+		$students = $_POST['students'];
 		$errorSending = array();
 		$data = array();
 		$num = '';
 
-		foreach($sections as $section) {
-			foreach (getStudentViaSection($section) as $studNumber) {
+		foreach($students as $student) {
+			foreach (getStudentViaSection($student) as $studNumber) {
 				$response = sendViaSemaphore($studNumber['mobile_number'], $message);
 
 				if(empty($response) || !isset($response[0]->status)){

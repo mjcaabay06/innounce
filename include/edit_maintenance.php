@@ -102,6 +102,30 @@
 					$out['message'] = mysqli_error($mysqli);
 				}
 				break;
+			case 'handle-course':
+				$delCourse = "delete from handle_courses where user_type_id = " . $data['id'];
+				$rsDelCourse = mysqli_query($mysqli, $delCourse);
+
+				if ($rsDelCourse !== false) {
+					$subArr = array();
+					foreach ($data['courses'] as $course) {
+						$aa = "(" . $data['id'] . "," . $course . ")";
+						array_push($subArr, $aa);
+					}
+					$insHandleCourse = "insert into handle_courses(user_type_id,school_course_id) values " . implode(',', $subArr);
+					$rsHandleCourse = mysqli_query($mysqli, $insHandleCourse);
+					if ($rsHandleCourse !== false) {
+						$out['status'] = 'success';
+					} else {
+						$out['status'] = 'failed';
+						$out['message'] = mysqli_error($mysqli);
+					}
+				} else {
+					$out['status'] = 'failed';
+					$out['message'] = mysqli_error($mysqli);
+				}
+
+				break;
 			default:
 				# code...
 				break;

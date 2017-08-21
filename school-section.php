@@ -169,6 +169,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
+					<input type="hidden" value="" name="hidden-ssid">
 					<button type="button" class="btn btn-success waves-effect" id="btn-save-edit" data-id="">Save</button>
 					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
 				</div>
@@ -197,13 +198,14 @@
 				$("#tb-section").val($("#section-" + id).html());
 				fetchSchooLevel($("#school-level-id-" + id).val());
 				fetchCourse($("#school-course-id-" + id).val());
+				$('input[name=hidden-ssid]').val(id);
 				$("#btn-save-edit").attr("data-id", id);
 				$("#edit-modal").modal('show');
 				
 			});
 
 			$("#btn-save-edit").on("click", function(){
-				var id = $(this).data('id');
+				var id = $('input[name=hidden-ssid]').val();
 
 				var data = new Object();
 				data.section = $("#tb-section").val();

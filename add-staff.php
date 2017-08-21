@@ -126,8 +126,13 @@
 														<div class="form-group">
 															<label class="control-label mb-10" for="sel-type">User Type</label>
 															<select class="form-control" id="sel-type">
-																<option value="1">Admin</option>
-																<option value="2">Professor</option>
+																<?php
+																	$selType = "select * from user_types order by type";
+																	$rsType = mysqli_query($mysqli, $selType);
+																	while ($type = mysqli_fetch_assoc($rsType)) :
+																?>
+																	<option value="<?php echo $type['id'] ?>"><?php echo $type['type'] ?></option>
+																<?php endwhile; ?>
 															</select>
 														</div>
 													</div>

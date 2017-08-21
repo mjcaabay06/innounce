@@ -58,9 +58,9 @@
 						<div class="panel panel-default card-view">
 							<div class="panel-heading">
 								<div class="pull-left">
-									<h6 class="panel-title txt-dark">School Years</h6>
+									<h6 class="panel-title txt-dark">User Roles</h6>
 								</div>
-								<a href="add-school-year.php" class="pull-right btn btn-primary btn-circle btn-sm" title="Add school year"><i class="fa fa-plus" style="color: #fff"></i></a>
+								<a href="add-user-role.php" class="pull-right btn btn-primary btn-circle btn-sm" title="Add user role"><i class="fa fa-plus" style="color: #fff"></i></a>
 								<div class="clearfix"></div>
 							</div>
 							<div class="panel-wrapper collapse in">
@@ -71,22 +71,20 @@
 												<thead>
 													<tr>
 														<th>#</th>
-														<th>From</th>
-														<th>To</th>
+														<th>Description</th>
 														<th></th>
 													</tr>
 												</thead>
 												<tbody>
 													<?php
-														$sel = "select * from school_years";
+														$sel = "select * from user_types";
 														$rs = mysqli_query($mysqli, $sel);
 
 														while($row = mysqli_fetch_assoc($rs)):
 													?>
 													<tr id="row-<?php echo $row['id'] ?>" class="txt-dark">
 														<td id=""><?php echo $row['id'] ?></td>
-														<td id="from-<?php echo $row['id'] ?>"><?php echo $row['year_from'] ?></td>
-														<td id="to-<?php echo $row['id'] ?>"><?php echo $row['year_to'] ?></td>
+														<td id="type-<?php echo $row['id'] ?>"><?php echo $row['type'] ?></td>
 														<td><button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $row['id'] ?>"><i class="fa fa-pencil"></i></button></td>
 													</tr>
 													<?php endwhile; ?>
@@ -126,7 +124,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h5 class="modal-title" id="myModalLabel">Edit Year</h5>
+					<h5 class="modal-title" id="myModalLabel">Edit User Role</h5>
 				</div>
 				<div class="modal-body">
 					<!-- Row -->
@@ -140,12 +138,12 @@
 												<form action="#">
 													<div class="form-group" id="edit-alert-message"></div>
 													<div class="form-group">
-														<label class="control-label mb-10" for="tb-from">Year From</label>
-														<input type="text" class="form-control number-only" name="tb-firstname" required="" maxlength="4" id="tb-from" placeholder="From">
+														<label class="control-label mb-10" for="tb-type">Role</label>
+														<input type="text" class="form-control" required="" name="tb-type" id="tb-type" placeholder="Enter user role">
 													</div>
 													<div class="form-group">
-														<label class="control-label mb-10" for="tb-to">Year To</label>
-														<input type="text" class="form-control number-only" required="" name="tb-middlename" maxlength="4" id="tb-to" placeholder="To">
+														<label class="control-label mb-10" for="sel-course-handle">Course Handle</label>
+														<select class="form-control" id="sel-course-handle" multiple="" style="height: 200px"></select>
 													</div>
 												</form>
 											</div>
@@ -157,7 +155,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<input type="hidden" value="" name="hidden-syid">
+					<input type="hidden" value="" name="hidden-ulid">
 					<button type="button" class="btn btn-success waves-effect" id="btn-save-edit" data-id="">Save</button>
 					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
 				</div>
@@ -183,40 +181,40 @@
 				$("#edit-alert-message").html('');
 				var id = $(this).data('id');
 
-				$("#tb-from").val($("#from-" + id).html());
-				$("#tb-to").val($("#to-" + id).html());
-				$('input[name=hidden-syid]').val(id);
+				$("#tb-type").val($("#type-" + id).html());
+				$('input[name=hidden-ulid]').val(id);
 				$("#btn-save-edit").attr("data-id", id);
-				$("#edit-modal").modal('show');
+				// $("#edit-modal").modal('show');
+				fetchCourseHandle(id);
 				
 			});
 
 			$("#btn-save-edit").on("click", function(){
-				var id = $('input[name=hidden-syid]').val();
+				var id = $('input[name=hidden-ulid]').val();
 
 				var data = new Object();
-				data.from = $("#tb-from").val();
-				data.to = $("#tb-to").val();
+				data.id = id;
+				data.type = $("#tb-type").val();
+				data.courses = $("#sel-course-handle").val();
 
 				$(".preloader").show();
 				$.ajax({
 					url: 'include/edit_maintenance.php',
 					type: 'post',
-					data: { action: 'school-year', id: id, params: data  },
+					data: { action: 'handle-course', params: data  },
 					success: function(response){
 						$(".preloader").hide();
 						var result = $.parseJSON(response);
 
 						if (result["status"] == 'success'){
-							$("#from-" + id).html($("#tb-from").val());
-							$("#to-" + id).html($("#tb-to").val());
+							$("#type-" + id).html($("#tb-type").val());
 
-							$("#edit-alert-message").html('<div class="alert alert-success">School year successfully updated.</div>');
+							$("#edit-alert-message").html('<div class="alert alert-success">User role successfully updated.</div>');
 							setTimeout(function(){
 								$("#edit-modal").modal('hide');
 							},1000);
 						} else {
-							$("#edit-alert-message").html('<div class="alert alert-danger">There was and error updating the school year.</div>');
+							$("#edit-alert-message").html('<div class="alert alert-danger">There was and error updating the user role.</div>');
 						}
 
 					}
@@ -261,6 +259,18 @@
 				$("#panel-error").addClass("hidden");
 				return 1;
 			}
+		}
+		function fetchCourseHandle(id){
+			$.ajax({
+				url: '_fetch.php',
+				type: 'post',
+				data: { action: 'role-section', id: id },
+				success: function(response){
+					var result = $.parseJSON(response);
+					$("#sel-course-handle").html(result['output']);
+					$("#edit-modal").modal('show');
+				}
+			});
 		}
 	</script>
 	<?php include('_common-js.php'); ?>

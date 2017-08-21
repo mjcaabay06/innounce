@@ -56,44 +56,51 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="panel panel-default card-view">
-							<div class="panel-heading">
-								<div class="pull-left">
-									<h6 class="panel-title txt-dark">School Years</h6>
-								</div>
-								<a href="add-school-year.php" class="pull-right btn btn-primary btn-circle btn-sm" title="Add school year"><i class="fa fa-plus" style="color: #fff"></i></a>
-								<div class="clearfix"></div>
-							</div>
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
-									<div class="table-wrap">
-										<div class="table-responsive">
-											<table class="table mb-0">
-												<thead>
-													<tr>
-														<th>#</th>
-														<th>From</th>
-														<th>To</th>
-														<th></th>
-													</tr>
-												</thead>
-												<tbody>
-													<?php
-														$sel = "select * from school_years";
-														$rs = mysqli_query($mysqli, $sel);
-
-														while($row = mysqli_fetch_assoc($rs)):
-													?>
-													<tr id="row-<?php echo $row['id'] ?>" class="txt-dark">
-														<td id=""><?php echo $row['id'] ?></td>
-														<td id="from-<?php echo $row['id'] ?>"><?php echo $row['year_from'] ?></td>
-														<td id="to-<?php echo $row['id'] ?>"><?php echo $row['year_to'] ?></td>
-														<td><button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $row['id'] ?>"><i class="fa fa-pencil"></i></button></td>
-													</tr>
-													<?php endwhile; ?>
-												</tbody>
-											</table>
+									<form action="" id="form-sign-up" method="post">
+										<input type="hidden" name="hidden-identifier" value="1" />
+										<div class="col-md-6 col-sm-12 col-md-offset-3">
+											<div id="add-alert-message"></div>
 										</div>
-									</div>
+										<div class="col-md-6 col-sm-12 col-md-offset-3">
+											<div class="panel panel-default border-panel card-view">
+												<div class="panel-heading">
+													<a href="user-roles.php" class="pull-left" title="Back to user roles"><i class="zmdi zmdi-chevron-left" style="color: rgba(23, 126, 193, 0.85);font-weight: bold;font-size: 25px;margin-right: 10px;"></i></a>
+													<div class="pull-left">
+														<h6 class="panel-title txt-dark">Add User Role</h6>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+												<div class="panel-wrapper">
+													<div class="panel-body">
+														<div class="form-group">
+															<label class="control-label mb-10" for="tb-type">Role</label>
+															<input type="text" class="form-control" name="tb-type" required="" id="tb-type" placeholder="Enter user role">
+														</div>
+														<div class="form-group">
+															<label class="control-label mb-10" for="sel-course-handle">Course Handle</label>
+															<select class="form-control" id="sel-course-handle" multiple="" style="height: 200px">
+																<?php
+																	$selCourse = "select * from school_courses";
+																	$rsCourse = mysqli_query($mysqli, $selCourse);
+																	while ($course = mysqli_fetch_assoc($rsCourse)) :
+																?>
+																	<option value="<?php echo $course['id'] ?>"><?php echo $course['description'] ?></option>
+																<?php endwhile; ?>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="form-group text-center">
+													<button type="button" id="btn-save-add" class="btn btn-info btn-rounded">Save</button>
+												</div>
+											</div>
+										</div>
+
+										
+										
+									</form>
 								</div>
 							</div>
 						</div>
@@ -121,51 +128,7 @@
     <!-- MODAL -->
     <?php include('partial/_modals.php'); ?>
 
-	<div id="edit-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h5 class="modal-title" id="myModalLabel">Edit Year</h5>
-				</div>
-				<div class="modal-body">
-					<!-- Row -->
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="">
-								<div class="panel-wrapper collapse in">
-									<div class="panel-body pa-0">
-										<div class="col-sm-12 col-xs-12">
-											<div class="form-wrap">
-												<form action="#">
-													<div class="form-group" id="edit-alert-message"></div>
-													<div class="form-group">
-														<label class="control-label mb-10" for="tb-from">Year From</label>
-														<input type="text" class="form-control number-only" name="tb-firstname" required="" maxlength="4" id="tb-from" placeholder="From">
-													</div>
-													<div class="form-group">
-														<label class="control-label mb-10" for="tb-to">Year To</label>
-														<input type="text" class="form-control number-only" required="" name="tb-middlename" maxlength="4" id="tb-to" placeholder="To">
-													</div>
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<input type="hidden" value="" name="hidden-syid">
-					<button type="button" class="btn btn-success waves-effect" id="btn-save-edit" data-id="">Save</button>
-					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
+	
 	<!-- <button data-toggle="modal" data-target="#responsive-modal" class="model_img img-responsive hidden" id="btn-modal">modal<button> -->
 	
 	<!-- JavaScript -->
@@ -177,51 +140,34 @@
 		$(document).ready(function(){
 			keyNumber();
 			
-			
 
-			$(".btn-edit").on("click",function(){
-				$("#edit-alert-message").html('');
-				var id = $(this).data('id');
-
-				$("#tb-from").val($("#from-" + id).html());
-				$("#tb-to").val($("#to-" + id).html());
-				$('input[name=hidden-syid]').val(id);
-				$("#btn-save-edit").attr("data-id", id);
-				$("#edit-modal").modal('show');
-				
-			});
-
-			$("#btn-save-edit").on("click", function(){
-				var id = $('input[name=hidden-syid]').val();
-
+			$("#btn-save-add").on('click', function(){
 				var data = new Object();
-				data.from = $("#tb-from").val();
-				data.to = $("#tb-to").val();
+				data.type = $("#tb-type").val();
+				data.courses = $("#sel-course-handle").val();
 
 				$(".preloader").show();
 				$.ajax({
-					url: 'include/edit_maintenance.php',
+					url: 'include/add_maintenance.php',
 					type: 'post',
-					data: { action: 'school-year', id: id, params: data  },
+					data: { action: 'handle-course', params: data  },
 					success: function(response){
 						$(".preloader").hide();
 						var result = $.parseJSON(response);
 
-						if (result["status"] == 'success'){
-							$("#from-" + id).html($("#tb-from").val());
-							$("#to-" + id).html($("#tb-to").val());
-
-							$("#edit-alert-message").html('<div class="alert alert-success">School year successfully updated.</div>');
+						if (result["status"] == 'success') {
+							$("#add-alert-message").html('<div class="alert alert-success">You have successfully created a user role.</div>');
 							setTimeout(function(){
-								$("#edit-modal").modal('hide');
+								window.location.href = 'user-roles.php';
 							},1000);
 						} else {
-							$("#edit-alert-message").html('<div class="alert alert-danger">There was and error updating the school year.</div>');
+							$("#add-alert-message").html('<div class="alert alert-danger">' + result['message'] + '</div>');
 						}
-
 					}
-				});
+				});	
 			});
+
+			
 		});
 		function checkPassword() {
 			var pwd = $("#tb-password").val();

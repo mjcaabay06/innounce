@@ -280,11 +280,12 @@
 												<div class="col-md-12">
 													<div class="pt-20">
 														<div class="form-group" id="g-alert-message"></div>
-														<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
+														<div class="form-group col-md-4 col-sm-12 col-xs-12">
 															<label for="g-sel-course" class="control-label mb-5 text-left">Courses</label>
 															<select class="form-control" id="g-sel-course">
 																<?php 
-																	$selCourses = "select school_courses.* from users inner join (professor_subjects inner join (enrolled_subjects inner join (enrollees inner join school_courses on school_courses.id = enrollees.school_course_id) on enrollees.id = enrolled_subjects.enrollee_id) on enrolled_subjects.subject_id = professor_subjects.school_subject_id) on professor_subjects.professor_id = users.id where users.id = " . $_SESSION['authId'] . " group by school_courses.id";
+																	//$selCourses = "select school_courses.* from users inner join (professor_subjects inner join (enrolled_subjects inner join (enrollees inner join school_courses on school_courses.id = enrollees.school_course_id) on enrollees.id = enrolled_subjects.enrollee_id) on enrolled_subjects.subject_id = professor_subjects.school_subject_id) on professor_subjects.professor_id = users.id where users.id = " . $_SESSION['authId'] . " group by school_courses.id";
+																	$selCourses = "select school_courses.* from handle_courses inner join school_courses on school_courses.id = handle_courses.school_course_id inner join users on users.user_type_id = handle_courses.user_type_id where users.id = " . $_SESSION['authId'];
 																	$rsCourse = mysqli_query($mysqli, $selCourses);
 
 																	while($course = mysqli_fetch_assoc($rsCourse)):
@@ -295,11 +296,16 @@
 														</div>
 														<div class="form-group col-md-4 col-sm-12 col-xs-12">
 															<label for="g-sel-section" class="control-label mb-5 text-left">Sections Handled</label>
-															<select multiple class="form-control" id="g-sel-section" style="height: 200px">
+															<select multiple class="form-control" id="g-sel-section" style="height: 100px">
+															</select>
+														</div>
+														<div class="col-sm-12 mt-20">
+															<label for="g-sel-students" class="control-label mb-5 text-left">Students</label>
+															<select multiple class="form-control" id="g-sel-students" style="height: 200px">
 															</select>
 														</div>
 														
-														<div class="form-group col-xs-12">
+														<div class="form-group col-xs-12 mt-50">
 															<label class="control-label mb-10 text-left">Message:</label>
 															<textarea class="form-control" rows="5" id="g-message"></textarea>
 														</div>
@@ -616,9 +622,9 @@
 
 			$("#g-send").on("click", function(){
 				var err = 0;
-				// if ($("#g-sel-stud").val() == null) {
-				// 	err += 1;
-				// }
+				if ($("#g-sel-students").val() == null) {
+					err += 1;
+				}
 
 				if (err > 0) {
 					alert("Please select a recipient.");
@@ -669,6 +675,12 @@
 				} else {
 					sendSurvey("include/send_survey.php");
 				}
+			});
+
+			$("#g-sel-section").on('change', function(){
+				var data = new Object();
+				data.sections = $(this).val();
+				fetchStudents(data);
 			});
 		});
 		
@@ -722,6 +734,24 @@
 						$("#g-sel-section").attr('disabled','');
 					}
 					$("#g-sel-section").html(result['output']);
+				}
+			});
+		}
+
+		function fetchStudents(data) {
+			$.ajax({
+				url: '_fetch.php',
+				type: 'post',
+				data: { action: 'fetch-students', params: data },
+				success: function(response) {
+					var result = $.parseJSON(response);
+
+					// if (result['status'] == 'success') {
+					// 	$("#g-sel-students").removeAttr('disabled', '');
+					// } else {
+					// 	$("#g-sel-students").attr('disabled','');
+					// }
+					$("#g-sel-students").html(result['output']);
 				}
 			});
 		}

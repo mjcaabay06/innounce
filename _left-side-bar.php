@@ -9,6 +9,7 @@
 	$yearLevel = array('year-level.php', 'add-year-level.php');
 	$subject = array('subject.php', 'add-subject.php');
 	$course = array('course.php', 'add-course.php');
+	$userRole = array('user-roles.php', 'add-user-role.php');
 
 	$enroll = array('enroll.php', 'add-enrollee.php', 'update-enrollee-subjects.php');
 ?>
@@ -49,47 +50,57 @@
 				</a>
 			<?php endif; ?>
 		</li>
-		<li><hr class="light-grey-hr mb-10"></li>
-		<li class="navigation-header">
-			<span>Maintenance</span> 
-			<i class="zmdi zmdi-more"></i>
-		</li>
-		<li>
-			<a <?php echo in_array($page, $schoolYear) ? 'class="active"' : '' ?> href="school-year.php">
-				<div class="pull-left">
-					<i class="zmdi zmdi-calendar mr-20"></i>
-					<span class="right-nav-text">School Year</span>
-				</div>
-				<div class="clearfix"></div>
-			</a>
-			<a <?php echo in_array($page, $schoolSection) ? 'class="active"' : '' ?> href="school-section.php">
-				<div class="pull-left">
-					<i class="fa fa-bookmark mr-20"></i>
-					<span class="right-nav-text">School Sections</span>
-				</div>
-				<div class="clearfix"></div>
-			</a>
-			<a <?php echo in_array($page, $yearLevel) ? 'class="active"' : '' ?> href="year-level.php">
-				<div class="pull-left">
-					<i class="fa fa-level-up mr-20"></i>
-					<span class="right-nav-text">Year Levels</span>
-				</div>
-				<div class="clearfix"></div>
-			</a>
-			<a <?php echo in_array($page, $subject) ? 'class="active"' : '' ?> href="subject.php">
-				<div class="pull-left">
-					<i class="zmdi zmdi-book mr-20"></i>
-					<span class="right-nav-text">Subjects</span>
-				</div>
-				<div class="clearfix"></div>
-			</a>
-			<a <?php echo in_array($page, $course) ? 'class="active"' : '' ?> href="course.php">
-				<div class="pull-left">
-					<i class="fa fa-folder-o mr-20"></i>
-					<span class="right-nav-text">Courses</span>
-				</div>
-				<div class="clearfix"></div>
-			</a>
-		</li>
+		<?php if ($_SESSION['userType'] == 1) : ?>
+			<li><hr class="light-grey-hr mb-10"></li>
+			<li class="navigation-header">
+				<span>Maintenance</span> 
+				<i class="zmdi zmdi-more"></i>
+			</li>
+			<li>
+				<a <?php echo in_array($page, $userRole) ? 'class="active"' : '' ?> href="user-roles.php">
+					<div class="pull-left">
+						<i class="fa fa-child mr-20"></i>
+						<span class="right-nav-text">user Role</span>
+					</div>
+					<div class="clearfix"></div>
+				</a>
+				<a <?php echo in_array($page, $course) ? 'class="active"' : '' ?> href="course.php">
+					<div class="pull-left">
+						<i class="fa fa-folder-o mr-20"></i>
+						<span class="right-nav-text">Courses</span>
+					</div>
+					<div class="clearfix"></div>
+				</a>
+				<a <?php echo in_array($page, $subject) ? 'class="active"' : '' ?> href="subject.php">
+					<div class="pull-left">
+						<i class="zmdi zmdi-book mr-20"></i>
+						<span class="right-nav-text">Subjects</span>
+					</div>
+					<div class="clearfix"></div>
+				</a>
+				<a <?php echo in_array($page, $schoolSection) ? 'class="active"' : '' ?> href="school-section.php">
+					<div class="pull-left">
+						<i class="fa fa-bookmark mr-20"></i>
+						<span class="right-nav-text">School Sections</span>
+					</div>
+					<div class="clearfix"></div>
+				</a>
+				<a <?php echo in_array($page, $yearLevel) ? 'class="active"' : '' ?> href="year-level.php">
+					<div class="pull-left">
+						<i class="fa fa-level-up mr-20"></i>
+						<span class="right-nav-text">Year Levels</span>
+					</div>
+					<div class="clearfix"></div>
+				</a>
+				<a <?php echo in_array($page, $schoolYear) ? 'class="active"' : '' ?> href="school-year.php">
+					<div class="pull-left">
+						<i class="zmdi zmdi-calendar mr-20"></i>
+						<span class="right-nav-text">School Year</span>
+					</div>
+					<div class="clearfix"></div>
+				</a>
+				
+			</li>
+		<?php endif; ?>
 	</ul>
 </div>

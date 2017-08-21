@@ -209,7 +209,7 @@
 	function getStudentViaSection($section) {
 		global $mysqli;
 
-		$selSection = "select students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id where school_sections.id = " . $section;
+		$selSection = "select students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id where students.id = " . $section;
 		$rsSection = mysqli_query($mysqli, $selSection);
 
 		$data = array();

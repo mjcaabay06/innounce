@@ -65,6 +65,9 @@
 							</div>
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
+									<div class="form-group">
+										<div id="del-alert-message"></div>
+									</div>
 									<div class="table-wrap">
 										<div class="table-responsive">
 											<table class="table mb-0">
@@ -87,7 +90,10 @@
 														<td id=""><?php echo $row['id'] ?></td>
 														<td id="level-<?php echo $row['id'] ?>"><?php echo $row['level'] ?></td>
 														<td id="description-<?php echo $row['id'] ?>"><?php echo $row['description'] ?></td>
-														<td><button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $row['id'] ?>"><i class="fa fa-pencil"></i></button></td>
+														<td>
+															<button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $row['id'] ?>"><i class="fa fa-pencil"></i></button>
+															<button id="btn-delete" class="btn-delete btn btn-primary btn-icon-anim btn-square btn-sm" title="Delete" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-o"></i></button>
+														</td>
 													</tr>
 													<?php endwhile; ?>
 												</tbody>
@@ -158,6 +164,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
+					<input type="hidden" value="" name="hidden-ylid">
 					<button type="button" class="btn btn-success waves-effect" id="btn-save-edit" data-id="">Save</button>
 					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
 				</div>
@@ -185,13 +192,45 @@
 
 				$("#tb-level").val($("#level-" + id).html());
 				$("#tb-description").val($("#description-" + id).html());
+				$('input[name=hidden-ylid]').val(id);
 				$("#btn-save-edit").attr("data-id", id);
 				$("#edit-modal").modal('show');
 				
 			});
 
-			$("#btn-save-edit").on("click", function(){
+			$(".btn-delete").on("click", function(){
+				var answer = confirm('Are you sure you want to delete the year level?');
 				var id = $(this).data('id');
+				var data = new Object();
+				data.id = id;
+
+				if (answer) {
+					$(".preloader").show();
+						$.ajax({
+							url: 'include/delete_maintenance.php',
+							type: 'post',
+							data: { action: 'year-level', params: data  },
+							success: function(response){
+								$(".preloader").hide();
+								var result = $.parseJSON(response);
+
+								if (result["status"] == 'success'){
+									$("table tr#row-" + id).remove();
+									$("#del-alert-message").html('<div class="alert alert-success">Year level successfully deleted.</div>');
+									setTimeout(function(){
+										$("#del-alert-message").html('');
+									},1500);
+								} else {
+									$("#del-alert-message").html('<div class="alert alert-danger">There was and error deleting the year level.</div>');
+								}
+
+							}
+						});
+				}
+			});
+
+			$("#btn-save-edit").on("click", function(){
+				var id = $('input[name=hidden-ylid]').val();
 
 				var data = new Object();
 				data.level = $("#tb-level").val();

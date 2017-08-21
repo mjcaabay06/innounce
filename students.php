@@ -77,12 +77,13 @@
 														<th>Email</th>
 														<th>Mobile</th>
 														<th>Course</th>
+														<th>Year Level</th>
 														<th></th>
 													</tr>
 												</thead>
 												<tbody>
 													<?php
-														$selStudent = "select students.id as student_id, students.*, school_courses.*, school_courses.id as school_course_id from students inner join school_courses on school_courses.id = students.course_id";
+														$selStudent = "select students.id as student_id, students.*, school_courses.*, school_courses.id as school_course_id, school_levels.description as level from students left join (enrollees inner join (school_sections inner join school_levels on school_levels.id = school_sections.school_level_id) on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id inner join school_courses on school_courses.id = students.course_id";
 														$rsStudent = mysqli_query($mysqli, $selStudent);
 
 														while($student = mysqli_fetch_assoc($rsStudent)):
@@ -96,6 +97,7 @@
 														<td id="email-<?php echo $student['student_id'] ?>"><?php echo $student['email_address'] ?></td>
 														<td id="mobile-<?php echo $student['student_id'] ?>"><?php echo $student['mobile_number'] ?></td>
 														<td id="course-<?php echo $student['student_id'] ?>"><?php echo $student['description'] ?></td>
+														<td id="level-<?php echo $student['student_id'] ?>"><?php echo $student['level'] ?></td>
 														<td><button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $student['student_id'] ?>"><i class="fa fa-pencil"></i></button></td>
 													</tr>
 													<?php endwhile; ?>

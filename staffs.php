@@ -97,7 +97,10 @@
 														<td id="email-<?php echo $staff['user_id'] ?>"><?php echo $staff['email_address'] ?></td>
 														<td id="mobile-<?php echo $staff['user_id'] ?>"><?php echo $staff['mobile_number'] ?></td>
 														<td id="user-type-<?php echo $staff['user_id'] ?>"><?php echo $staff['type'] ?></td>
-														<td><button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $staff['user_id'] ?>"><i class="fa fa-pencil"></i></button></td>
+														<td>
+															<button id="btn-view" class="btn-view btn btn-primary btn-icon-anim btn-square btn-sm" title="View Sections" data-id="<?php echo $staff['user_id'] ?>"><i class="fa fa-eye"></i></button>
+															<button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $staff['user_id'] ?>"><i class="fa fa-pencil"></i></button>
+														</td>
 													</tr>
 													<?php endwhile; ?>
 												</tbody>
@@ -173,8 +176,6 @@
 													<div class="form-group">
 														<label class="control-label mb-10" for="sel-type">User Type</label>
 														<select class="form-control" id="sel-type">
-															<option value="1">Admin</option>
-															<option value="2">Professor</option>
 														</select>
 													</div>
 													<div class="form-group">
@@ -194,9 +195,56 @@
 					</div>
 				</div>
 				<div class="modal-footer">
+					<input type="hidden" value="" name="hidden-staffid">
 					<button type="button" class="btn btn-success waves-effect" id="btn-save-edit" data-id="">Save</button>
 					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
 				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<div id="view-sections-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalSubject" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h5 class="modal-title" id="myModalSubject">Sections Handle</h5>
+				</div>
+				<div class="modal-body">
+					<!-- Row -->
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="">
+								<div class="panel-wrapper collapse in">
+									<div class="panel-body pa-0">
+										<div class="col-sm-12 col-xs-12">
+											<div class="form-wrap">
+												<form action="#">
+													<div class="form-group" id="view-alert-message"></div>
+													<table class="table mb-0" id="table-view">
+														<thead>
+															<tr>
+																<th>Section</th>
+																<th>Year Level</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="modal-footer">
+					<button type="button" class="btn btn-success waves-effect" id="btn-update-enrollee" data-id="">Update</button>
+					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+				</div> -->
 			</div>
 			<!-- /.modal-content -->
 		</div>
@@ -226,13 +274,32 @@
 				$("#tb-mobile").val($("#mobile-" + id).html());
 				$("#sel-type").val($("#type-" + id).val());
 				$("#sel-status").val($("#status-" + id).val());
+				$('input[name=hidden-staffid]').val(id);
 				$("#btn-save-edit").attr("data-id", id);
+				type($("#type-" + id).val());
 				$("#edit-staff-modal").modal('show');
 				
 			});
 
+			$(".btn-view").on("click", function(){
+				$("#view-sections-modal").modal('show');
+
+				$.ajax({
+					url: '_fetch.php',
+					type: 'post',
+					data: { action: 'handled-sections', id: $(this).data('id') },
+					success: function(response){
+						var result = $.parseJSON(response);
+
+						if (result['status'] == 'success') {
+							$("#table-view tbody").html(result['output']);
+						}
+					}
+				});
+			});
+
 			$("#btn-save-edit").on("click", function(){
-				var id = $(this).data('id');
+				var id = $('input[name=hidden-staffid]').val();
 
 				var data = new Object();
 				data.first_name = $("#tb-firstname").val();
@@ -255,13 +322,12 @@
 						console.log(result["status"]);
 
 						if (result["status"] == 'success'){
-							var userType = $("#sel-type").val() == 1 ? 'Admin' : 'Professor';
 							$("#fname-" + id).html($("#tb-firstname").val());
 							$("#mname-" + id).html($("#tb-middlename").val());
 							$("#lname-" + id).html($("#tb-lastname").val());
 							$("#email-" + id).html($("#tb-email").val());
 							$("#mobile-" + id).html($("#tb-mobile").val());
-							$("#user-type-" + id).html(userType);
+							$("#user-type-" + id).html($("#sel-type option:selected").text());
 							$("#type-" + id).val($("#sel-type").val());
 							$("#status-" + id).val($("#sel-status").val());
 
@@ -322,6 +388,18 @@
 				$("#panel-error").addClass("hidden");
 				return 1;
 			}
+		}
+		function type(id) {
+			$.ajax({
+				url: '_fetch.php',
+				type: 'post',
+				data: { action: 'user-type', id: id },
+				success: function(response){
+					var result = $.parseJSON(response);
+					$("#sel-type").html(result['output']);
+					$("#edit-modal").modal('show');
+				}
+			});
 		}
 	</script>
 	<?php include('_common-js.php'); ?>
