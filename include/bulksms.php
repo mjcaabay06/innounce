@@ -15,14 +15,14 @@ $transient_errors = array(
 /*
 * Sending 7-bit message
 */
-$post_body = seven_bit_sms( $username, $password, $seven_bit_msg, $msisdn );
-$result = send_message( $post_body, $url );
-if( $result['success'] ) {
-  print_ln( formatted_server_response( $result ) );
-}
-else {
-  print_ln( formatted_server_response( $result ) );
-}
+// $post_body = seven_bit_sms( $username, $password, $seven_bit_msg, $msisdn );
+// $result = send_message( $post_body, $url );
+// if( $result['success'] ) {
+//   print_ln( formatted_server_response( $result ) );
+// }
+// else {
+//   print_ln( formatted_server_response( $result ) );
+// }
 
 
 /*
@@ -87,24 +87,24 @@ function send_message ( $post_body ) {
   $sms_result['api_batch_id'] = '';
 
   if ( $response_string == FALSE ) {
-    $sms_result['details'] .= "cURL error: " . curl_error( $ch ) . "\n";
+    $sms_result['details'] .= "cURL error: " . curl_error( $ch ) . "<br/>";
   } elseif ( $curl_info[ 'http_code' ] != 200 ) {
     $sms_result['transient_error'] = 1;
-    $sms_result['details'] .= "Error: non-200 HTTP status code: " . $curl_info[ 'http_code' ] . "\n";
+    $sms_result['details'] .= "Error: non-200 HTTP status code: " . $curl_info[ 'http_code' ] . "<br/>";
   }
   else {
-    $sms_result['details'] .= "Response from server: $response_string\n";
+    $sms_result['details'] .= "Response from server: $response_string<br/>";
     $api_result = explode( '|', $response_string );
     $status_code = $api_result[0];
     $sms_result['api_status_code'] = $status_code;
     $sms_result['api_message'] = $api_result[1];
     if ( count( $api_result ) != 3 ) {
-      $sms_result['details'] .= "Error: could not parse valid return data from server.\n" . count( $api_result );
+      $sms_result['details'] .= "Error: could not parse valid return data from server.<br/>" . count( $api_result );
     } else {
       if ($status_code == '0') {
         $sms_result['success'] = 1;
         $sms_result['api_batch_id'] = $api_result[2];
-        $sms_result['details'] .= "Message sent - batch ID $api_result[2]\n";
+        $sms_result['details'] .= "Message sent - batch ID $api_result[2]<br/>";
       }
       else if ($status_code == '1') {
         # Success: scheduled for later sending.
@@ -112,19 +112,20 @@ function send_message ( $post_body ) {
         $sms_result['api_batch_id'] = $api_result[2];
       }
       else {
-        $sms_result['details'] .= "Error sending: status code [$api_result[0]] description [$api_result[1]]\n";
+        $sms_result['details'] .= "Error sending: status code [$api_result[0]] description [$api_result[1]]<br/>";
       }
     }
   }
   curl_close( $ch );
+  $sms_result['details'] .= "Full response >> " . $response_string;
 
   return $sms_result;
 }
 
 function seven_bit_sms ($message, $msisdn ) {
   $post_fields = array (
-  'username' => 'mjcaabay06',
-  'password' => 'sabert00th3693',
+  'username' => 'dummyaccnt548',
+  'password' => 'Sabert00th3693',
   //'message'  => character_resolve( $message ),
   'message'  => $message,
   'msisdn'   => $msisdn,

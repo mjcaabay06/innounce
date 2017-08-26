@@ -15,7 +15,9 @@
 	// $decoded_body = mb_convert_encoding(hex2bin($_REQUEST['message']), "UTF-8", "UTF-16");
 
 	// Print the rest of the pushed parameters:
+	$res = '';
 	foreach ( $_REQUEST as $param => $value ) {
-	  echo $param . ": " . $value . "<br />";
+	  $res .= $param . ": " . $value . "<br />";
 	}
+	echo $res;
 ?>
