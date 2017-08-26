@@ -297,6 +297,9 @@
 
 		if ($rsInsertMessage !== false) {
 
+		} else {
+			error_log($response);
+			error_log(mysqli_error($mysqli));
 		}
 	}
 
