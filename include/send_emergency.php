@@ -10,9 +10,12 @@
 		$num = '';
 
 		foreach(getAllReceivers() as $rcvr) {
-			$response = sendViaSemaphore($rcvr['mobile_number'], $message);
+			$response = sendViaBulksms($rcvr['mobile_number'], $message);
 
-			if(empty($response) || !isset($response[0]->status)){
+			// if(empty($response) || !isset($response[0]->status)){
+			// 	$errorSending[] = $rcvr['name'];
+			// }
+			if (!$response['success']) {
 				$errorSending[] = $rcvr['name'];
 			}
 		}

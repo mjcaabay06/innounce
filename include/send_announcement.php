@@ -37,9 +37,13 @@
 		} else {
 			foreach ($hasLvl as $year) {
 				foreach (getStudentReceivers($year,$course) as $studNumber) {
-					$response = sendViaSemaphore($studNumber['mobile_number'], $message);
+					$response = sendViaBulksms($studNumber['mobile_number'], $message);
 
-					if(empty($response) || !isset($response[0]->status)){
+					// if(empty($response) || !isset($response[0]->status)){
+					// 	$errorSending[] = $studNumber['name'];
+					// }
+
+					if (!$response['success']) {
 						$errorSending[] = $studNumber['name'];
 					}
 				}

@@ -14,12 +14,16 @@
 
 				$message = 'Your activation code is ' . $activationCode . '. And your Password: ' . $_POST['userpass'];
 
-				$response = sendViaSemaphore(trim($_POST['mobile']), $message);
+				$response = sendViaBulksms(trim($_POST['mobile']), $message);
 
-				if(empty($response) || !isset($response[0]->status)){
-					if(isset($response[0])){ //different error
-						$diffError = $response[0];
-					}
+				// if(empty($response) || !isset($response[0]->status)){
+				// 	if(isset($response[0])){ //different error
+				// 		$diffError = $response[0];
+				// 	}
+				// 	$errorSending = $_POST['mobile'];
+				// }
+
+				if (!$response['success']) {
 					$errorSending = $_POST['mobile'];
 				}
 				
@@ -58,12 +62,16 @@
 
 				if ($data['status']) {
 
-					$response = sendViaSemaphore($row['mobile_number'], $message);
+					$response = sendViaBulksms($row['mobile_number'], $message);
 
-					if(empty($response) || !isset($response[0]->status)){
-						if(isset($response[0])){ //different error
-							$diffError = $response[0];
-						}
+					// if(empty($response) || !isset($response[0]->status)){
+					// 	if(isset($response[0])){ //different error
+					// 		$diffError = $response[0];
+					// 	}
+					// 	$errorSending = $row['mobile_number'];
+					// }
+
+					if (!$response['success']) {
 						$errorSending = $row['mobile_number'];
 					}
 

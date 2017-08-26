@@ -13,6 +13,7 @@
 		$hasLvl = array();
 		$hasWordLvl = array();
 		$noLvl = array();
+		$response = '';
 		foreach ($_POST['year'] as $year) {
 			$selLevel = "select * from enrollees inner join school_sections on school_sections.id = enrollees.school_section_id where school_level_id = " . $year;
 			$rsLevel = mysqli_query($mysqli, $selLevel);
@@ -36,16 +37,19 @@
 		} else {
 			foreach ($hasLvl as $year) {
 				foreach (getStudentReceivers($year,$course) as $studNumber) {
-					$response = sendViaSemaphore($studNumber['mobile_number'], $message);
+					$response = sendViaBulksms($studNumber['mobile_number'], $message);
 
-					if(empty($response) || !isset($response[0]->status)){
+					// if(empty($response) || !isset($response[0]->status)){
+					// 	$errorSending[] = $studNumber['name'];
+					// }
+					if (!$response['success']) {
 						$errorSending[] = $studNumber['name'];
 					}
 				}
 			}
 
 			if(empty($errorSending)){
-				insertMessage($_SESSION['authId'],$message,2);
+				insertMessage($_SESSION['authId'],$message,2,$response);
 				$data['message'] = "Survey was sent to: [" . implode(', ', $hasWordLvl) . "]";
 				$data['status'] = "success";
 

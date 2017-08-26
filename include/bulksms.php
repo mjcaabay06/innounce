@@ -117,7 +117,7 @@ function send_message ( $post_body ) {
     }
   }
   curl_close( $ch );
-  $sms_result['details'] .= "Full response >> " . $response_string;
+  #$sms_result['details'] .= "Full response >> " . $response_string;
 
   return $sms_result;
 }

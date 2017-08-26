@@ -78,13 +78,14 @@
 
 		$post_body = seven_bit_sms($message, $mobile);
 		$result = send_message($post_body);
-		if( $result['success'] ) {
-			print_ln( formatted_server_response( $result ) );
-		}
-		else {
-			print_ln( formatted_server_response( $result ) );
-		}
-		#return send_message($post_body);
+		// if( $result['success'] ) {
+		// 	print_ln( formatted_server_response( $result ) );
+		// }
+		// else {
+		// 	print_ln( formatted_server_response( $result ) );
+		// }
+		//return send_message($post_body);
+		return $result;
 	}
 
 	function sendEmail() {
@@ -271,10 +272,26 @@
 		return $data;
 	}
 
-	function insertMessage($userId, $message, $typeId) {
+	function insertMessage($userId, $message, $typeId, $response) {
 		global $mysqli;
 
-		$insertMessage = "insert into sent_messages(user_id,message,message_type_id) values(".$userId.",'".$message."',".$typeId.")";
+		$insertMessage = "
+			insert into
+			sent_messages(
+				batch_id,
+				message,
+				user_id,
+				message_type_id,
+				remarks
+			)
+			values(
+				" . $response['api_batch_id'] . ",
+				" . $message . ",
+				'" . $userId . "',
+				" . $typeId . ",
+				'" . $response['success'] . "'
+			)
+			";
 		$rsInsertMessage = mysqli_query($mysqli, $insertMessage);
 
 		if ($rsInsertMessage !== false) {
