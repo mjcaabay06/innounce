@@ -90,7 +90,7 @@
 													?>
 													<tr id="row-student<?php echo $student['student_id'] ?>" class="txt-dark">
 														<input type="hidden" id="course-id-<?php echo $student['student_id'] ?>" value="<?php echo $student['school_course_id'] ?>">
-														<td id=""><?php echo $student['student_id'] ?></td>
+														<td id=""><?php echo $student['student_code'] ?></td>
 														<td id="fname-<?php echo $student['student_id'] ?>"><?php echo $student['first_name'] ?></td>
 														<td id="mname-<?php echo $student['student_id'] ?>"><?php echo $student['middle_name'] ?></td>
 														<td id="lname-<?php echo $student['student_id'] ?>"><?php echo $student['last_name'] ?></td>
