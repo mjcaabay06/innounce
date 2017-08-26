@@ -125,7 +125,8 @@ function seven_bit_sms ($message, $msisdn ) {
   $post_fields = array (
   'username' => 'mjcaabay06',
   'password' => 'sabert00th3693',
-  'message'  => character_resolve( $message ),
+  //'message'  => character_resolve( $message ),
+  'message'  => $message,
   'msisdn'   => $msisdn,
   'allow_concat_text_sms' => 0, # Change to 1 to enable long messages
   'concat_text_sms_max_parts' => 2
