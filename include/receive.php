@@ -23,7 +23,7 @@
 		)
 		values(
 			'" . $msisdn . "',
-			'" . $sender . "',
+			'" . substr_replace($sender, '0', 0, 2) . "',
 			" . $msg_id . ",
 			'" . $message . "',
 			'" . $received_time . "',
