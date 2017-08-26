@@ -29,7 +29,7 @@ $transient_errors = array(
 * If you don't see this, and no errors appeared to screen, you should
 * check your Web server's error logs for error output:
 */
-print_ln("Script ran to completion");
+//print_ln("Script ran to completion");
 
 function print_ln($content) {
   if (isset($_SERVER["SERVER_NAME"])) {
