@@ -287,8 +287,8 @@
 			)
 			values(
 				" . $response['api_batch_id'] . ",
-				" . $message . ",
-				'" . $userId . "',
+				'" . $message . "',
+				" . $userId . ",
 				" . $typeId . ",
 				'" . $response['success'] . "'
 			)
