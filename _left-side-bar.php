@@ -35,6 +35,12 @@
 				<a href="javascript:void(0);" data-toggle="collapse" data-target="#reports"><div class="pull-left"><i class="fa fa-bar-chart-o mr-20"></i><span class="right-nav-text">Reports</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
 				<ul id="reports" class="collapse collapse-level-1">
 					<li>
+						<a href="#" class="a-reports" data-value="sent">Sent Messages</a>
+					</li>
+					<li>
+						<a href="#" class="a-reports" data-value="receive">Response Messages</a>
+					</li>
+					<li>
 						<a href="#" class="a-reports" data-value="login">Logins</a>
 					</li>
 					<li>

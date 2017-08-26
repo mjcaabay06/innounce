@@ -81,3 +81,29 @@
 		</div>
 	</div>
 </div>
+
+<div id="viewResponseModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="response-title" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<form action="">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h5 class="modal-title" id="response-title"></h5>
+				</div>
+				<div class="modal-body">
+					<table class="table mb-0">
+						<thead>
+							<tr>
+								<th>Reply Message</th>
+								<th>Sender Number</th>
+								<th>Date Receive</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

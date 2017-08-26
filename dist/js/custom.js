@@ -27,6 +27,11 @@ function sendAnnouncement(url) {
 			if (result["status"] == "success") {
 				$("#a-alert-message").html('<div class="alert alert-success">' + result['message'] + '</div>');
 				resetAnnouncement();
+				setTimeout(function(){
+					$("#a-message-list").show();
+					$("#a-new-message").hide();
+					$("#a-alert-message").html('');
+				},1500);
 			} else {
 				$("#a-alert-message").html('<div class="alert alert-danger">' + result['message'] + '</div>');
 			}
@@ -102,6 +107,11 @@ function sendGrouping(url) {
 				$("#g-alert-message").html('<div class="alert alert-success">' + result['message'] + '</div>');
 				$("#g-sel-stud option:selected").removeAttr('selected');
 				$("#g-message").val('');
+				setTimeout(function(){
+					$("#g-message-list").show();
+					$("#g-new-message").hide();
+					$("#g-alert-message").html('');
+				},1500);
 			} else {
 				$("#g-alert-message").html('<div class="alert alert-danger">' + result['message'] + '</div>');
 			}
@@ -129,6 +139,11 @@ function sendEmergency(url) {
 			if (result["status"]) {
 				$("#e-alert-message").html('<div class="alert alert-success">' + result['message'] + '</div>');
 				$("#e-message").val('');
+				setTimeout(function(){
+					$("#e-message-list").show();
+					$("#e-new-message").hide();
+					$("#e-alert-message").html('');
+				},1500);
 			} else {
 				$("#e-alert-message").html('<div class="alert alert-danger">' + result['message'] + '</div>');
 			}
@@ -156,6 +171,11 @@ function sendSurvey(url) {
 			if (result["status"] == "success") {
 				$("#s-alert-message").html('<div class="alert alert-success">' + result['message'] + '</div>');
 				resetSurvey();
+				setTimeout(function(){
+					$("#s-message-list").show();
+					$("#s-new-message").hide();
+					$("#s-alert-message").html('');
+				},1500);
 			} else {
 				$("#s-alert-message").html('<div class="alert alert-danger">' + result['message'] + '</div>');
 			}

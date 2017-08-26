@@ -115,6 +115,10 @@
 
 			if (type == 'login') {
 				$("#report-title").html('Generate Login Report');
+			} else if (type == 'sent') {
+				$("#report-title").html('Generate Sent Messages Report');
+			} else if (type == 'receive') {
+				$("#report-title").html('Generate Response Messages Report');
 			} else {
 				$("#report-title").html('Generate Logout Report');
 			}

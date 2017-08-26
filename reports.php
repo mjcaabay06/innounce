@@ -8,6 +8,11 @@
 		exit;
 	}
 
+	if (!in_array($_GET['type'], array('login','logout'))) {
+		header("Location: message-reports.php?type=" . $_GET['type'] . "&startdate=" . $_GET['startdate'] . "&enddate=" . $_GET['enddate']);
+		exit;
+	}
+
 	$startdate = date('Y-m-d',strtotime($_GET['startdate']));
 	$enddate = date('Y-m-d',strtotime($_GET['enddate']));
 	
@@ -17,7 +22,6 @@
 	$numCountLogin = mysqli_num_rows($rsCountLogin);
 	$rowPerPage = 10;
 	$pageCount = intval($numCountLogin) == 0 ? 1 : ceil(intval($numCountLogin) / intval($rowPerPage));
-	
 ?>
 <!DOCTYPE html>
 <html lang="en">

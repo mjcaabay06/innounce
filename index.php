@@ -223,7 +223,47 @@
 										<div class="tab-content" id="myTabContent_8">
 											<div  id="announcement_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? 'in active' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
-													<div class="pt-20">
+													<div class="pt-20 mb-20" id="a-message-list">
+														<div class="">
+															<button id="a-btn-new" type="button" class="btn btn-sm btn-primary pull-right">
+																<i class="fa fa-plus mr-10"></i> New message
+															</button>
+															<div class="clearfix"></div>
+														</div>
+														<table class="table mb-0">
+															<thead>
+																<tr>
+																	<th>Batch ID</th>
+																	<th>Message</th>
+																	<th>User</th>
+																	<th>Date Sent</th>
+																</tr>
+															</thead>
+															<tbody>
+																<?php
+																	$selAnnouncement = "select sent_messages.*, user_infos.*, date_format(sent_messages.created_at, '%b %e, %Y [ %H:%i:%s ]') as date_sent from sent_messages inner join (users inner join user_infos on user_infos.user_id = users.id) on users.id = sent_messages.user_id where sent_messages.message_type_id = 1 order by sent_messages.created_at desc";
+																	$rsAnnouncement = mysqli_query($mysqli, $selAnnouncement);
+
+																	while($announcement = mysqli_fetch_assoc($rsAnnouncement)):
+																?>
+																<tr>
+																	<td><?php echo $announcement['batch_id'] ?></td>
+																	<td><?php echo $announcement['message'] ?></td>
+																	<td><?php echo $announcement['last_name'] . ', ' . $announcement['first_name'] ?></td>
+																	<td><?php echo $announcement['date_sent'] ?></td>
+																</tr>
+																<?php endwhile; ?>
+															</tbody>
+														</table>
+														<div class="clearfix"></div>
+													</div>
+													<div class="pt-20" id="a-new-message" style="display: none">
+														<div class="">
+															<button id="a-btn-cancel" type="button" class="btn btn-sm btn-primary pull-right">
+																<i class="fa fa-angle-left mr-10"></i> Cancel
+															</button>
+															<div class="clearfix"></div>
+														</div>
 														<div class="form-group" id="a-alert-message"></div>
 														<div class="form-group">
 															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
@@ -278,7 +318,45 @@
 											</div>
 											<div  id="grouping_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 2 ? 'in active' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
-													<div class="pt-20">
+													<div class="pt-20 mb-20" id="g-message-list">
+														<div class="">
+															<button id="g-btn-new" type="button" class="btn btn-sm btn-primary pull-right">
+																<i class="fa fa-plus mr-10"></i> New message
+															</button>
+															<div class="clearfix"></div>
+														</div>
+														<table class="table mb-0">
+															<thead>
+																<tr>
+																	<th>Batch ID</th>
+																	<th>Message</th>
+																	<th>Date Sent</th>
+																</tr>
+															</thead>
+															<tbody>
+																<?php
+																	$selGrouping = "select sent_messages.*, user_infos.*, date_format(sent_messages.created_at, '%b %e, %Y [ %H:%i:%s ]') as date_sent from sent_messages inner join (users inner join user_infos on user_infos.user_id = users.id) on users.id = sent_messages.user_id where sent_messages.message_type_id = 4 and users.id = " . $_SESSION['authId'] . " order by sent_messages.created_at desc";
+																	$rsGrouping = mysqli_query($mysqli, $selGrouping);
+
+																	while($grouping = mysqli_fetch_assoc($rsGrouping)):
+																?>
+																<tr>
+																	<td><?php echo $grouping['batch_id'] ?></td>
+																	<td><?php echo $grouping['message'] ?></td>
+																	<td><?php echo $grouping['date_sent'] ?></td>
+																</tr>
+																<?php endwhile; ?>
+															</tbody>
+														</table>
+														<div class="clearfix"></div>
+													</div>
+													<div class="pt-20" id="g-new-message" style="display: none">
+														<div class="">
+															<button id="g-btn-cancel" type="button" class="btn btn-sm btn-primary pull-right">
+																<i class="fa fa-angle-left mr-10"></i> Cancel
+															</button>
+															<div class="clearfix"></div>
+														</div>
 														<div class="form-group" id="g-alert-message"></div>
 														<div class="form-group col-md-4 col-sm-12 col-xs-12">
 															<label for="g-sel-course" class="control-label mb-5 text-left">Courses</label>
@@ -318,7 +396,52 @@
 											</div>
 											<div  id="emergency_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
-													<div class="pt-20">
+													<div class="pt-20 mb-20" id="e-message-list">
+														<div class="">
+															<button id="e-btn-new" type="button" class="btn btn-sm btn-primary pull-right">
+																<i class="fa fa-plus mr-10"></i> New message
+															</button>
+															<div class="clearfix"></div>
+														</div>
+														<table class="table mb-0">
+															<thead>
+																<tr>
+																	<th>Batch ID</th>
+																	<th>Message</th>
+																	<th>User</th>
+																	<th>Date Sent</th>
+																	<th>Response Count</th>
+																	<th></th>
+																</tr>
+															</thead>
+															<tbody>
+																<?php
+																	$selEmergency = "select (select count(id) from response_messages where referring_batch_id = sent_messages.batch_id) as response_count, sent_messages.*, user_infos.*, date_format(sent_messages.created_at, '%b %e, %Y [ %H:%i:%s ]') as date_sent from sent_messages inner join (users inner join user_infos on user_infos.user_id = users.id) on users.id = sent_messages.user_id where sent_messages.message_type_id = 3 order by sent_messages.created_at desc";
+																	$rsEmergency = mysqli_query($mysqli, $selEmergency);
+
+																	while($emergency = mysqli_fetch_assoc($rsEmergency)):
+																?>
+																<tr>
+																	<td><?php echo $emergency['batch_id'] ?></td>
+																	<td><?php echo $emergency['message'] ?></td>
+																	<td><?php echo $emergency['last_name'] . ', ' . $emergency['first_name'] ?></td>
+																	<td><?php echo $emergency['date_sent'] ?></td>
+																	<td><?php echo $emergency['response_count'] ?></td>
+																	<td>
+																		<button data-id="<?php echo $emergency['batch_id'] ?>" id="e-btn-view" class="response-btn-view btn btn-primary btn-square btn-sm <?php echo $emergency['response_count'] > 0 ? '' : 'disabled' ?>" title="View Response" data-id="<?php echo $emergency['batch_id'] ?>"><i class="fa fa-eye"></i></button>
+																	</td>
+																</tr>
+																<?php endwhile; ?>
+															</tbody>
+														</table>
+													</div>
+													<div class="pt-20" id="e-new-message" style="display: none">
+														<div class="">
+															<button id="e-btn-cancel" type="button" class="btn btn-sm btn-primary pull-right">
+																<i class="fa fa-angle-left mr-10"></i> Cancel
+															</button>
+															<div class="clearfix"></div>
+														</div>
 														<div class="form-group" id="e-alert-message"></div>
 														<div class="form-group col-xs-12">
 															<label class="control-label mb-10 text-left">Message:</label>
@@ -334,7 +457,52 @@
 											<div  id="survey_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
 												<!-- Row -->
 												<div class="col-md-12">
-													<div class="pt-20">
+													<div class="pt-20 mb-20" id="s-message-list">
+														<div class="">
+															<button id="s-btn-new" type="button" class="btn btn-sm btn-primary pull-right">
+																<i class="fa fa-plus mr-10"></i> New message
+															</button>
+															<div class="clearfix"></div>
+														</div>
+														<table class="table mb-0">
+															<thead>
+																<tr>
+																	<th>Batch ID</th>
+																	<th>Message</th>
+																	<th>User</th>
+																	<th>Date Sent</th>
+																	<th>Response Count</th>
+																	<th></th>
+																</tr>
+															</thead>
+															<tbody>
+																<?php
+																	$selSurvey = "select (select count(id) from response_messages where referring_batch_id = sent_messages.batch_id) as response_count, sent_messages.*, user_infos.*, date_format(sent_messages.created_at, '%b %e, %Y [ %H:%i:%s ]') as date_sent from sent_messages inner join (users inner join user_infos on user_infos.user_id = users.id) on users.id = sent_messages.user_id where sent_messages.message_type_id = 2 order by sent_messages.created_at desc";
+																	$rsSurvey = mysqli_query($mysqli, $selSurvey);
+
+																	while($survey = mysqli_fetch_assoc($rsSurvey)):
+																?>
+																<tr>
+																	<td><?php echo $survey['batch_id'] ?></td>
+																	<td><?php echo $survey['message'] ?></td>
+																	<td><?php echo $survey['last_name'] . ', ' . $survey['first_name'] ?></td>
+																	<td><?php echo $survey['date_sent'] ?></td>
+																	<td><?php echo $survey['response_count'] ?></td>
+																	<td>
+																		<button data-id="<?php echo $survey['batch_id'] ?>" id="s-btn-view" class="response-btn-view btn btn-primary btn-square btn-sm <?php echo $survey['response_count'] > 0 ? '' : 'disabled' ?>" title="View Response" data-id="<?php echo $survey['batch_id'] ?>"><i class="fa fa-eye"></i></button>
+																	</td>
+																</tr>
+																<?php endwhile; ?>
+															</tbody>
+														</table>
+													</div>
+													<div class="pt-20" id="s-new-message" style="display: none">
+														<div class="">
+															<button id="s-btn-cancel" type="button" class="btn btn-sm btn-primary pull-right">
+																<i class="fa fa-angle-left mr-10"></i> Cancel
+															</button>
+															<div class="clearfix"></div>
+														</div>
 														<div class="form-group" id="s-alert-message"></div>
 														<div class="form-group">
 															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
@@ -585,7 +753,14 @@
 			// $("#a-sel-course").on('change', function(){
 			// 	fetchYear($(this).val());
 			// });
-
+			$("#a-btn-new").on("click", function(){
+				$("#a-new-message").show();
+				$("#a-message-list").hide();
+			});
+			$("#a-btn-cancel").on("click", function(){
+				$("#a-new-message").hide();
+				$("#a-message-list").show();
+			});
 			$("#a-send").on("click", function(){
 				var err = 0;
 				// if (!$("#a-check-prof").is(':checked') && !$("#a-check-stud").is(':checked')) {
@@ -620,6 +795,14 @@
 				fetchSections($(this).val());
 			});
 
+			$("#g-btn-new").on("click", function(){
+				$("#g-new-message").show();
+				$("#g-message-list").hide();
+			});
+			$("#g-btn-cancel").on("click", function(){
+				$("#g-new-message").hide();
+				$("#g-message-list").show();
+			});
 			$("#g-send").on("click", function(){
 				var err = 0;
 				if ($("#g-sel-students").val() == null) {
@@ -635,6 +818,14 @@
 				}
 			});
 
+			$("#e-btn-new").on("click", function(){
+				$("#e-new-message").show();
+				$("#e-message-list").hide();
+			});
+			$("#e-btn-cancel").on("click", function(){
+				$("#e-new-message").hide();
+				$("#e-message-list").show();
+			});
 			$("#e-send").on("click", function(){
 				if ($("#e-message").val().trim() == "") {
 					alert("Please compose a message.");
@@ -649,6 +840,14 @@
 			// $("#s-sel-course").on('change', function(){
 			// 	fetchYearS($(this).val());
 			// });
+			$("#s-btn-new").on("click", function(){
+				$("#s-new-message").show();
+				$("#s-message-list").hide();
+			});
+			$("#s-btn-cancel").on("click", function(){
+				$("#s-new-message").hide();
+				$("#s-message-list").show();
+			});
 			$("#s-send").on("click", function(){
 				var err = 0;
 				// if (!$("#s-check-prof").is(':checked') && !$("#s-check-stud").is(':checked')) {
@@ -675,6 +874,25 @@
 				} else {
 					sendSurvey("include/send_survey.php");
 				}
+			});
+			$(".response-btn-view").on("click", function(){
+				$(".preloader").show();
+				var id = $(this).data('id');
+				$.ajax({
+					url: '_fetch.php',
+					type: 'post',
+					data: { action: 'view-response', id: id },
+					success: function(response){
+						var result = $.parseJSON(response);
+
+						if (result['status'] == 'success') {
+							$("#viewResponseModal table tbody").html(result['output']);
+							$("#viewResponseModal #response-title").html('Response messages for: ' + id);
+							$("#viewResponseModal").modal('show');
+							$(".preloader").hide();
+						}
+					}
+				});
 			});
 
 			$("#g-sel-section").on('change', function(){
