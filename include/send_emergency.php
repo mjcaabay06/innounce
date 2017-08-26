@@ -8,7 +8,7 @@
 		$errorSending = array();
 		$data = array();
 		$num = '';
-
+		$response = '';
 		foreach(getAllReceivers() as $rcvr) {
 			$response = sendViaBulksms($rcvr['mobile_number'], $message);
 
@@ -23,7 +23,7 @@
 		#saveEmergency($message);
 
 		if(empty($errorSending)){
-			insertMessage($_SESSION['authId'],$message,3);
+			insertMessage($_SESSION['authId'],$message,3,$response);
 			$data['message'] = "Emergency message was sent to all recipients.";
 			$data['status'] = true;
 		}else{

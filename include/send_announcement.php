@@ -35,6 +35,7 @@
 			$data['message'] = "No enrollee for the year level: [" . implode(', ', $noLvl) . "]";
 			$data['status'] = "failed";
 		} else {
+			$response = "";
 			foreach ($hasLvl as $year) {
 				foreach (getStudentReceivers($year,$course) as $studNumber) {
 					$response = sendViaBulksms($studNumber['mobile_number'], $message);
@@ -50,7 +51,7 @@
 			}
 
 			if(empty($errorSending)){
-				insertMessage($_SESSION['authId'],$message,1);
+				insertMessage($_SESSION['authId'],$message,1,$response);
 				$data['message'] = "Announcement was sent to: [" . implode(', ', $hasWordLvl) . "]";
 				$data['status'] = "success";
 

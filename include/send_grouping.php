@@ -10,7 +10,7 @@
 		$errorSending = array();
 		$data = array();
 		$num = '';
-
+		$response = '';
 		foreach($students as $student) {
 			foreach (getStudentViaSection($student) as $studNumber) {
 				$response = sendViaBulksms($studNumber['mobile_number'], $message);
@@ -25,7 +25,7 @@
 		}
 
 		if(empty($errorSending)){
-			insertMessage($_SESSION['authId'],$message,4);
+			insertMessage($_SESSION['authId'],$message,4,$response);
 			$data['message'] = "Announcement was sent to all recipients.";
 			$data['status'] = true;
 		}else{
