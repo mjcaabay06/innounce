@@ -189,7 +189,7 @@
 													<span>announcement</span>
 												</a>
 											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] == 2 ? 'active' : 'hidden' ?>">
+											<li role="presentation" class="<?php echo $_SESSION['userType'] != 1 ? 'active' : 'hidden' ?>">
 												<a data-toggle="tab" id="grouping_tab_8" role="tab" href="#grouping_8" aria-expanded="false">
 													<span>announcement</span>
 												</a>
@@ -318,7 +318,7 @@
 													</div>
 												</div>
 											</div>
-											<div  id="grouping_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 2 ? 'in active' : 'hidden' ?>" role="tabpanel">
+											<div  id="grouping_8" class="tab-pane fade <?php echo $_SESSION['userType'] != 1 ? 'in active' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
 													<div class="pt-20 mb-20" id="g-message-list">
 														<div class="">
