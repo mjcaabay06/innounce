@@ -65,6 +65,9 @@
 							</div>
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
+									<div class="form-group">
+										<div id="del-alert-message"></div>
+									</div>
 									<div class="table-wrap">
 										<div class="table-responsive">
 											<table class="table mb-0">
@@ -98,7 +101,10 @@
 														<td id="mobile-<?php echo $student['student_id'] ?>"><?php echo $student['mobile_number'] ?></td>
 														<td id="course-<?php echo $student['student_id'] ?>"><?php echo $student['description'] ?></td>
 														<td id="level-<?php echo $student['student_id'] ?>"><?php echo $student['level'] ?></td>
-														<td><button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $student['student_id'] ?>"><i class="fa fa-pencil"></i></button></td>
+														<td>
+															<button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $student['student_id'] ?>"><i class="fa fa-pencil"></i></button>
+															<button id="btn-delete" class="btn-delete btn btn-primary btn-icon-anim btn-square btn-sm" title="Delete" data-id="<?php echo $student['student_id'] ?>"><i class="fa fa-trash-o"></i></button>
+														</td>
 													</tr>
 													<?php endwhile; ?>
 												</tbody>
@@ -186,6 +192,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
+					<input type="hidden" value="" name="hidden-studid">
 					<button type="button" class="btn btn-success waves-effect" id="btn-save-edit" data-id="">Save</button>
 					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
 				</div>
@@ -216,7 +223,7 @@
 				$("#tb-email").val($("#email-" + id).html());
 				$("#tb-mobile").val($("#mobile-" + id).html());
 				$("#btn-save-edit").attr("data-id", id);
-				console.log($("#course-id-" + id).val());
+				$('input[name=hidden-studid]').val(id);
 				fetchCourse($("#course-id-" + id).val());
 				//fetchSection($("#course-id-" + id).val(),$("#section-id-" + id).val());
 
@@ -227,8 +234,40 @@
 			// 	fetchSection($(this).val(),0);
 			// });
 
-			$("#btn-save-edit").on("click", function(){
+			$(".btn-delete").on("click", function(){
+				var answer = confirm('Are you sure you want to delete the student?');
 				var id = $(this).data('id');
+				var data = new Object();
+				data.id = id;
+
+				if (answer) {
+					$(".preloader").show();
+					$.ajax({
+						url: 'include/delete_maintenance.php',
+						type: 'post',
+						data: { action: 'student', params: data  },
+						success: function(response){
+							$(".preloader").hide();
+							var result = $.parseJSON(response);
+
+							if (result["status"] == 'success'){
+								$("table tr#row-" + id).remove();
+								$("#del-alert-message").html('<div class="alert alert-success">Student successfully deleted.</div>');
+								setTimeout(function(){
+									$("#del-alert-message").html('');
+								},1500);
+							} else {
+								$("#del-alert-message").html('<div class="alert alert-danger">There was and error deleting the student.</div>');
+							}
+
+						}
+					});
+				}
+			});
+
+			$("#btn-save-edit").on("click", function(){
+				var id = $('input[name=hidden-studid]').val();
+				console.log(id);
 
 				var data = new Object();
 				data.first_name = $("#tb-firstname").val();
@@ -237,7 +276,7 @@
 				data.email_address = $("#tb-email").val();
 				data.mobile_number = $("#tb-mobile").val();
 				data.course = $("#sel-course").val();
-				// data.section = $("#sel-section").val();
+				data.section = $("#sel-section").val();
 
 				$(".preloader").show();
 				$.ajax({
@@ -246,9 +285,7 @@
 					data: { action: 'get', studentId: id, params: data  },
 					success: function(response){
 						$(".preloader").hide();
-						console.log(response);
 						var result = $.parseJSON(response);
-						console.log(result["status"]);
 
 						if (result["status"] == 'success'){
 							$("#fname-" + id).html($("#tb-firstname").val());
