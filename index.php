@@ -819,11 +819,9 @@
 				// 	}
 				// }
 
-				// if ($("#a-check-stud").is(':checked')) {
-				// 	if ($("#a-sel-stud").val() == null) {
-				// 		err += 1;
-				// 	}
-				// }
+				if ($("#a-sel-year").val() == null) {
+					err += 1;
+				}
 
 				if (err > 0) {
 					alert("Please select a recipient.");
@@ -853,6 +851,10 @@
 				var err = 0;
 				<?php if ($rowUser['user_type_id'] == 2): ?>
 					if ($("#g-sel-students").val() == null) {
+						err += 1;
+					}
+				<?php else: ?>
+					if ($("#g-sel-year").val() == null) {
 						err += 1;
 					}
 				<?php endif; ?>
@@ -919,6 +921,10 @@
 					if ($("#s-sel-stud").val() == null) {
 						err += 1;
 					}
+				}
+
+				if ($("#s-sel-year").val() == null) {
+					err += 1;
 				}
 
 				if (err > 0) {
