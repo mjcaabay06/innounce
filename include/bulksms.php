@@ -31,14 +31,14 @@ $transient_errors = array(
 */
 //print_ln("Script ran to completion");
 
-// function print_ln($content) {
-//   if (isset($_SERVER["SERVER_NAME"])) {
-//     print $content."<br />";
-//   }
-//   else {
-//     print $content."\n";
-//   }
-// }
+function print_ln($content) {
+  if (isset($_SERVER["SERVER_NAME"])) {
+    print $content."<br />";
+  }
+  else {
+    print $content."\n";
+  }
+}
 
 function formatted_server_response( $result ) {
   $this_result = "";
