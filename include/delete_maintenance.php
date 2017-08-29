@@ -74,6 +74,34 @@
 					$out['message'] = mysqli_error($mysqli);
 				}
 				break;
+			case 'role':
+				$del = "delete from user_types where id = " . $data['id'];
+				$rs = mysqli_query($mysqli, $del);
+				if ($rs !== false) {
+					$out['status'] = 'success';
+				} else {
+					$out['status'] = 'failed';
+					$out['message'] = mysqli_error($mysqli);
+				}
+				break;
+			case 'section':
+				$del = "delete from school_fix_sections where id = " . $data['id'];
+				$rs = mysqli_query($mysqli, $del);
+				if ($rs !== false) {
+					$delSection = "delete from school_sections where id = " . $data['id'];
+					$rsSection = mysqli_query($mysqli, $delSection);
+					if ($rsSection !== false) {
+						$out['status'] = 'success';
+					}else {
+						$out['status'] = 'failed';
+						$out['message'] = mysqli_error($mysqli);
+					}
+					
+				} else {
+					$out['status'] = 'failed';
+					$out['message'] = mysqli_error($mysqli);
+				}
+				break;
 			default:
 				# code...
 				break;

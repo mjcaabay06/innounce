@@ -28,6 +28,30 @@
 	</div>
 </div>
 
+<div id="changePassword" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Change your password.</h5>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group" id="alert-change-message">
+					</div>
+					<div class="form-group col-sm-6 col-sm-offset-3">
+						<input type="password" class="form-control col-sm-6 text-center" id="tb-change-password" placeholder="Enter new password">
+						<div class="hidden" style="color: #cc0000" id="panel-change-error"></div>
+						<div class="clearfix"></div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer" style="text-align: center">
+				<button type="button" id="btn-change-save" class="btn btn-danger">Save Password</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <div id="disableLoginFailure" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog modal-sm">

@@ -65,6 +65,9 @@
 							</div>
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
+									<div class="form-group">
+										<div id="del-alert-message"></div>
+									</div>
 									<div class="table-wrap">
 										<div class="table-responsive">
 											<table class="table mb-0">

@@ -65,6 +65,9 @@
 							</div>
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
+									<div class="form-group">
+										<div id="del-alert-message"></div>
+									</div>
 									<div class="table-wrap">
 										<div class="table-responsive">
 											<table class="table mb-0">
@@ -85,7 +88,10 @@
 													<tr id="row-<?php echo $row['id'] ?>" class="txt-dark">
 														<td id=""><?php echo $row['id'] ?></td>
 														<td id="type-<?php echo $row['id'] ?>"><?php echo $row['type'] ?></td>
-														<td><button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $row['id'] ?>"><i class="fa fa-pencil"></i></button></td>
+														<td>
+															<button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $row['id'] ?>"><i class="fa fa-pencil"></i></button>
+															<button id="btn-delete" class="btn-delete btn btn-primary btn-icon-anim btn-square btn-sm" title="Delete" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-o"></i></button>
+														</td>
 													</tr>
 													<?php endwhile; ?>
 												</tbody>
@@ -187,6 +193,37 @@
 				// $("#edit-modal").modal('show');
 				fetchCourseHandle(id);
 				
+			});
+
+			$(".btn-delete").on("click", function(){
+				var answer = confirm('Are you sure you want to delete the user role?');
+				var id = $(this).data('id');
+				var data = new Object();
+				data.id = id;
+
+				if (answer) {
+					$(".preloader").show();
+					$.ajax({
+						url: 'include/delete_maintenance.php',
+						type: 'post',
+						data: { action: 'role', params: data  },
+						success: function(response){
+							$(".preloader").hide();
+							var result = $.parseJSON(response);
+
+							if (result["status"] == 'success'){
+								$("table tr#row-" + id).remove();
+								$("#del-alert-message").html('<div class="alert alert-success">User role successfully deleted.</div>');
+								setTimeout(function(){
+									$("#del-alert-message").html('');
+								},1500);
+							} else {
+								$("#del-alert-message").html('<div class="alert alert-danger">There was and error deleting the user role.</div>');
+							}
+
+						}
+					});
+				}
 			});
 
 			$("#btn-save-edit").on("click", function(){

@@ -14,18 +14,18 @@
 
 				$message = 'Your activation code is ' . $activationCode . '. And your Password: ' . $_POST['userpass'];
 
-				$response = sendViaBulksms(trim($_POST['mobile']), $message);
+				// $response = sendViaBulksms(trim($_POST['mobile']), $message);
 
-				// if(empty($response) || !isset($response[0]->status)){
-				// 	if(isset($response[0])){ //different error
-				// 		$diffError = $response[0];
-				// 	}
+				// // if(empty($response) || !isset($response[0]->status)){
+				// // 	if(isset($response[0])){ //different error
+				// // 		$diffError = $response[0];
+				// // 	}
+				// // 	$errorSending = $_POST['mobile'];
+				// // }
+
+				// if (!$response['success']) {
 				// 	$errorSending = $_POST['mobile'];
 				// }
-
-				if (!$response['success']) {
-					$errorSending = $_POST['mobile'];
-				}
 				
 				if(empty($errorSending)){
 					echo "Activation code was sent to your mobile number.";

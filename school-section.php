@@ -65,6 +65,9 @@
 							</div>
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
+									<div class="form-group">
+										<div id="del-alert-message"></div>
+									</div>
 									<div class="table-wrap">
 										<div class="table-responsive">
 											<table class="table mb-0">
@@ -91,7 +94,10 @@
 														<td id="section-<?php echo $row['id'] ?>"><?php echo $row['section'] ?></td>
 														<td id="description-<?php echo $row['id'] ?>"><?php echo $row['description'] ?></td>
 														<td id="course-<?php echo $row['id'] ?>"><?php echo $row['course'] ?></td>
-														<td><button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $row['id'] ?>"><i class="fa fa-pencil"></i></button></td>
+														<td>
+															<button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $row['id'] ?>"><i class="fa fa-pencil"></i></button>
+															<button id="btn-delete" class="btn-delete btn btn-primary btn-icon-anim btn-square btn-sm" title="Delete" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-o"></i></button>
+														</td>
 													</tr>
 													<?php endwhile; ?>
 												</tbody>
@@ -202,6 +208,37 @@
 				$("#btn-save-edit").attr("data-id", id);
 				$("#edit-modal").modal('show');
 				
+			});
+
+			$(".btn-delete").on("click", function(){
+				var answer = confirm('Are you sure you want to delete the section?');
+				var id = $(this).data('id');
+				var data = new Object();
+				data.id = id;
+
+				if (answer) {
+					$(".preloader").show();
+					$.ajax({
+						url: 'include/delete_maintenance.php',
+						type: 'post',
+						data: { action: 'section', params: data  },
+						success: function(response){
+							$(".preloader").hide();
+							var result = $.parseJSON(response);
+
+							if (result["status"] == 'success'){
+								$("table tr#row-" + id).remove();
+								$("#del-alert-message").html('<div class="alert alert-success">Section successfully deleted.</div>');
+								setTimeout(function(){
+									$("#del-alert-message").html('');
+								},1500);
+							} else {
+								$("#del-alert-message").html('<div class="alert alert-danger">There was and error deleting the section.</div>');
+							}
+
+						}
+					});
+				}
 			});
 
 			$("#btn-save-edit").on("click", function(){

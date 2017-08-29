@@ -17,6 +17,10 @@
 				<a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown"><img src="dist/img/user1.png" alt="user_auth" class="user-auth-img img-circle"/><span class="user-online-status"></span></a>
 				<ul class="dropdown-menu user-auth-dropdown" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
 					<li>
+						<a href="#" data-toggle="modal" data-target="#changePassword"><i class="fa fa-refresh"></i><span>Change Password</span></a>
+					</li>
+					<li class="divider"></li>
+					<li>
 						<a href="#" data-toggle="modal" data-target="#disableLoginFailure"><i class="zmdi zmdi-settings"></i><span>Disable Login Failure</span></a>
 					</li>
 					<li class="divider"></li>

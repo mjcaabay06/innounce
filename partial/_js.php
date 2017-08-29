@@ -70,6 +70,30 @@
 			}
 		});
 
+		$("#tb-change-password").focusout(function(){
+			checkChangePassword();
+		});
+		$("#btn-change-save").on("click", function(){
+			if (checkChangePassword()) {
+				$(".preloader").show();
+				$.ajax({
+					url: 'include/admin_functions.php',
+					type: 'post',
+					data: { action: 'change-password', pwd: $("#tb-change-password").val(), userId: <?php echo $_SESSION['authId'] ?>  },
+					success: function(response){
+						console.log(response);
+						$("#alert-change-message").html('<div class="alert alert-success">' + response + '</div>');
+						setTimeout(function(){
+							$("#changePassword").modal('hide');
+							$("#tb-change-password").val('');
+							$("#panel-change-error").html('');
+						},1500);
+						$(".preloader").hide();
+					}
+				});
+			}
+		});
+
 		$("#btn-disable-off").on('click', function(){
 			if (!$(this).hasClass('disabled')){
 				$("#tb-disable-login").val(0);
@@ -171,6 +195,45 @@
 			},1000);
 			$("#panel-error").html('');
 			$("#panel-error").addClass("hidden");
+			return 1;
+		}
+	}
+	function checkChangePassword() {
+		var pwd = $("#tb-change-password").val();
+		var sc = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+		var num = /[1234567890]/;
+		var capital = /[ABCDEFGHIJKLMNOPQRSTUVWXYZ]/;
+		var error = '';
+		var cntError = 0;
+
+		if (pwd.length < 8) {
+			error += '&bull; Must at least eight (8) characters long.<br/>';
+			cntError += 1;
+		}
+
+		if (sc.test(pwd) == false || num.test(pwd) == false) {
+			error += '&bull; Must have at least one(1) numeric and special character.<br/>';
+			cntError += 1;
+		}
+
+		if (capital.test(pwd) == false) {
+			error += '&bull; Must have at least one(1) capital letter.<br/>';
+			cntError += 1;
+		}
+
+		if (cntError > 0) {
+			$("#tb-change-password").css('border-color', 'rgb(204,0,0)');
+			$("#panel-change-error").html(error);
+			$("#panel-change-error").removeClass("hidden");
+			return 0;
+		} else {
+			//$("#tb-password").addClass("passed");
+			$("#tb-change-password").css('border-color', 'rgb(0,128,0)')
+			setTimeout(function(){
+				$("#tb-change-password").css('border-color', 'rgba(33, 33, 33, 0.12)');
+			},1000);
+			$("#panel-change-error").html('');
+			$("#panel-change-error").addClass("hidden");
 			return 1;
 		}
 	}

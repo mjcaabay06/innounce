@@ -83,7 +83,7 @@
 												</thead>
 												<tbody>
 													<?php
-														$selStaff = "select *, departments.id as dep_id from users inner join user_infos on users.id = user_infos.user_id inner join user_types on users.user_type_id = user_types.id inner join departments on departments.id = users.department_id where users.id != " . $_SESSION['authId'];
+														$selStaff = "select *, departments.id as dep_id from users inner join user_infos on users.id = user_infos.user_id inner join user_types on users.user_type_id = user_types.id left join departments on departments.id = users.department_id where users.id != " . $_SESSION['authId'];
 														$rsStaff = mysqli_query($mysqli, $selStaff);
 
 														while($staff = mysqli_fetch_assoc($rsStaff)):
