@@ -41,17 +41,19 @@
 				break;
 			case 'chairman':
 				$message = $_POST['message'];
-				$year = $_POST['year'];
+				$years = $_POST['year'];
 				$depId = $_POST['depId'];
 
-				foreach (getStudentViaDeparment($year, $depId) as $studNumber) {
-					$response = sendViaBulksms($studNumber['mobile_number'], $message);
+				foreach($years as $year) {
+					foreach (getStudentViaDeparment($year, $depId) as $studNumber) {
+						$response = sendViaBulksms($studNumber['mobile_number'], $message);
 
-					// if(empty($response) || !isset($response[0]->status)){
-					// 	$errorSending[] = $studNumber['name'];
-					// }
-					if (!$response['success']) {
-						$errorSending[] = $studNumber['name'];
+						// if(empty($response) || !isset($response[0]->status)){
+						// 	$errorSending[] = $studNumber['name'];
+						// }
+						if (!$response['success']) {
+							$errorSending[] = $studNumber['name'];
+						}
 					}
 				}
 
@@ -70,17 +72,19 @@
 				break;
 			case 'dean':
 				$message = $_POST['message'];
-				$year = $_POST['year'];
+				$years = $_POST['year'];
 				$course = $_POST['course'];
 
-				foreach (getStudentReceivers($year, $course) as $studNumber) {
-					$response = sendViaBulksms($studNumber['mobile_number'], $message);
+				foreach($years as $year) {
+					foreach (getStudentReceivers($year, $course) as $studNumber) {
+						$response = sendViaBulksms($studNumber['mobile_number'], $message);
 
-					// if(empty($response) || !isset($response[0]->status)){
-					// 	$errorSending[] = $studNumber['name'];
-					// }
-					if (!$response['success']) {
-						$errorSending[] = $studNumber['name'];
+						// if(empty($response) || !isset($response[0]->status)){
+						// 	$errorSending[] = $studNumber['name'];
+						// }
+						if (!$response['success']) {
+							$errorSending[] = $studNumber['name'];
+						}
 					}
 				}
 

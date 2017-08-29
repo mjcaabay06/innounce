@@ -851,9 +851,11 @@
 			});
 			$("#g-send").on("click", function(){
 				var err = 0;
-				if ($("#g-sel-students").val() == null) {
-					err += 1;
-				}
+				<?php if ($rowUser['user_type_id'] == 2): ?>
+					if ($("#g-sel-students").val() == null) {
+						err += 1;
+					}
+				<?php endif; ?>
 
 				if (err > 0) {
 					alert("Please select a recipient.");

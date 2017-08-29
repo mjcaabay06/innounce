@@ -74,7 +74,7 @@
 	}
 
 	function sendViaBulksms($mobile, $message) {
-		require 'bulksms.php';
+		require_once('bulksms.php');
 
 		$mobile = substr_replace($mobile, '63', 0, 1);
 		$post_body = seven_bit_sms($message, $mobile);
