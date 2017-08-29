@@ -10,6 +10,7 @@
 	$subject = array('subject.php', 'add-subject.php');
 	$course = array('course.php', 'add-course.php');
 	$userRole = array('user-roles.php', 'add-user-role.php');
+	$department = array('department.php', 'add-department.php');
 
 	$enroll = array('enroll.php', 'add-enrollee.php', 'update-enrollee-subjects.php');
 ?>
@@ -67,6 +68,13 @@
 					<div class="pull-left">
 						<i class="fa fa-child mr-20"></i>
 						<span class="right-nav-text">user Role</span>
+					</div>
+					<div class="clearfix"></div>
+				</a>
+				<a <?php echo in_array($page, $department) ? 'class="active"' : '' ?> href="department.php">
+					<div class="pull-left">
+						<i class="fa fa-certificate mr-20"></i>
+						<span class="right-nav-text">department</span>
 					</div>
 					<div class="clearfix"></div>
 				</a>

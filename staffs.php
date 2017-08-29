@@ -77,12 +77,13 @@
 														<th>Email</th>
 														<th>Mobile</th>
 														<th>User Type</th>
+														<th>Department</th>
 														<th></th>
 													</tr>
 												</thead>
 												<tbody>
 													<?php
-														$selStaff = "select * from users inner join user_infos on users.id = user_infos.user_id inner join user_types on users.user_type_id = user_types.id where users.id != " . $_SESSION['authId'];
+														$selStaff = "select *, departments.id as dep_id from users inner join user_infos on users.id = user_infos.user_id inner join user_types on users.user_type_id = user_types.id inner join departments on departments.id = users.department_id where users.id != " . $_SESSION['authId'];
 														$rsStaff = mysqli_query($mysqli, $selStaff);
 
 														while($staff = mysqli_fetch_assoc($rsStaff)):
@@ -90,6 +91,7 @@
 													<tr id="row-staff<?php echo $staff['user_id'] ?>" class="<?php echo $staff['status_id'] == 2 ? 'success' : 'txt-dark' ?>">
 														<input type="hidden" id="type-<?php echo $staff['user_id'] ?>" value="<?php echo $staff['user_type_id'] ?>">
 														<input type="hidden" id="status-<?php echo $staff['user_id'] ?>" value="<?php echo $staff['status_id'] ?>">
+														<input type="hidden" id="dep-id-<?php echo $staff['user_id'] ?>" value="<?php echo $staff['dep_id'] ?>">
 														<td id=""><?php echo $staff['user_id'] ?></td>
 														<td id="fname-<?php echo $staff['user_id'] ?>"><?php echo $staff['first_name'] ?></td>
 														<td id="mname-<?php echo $staff['user_id'] ?>"><?php echo $staff['middle_name'] ?></td>
@@ -97,6 +99,7 @@
 														<td id="email-<?php echo $staff['user_id'] ?>"><?php echo $staff['email_address'] ?></td>
 														<td id="mobile-<?php echo $staff['user_id'] ?>"><?php echo $staff['mobile_number'] ?></td>
 														<td id="user-type-<?php echo $staff['user_id'] ?>"><?php echo $staff['type'] ?></td>
+														<td id="department-<?php echo $staff['user_id'] ?>"><?php echo $staff['description'] ?></td>
 														<td>
 															<button id="btn-view" class="btn-view btn btn-primary btn-icon-anim btn-square btn-sm" title="View Sections" data-id="<?php echo $staff['user_id'] ?>"><i class="fa fa-eye"></i></button>
 															<button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $staff['user_id'] ?>"><i class="fa fa-pencil"></i></button>
@@ -176,6 +179,19 @@
 													<div class="form-group">
 														<label class="control-label mb-10" for="sel-type">User Type</label>
 														<select class="form-control" id="sel-type">
+														</select>
+													</div>
+													<div class="form-group">
+														<label class="control-label mb-10" for="sel-type">Department</label>
+														<select class="form-control" id="sel-deparment">
+															<?php
+																$selDep = "select * from departments";
+																$rsDep = mysqli_query($mysqli, $selDep);
+
+																while($dep = mysqli_fetch_assoc($rsDep)):
+															?>
+																<option value="<?php echo $dep['id'] ?>"><?php echo $dep['description'] ?></option>
+															<?php endwhile; ?>
 														</select>
 													</div>
 													<div class="form-group">
@@ -266,7 +282,7 @@
 			$(".btn-edit").on("click",function(){
 				$("#edit-alert-message").html('');
 				var id = $(this).data('id');
-
+				console.log($("#dep-id-" + id).val());
 				$("#tb-firstname").val($("#fname-" + id).html());
 				$("#tb-middlename").val($("#mname-" + id).html());
 				$("#tb-lastname").val($("#lname-" + id).html());
@@ -274,6 +290,7 @@
 				$("#tb-mobile").val($("#mobile-" + id).html());
 				$("#sel-type").val($("#type-" + id).val());
 				$("#sel-status").val($("#status-" + id).val());
+				$("#sel-deparment").val($("#dep-id-" + id).val());
 				$('input[name=hidden-staffid]').val(id);
 				$("#btn-save-edit").attr("data-id", id);
 				type($("#type-" + id).val());
@@ -309,6 +326,7 @@
 				data.mobile_number = $("#tb-mobile").val();
 				data.user_type = $("#sel-type").val();
 				data.status = $("#sel-status").val();
+				data.department = $("#sel-deparment").val();
 
 				$(".preloader").show();
 				$.ajax({
@@ -330,6 +348,8 @@
 							$("#user-type-" + id).html($("#sel-type option:selected").text());
 							$("#type-" + id).val($("#sel-type").val());
 							$("#status-" + id).val($("#sel-status").val());
+							$("#dep-id-" + id).val($("#sel-deparment").val());
+							$("#department-" + id).html($("#sel-deparment option:selected").text());
 
 							if ($("#sel-status").val() == '1') {
 								$("#row-staff" + id).removeClass('success');

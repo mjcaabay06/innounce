@@ -87,7 +87,10 @@
 														<td id=""><?php echo $row['id'] ?></td>
 														<td id="description-<?php echo $row['id'] ?>"><?php echo $row['description'] ?></td>
 														<td id="acronym-<?php echo $row['id'] ?>"><?php echo $row['acronym'] ?></td>
-														<td><button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $row['id'] ?>"><i class="fa fa-pencil"></i></button></td>
+														<td>
+															<button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $row['id'] ?>"><i class="fa fa-pencil"></i></button>
+															<button id="btn-delete" class="btn-delete btn btn-primary btn-icon-anim btn-square btn-sm" title="Delete" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-o"></i></button>
+														</td>
 													</tr>
 													<?php endwhile; ?>
 												</tbody>
@@ -177,8 +180,6 @@
 		$(document).ready(function(){
 			keyNumber();
 			
-			
-
 			$(".btn-edit").on("click",function(){
 				$("#edit-alert-message").html('');
 				var id = $(this).data('id');
@@ -189,6 +190,37 @@
 				$("#btn-save-edit").attr("data-id", id);
 				$("#edit-modal").modal('show');
 				
+			});
+
+			$(".btn-delete").on("click", function(){
+				var answer = confirm('Are you sure you want to delete the course?');
+				var id = $(this).data('id');
+				var data = new Object();
+				data.id = id;
+
+				if (answer) {
+					$(".preloader").show();
+					$.ajax({
+						url: 'include/delete_maintenance.php',
+						type: 'post',
+						data: { action: 'course', params: data  },
+						success: function(response){
+							$(".preloader").hide();
+							var result = $.parseJSON(response);
+
+							if (result["status"] == 'success'){
+								$("table tr#row-" + id).remove();
+								$("#del-alert-message").html('<div class="alert alert-success">Course successfully deleted.</div>');
+								setTimeout(function(){
+									$("#del-alert-message").html('');
+								},1500);
+							} else {
+								$("#del-alert-message").html('<div class="alert alert-danger">There was and error deleting the course.</div>');
+							}
+
+						}
+					});
+				}
 			});
 
 			$("#btn-save-edit").on("click", function(){

@@ -58,38 +58,33 @@
 						<div class="panel panel-default card-view">
 							<div class="panel-heading">
 								<div class="pull-left">
-									<h6 class="panel-title txt-dark">Year Levels</h6>
+									<h6 class="panel-title txt-dark">Departments</h6>
 								</div>
-								<a href="add-year-level.php" class="pull-right btn btn-primary btn-circle btn-sm" title="Add year level"><i class="fa fa-plus" style="color: #fff"></i></a>
+								<a href="add-department.php" class="pull-right btn btn-primary btn-circle btn-sm" title="Add department"><i class="fa fa-plus" style="color: #fff"></i></a>
 								<div class="clearfix"></div>
 							</div>
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
-									<div class="form-group">
-										<div id="del-alert-message"></div>
-									</div>
 									<div class="table-wrap">
 										<div class="table-responsive">
 											<table class="table mb-0">
 												<thead>
 													<tr>
 														<th>#</th>
-														<th>Level</th>
-														<th>Description</th>
+														<th>Department</th>
 														<th></th>
 													</tr>
 												</thead>
 												<tbody>
 													<?php
-														$sel = "select * from school_levels";
+														$sel = "select * from departments";
 														$rs = mysqli_query($mysqli, $sel);
 
 														while($row = mysqli_fetch_assoc($rs)):
 													?>
 													<tr id="row-<?php echo $row['id'] ?>" class="txt-dark">
 														<td id=""><?php echo $row['id'] ?></td>
-														<td id="level-<?php echo $row['id'] ?>"><?php echo $row['level'] ?></td>
-														<td id="description-<?php echo $row['id'] ?>"><?php echo $row['description'] ?></td>
+														<td id="department-<?php echo $row['id'] ?>"><?php echo $row['description'] ?></td>
 														<td>
 															<button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $row['id'] ?>"><i class="fa fa-pencil"></i></button>
 															<button id="btn-delete" class="btn-delete btn btn-primary btn-icon-anim btn-square btn-sm" title="Delete" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash-o"></i></button>
@@ -132,7 +127,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h5 class="modal-title" id="myModalLabel">Edit Year Level</h5>
+					<h5 class="modal-title" id="myModalLabel">Edit Department</h5>
 				</div>
 				<div class="modal-body">
 					<!-- Row -->
@@ -146,14 +141,9 @@
 												<form action="#">
 													<div class="form-group" id="edit-alert-message"></div>
 													<div class="form-group">
-														<label class="control-label mb-10" for="tb-level">Level</label>
-														<input type="text" class="form-control number-only" name="tb-level" required="" id="tb-level" placeholder="Enter level">
+														<label class="control-label mb-10" for="tb-department">Department</label>
+														<input type="text" class="form-control" name="tb-code" required="" id="tb-department" placeholder="Enter department">
 													</div>
-													<div class="form-group">
-														<label class="control-label mb-10" for="tb-description">Description</label>
-														<input type="text" class="form-control" required="" name="tb-description" id="tb-description" placeholder="Enter description">
-													</div>
-													
 												</form>
 											</div>
 										</div>
@@ -164,7 +154,7 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<input type="hidden" value="" name="hidden-ylid">
+					<input type="hidden" value="" name="hidden-did">
 					<button type="button" class="btn btn-success waves-effect" id="btn-save-edit" data-id="">Save</button>
 					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
 				</div>
@@ -183,23 +173,20 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			keyNumber();
-			
-			
 
 			$(".btn-edit").on("click",function(){
 				$("#edit-alert-message").html('');
 				var id = $(this).data('id');
 
-				$("#tb-level").val($("#level-" + id).html());
-				$("#tb-description").val($("#description-" + id).html());
-				$('input[name=hidden-ylid]').val(id);
+				$("#tb-department").val($("#department-" + id).html());
+				$('input[name=hidden-did]').val(id);
 				$("#btn-save-edit").attr("data-id", id);
 				$("#edit-modal").modal('show');
 				
 			});
 
 			$(".btn-delete").on("click", function(){
-				var answer = confirm('Are you sure you want to delete the year level?');
+				var answer = confirm('Are you sure you want to delete the department?');
 				var id = $(this).data('id');
 				var data = new Object();
 				data.id = id;
@@ -209,19 +196,19 @@
 					$.ajax({
 						url: 'include/delete_maintenance.php',
 						type: 'post',
-						data: { action: 'year-level', params: data  },
+						data: { action: 'department', params: data  },
 						success: function(response){
 							$(".preloader").hide();
 							var result = $.parseJSON(response);
 
 							if (result["status"] == 'success'){
 								$("table tr#row-" + id).remove();
-								$("#del-alert-message").html('<div class="alert alert-success">Year level successfully deleted.</div>');
+								$("#del-alert-message").html('<div class="alert alert-success">Department successfully deleted.</div>');
 								setTimeout(function(){
 									$("#del-alert-message").html('');
 								},1500);
 							} else {
-								$("#del-alert-message").html('<div class="alert alert-danger">There was and error deleting the year level.</div>');
+								$("#del-alert-message").html('<div class="alert alert-danger">There was and error deleting the department.</div>');
 							}
 
 						}
@@ -230,31 +217,30 @@
 			});
 
 			$("#btn-save-edit").on("click", function(){
-				var id = $('input[name=hidden-ylid]').val();
+				var id = $('input[name=hidden-did]').val();
 
 				var data = new Object();
-				data.level = $("#tb-level").val();
-				data.description = $("#tb-description").val();
+				data.id = id;
+				data.department = $("#tb-department").val();
 
 				$(".preloader").show();
 				$.ajax({
 					url: 'include/edit_maintenance.php',
 					type: 'post',
-					data: { action: 'school-level', id: id, params: data  },
+					data: { action: 'school-department', id: id, params: data  },
 					success: function(response){
 						$(".preloader").hide();
 						var result = $.parseJSON(response);
 
 						if (result["status"] == 'success'){
-							$("#level-" + id).html($("#tb-level").val());
-							$("#description-" + id).html($("#tb-description").val());
+							$("#department-" + id).html($("#tb-department").val());
 
-							$("#edit-alert-message").html('<div class="alert alert-success">Year level successfully updated.</div>');
+							$("#edit-alert-message").html('<div class="alert alert-success">Department successfully updated.</div>');
 							setTimeout(function(){
 								$("#edit-modal").modal('hide');
 							},1000);
 						} else {
-							$("#edit-alert-message").html('<div class="alert alert-danger">There was and error updating the year level.</div>');
+							$("#edit-alert-message").html('<div class="alert alert-danger">There was and error updating the department.</div>');
 						}
 
 					}

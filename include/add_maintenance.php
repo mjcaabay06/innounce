@@ -146,6 +146,17 @@
 					}
 				}
 				break;
+			case 'school-department':
+				$insDepartment = "insert into departments(description) values('" . $data['department'] . "')";
+				$rsInsDepartment = mysqli_query($mysqli, $insDepartment);
+				if ($rsInsDepartment !== false) {
+					$out['status'] = 'success';
+				} else {
+					$out['status'] = 'error';
+					$out['message'] = mysqli_error($mysqli);
+				}
+				break;
+				break;
 			default:
 				# code...
 				break;

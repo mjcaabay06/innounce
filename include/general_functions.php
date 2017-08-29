@@ -226,6 +226,24 @@
 		return $data;
 	}
 
+	function getStudentViaDeparment($year, $depId) {
+		global $mysqli;
+
+		$selSection = "select students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id inner join (school_courses inner join departments on departments.id = school_courses.department_id) on school_courses.id = students.course_id where departments.id = " . $depId . " and school_sections.school_level_id = " . $year;
+		$rsSection = mysqli_query($mysqli, $selSection);
+
+		$data = array();
+		while($studNumber = mysqli_fetch_assoc($rsSection)) {
+			$studData = array(
+					'name' => '[' . $studNumber['last_name'] . ',' . $studNumber['first_name'] . '(' . $studNumber['section'] . ')]',
+					'mobile_number' => $studNumber['mobile_number']
+					);
+			array_push($data, $studData);
+		}
+
+		return $data;
+	}
+
 	function getProfReceivers($id) {
 		global $mysqli;
 

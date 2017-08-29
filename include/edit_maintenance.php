@@ -126,6 +126,17 @@
 				}
 
 				break;
+			case 'school-department':
+				$upDepartment = "update departments set description = '" . $data['department'] . "' where id = " . $data['id'];
+				$rsDepartment = mysqli_query($mysqli, $upDepartment);
+				if ($rsDepartment !== false) {
+					$out['status'] = 'success';
+				} else {
+					$out['status'] = 'failed';
+					$out['message'] = mysqli_error($mysqli);
+				}
+				break;
+				break;
 			default:
 				# code...
 				break;

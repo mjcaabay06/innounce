@@ -135,6 +135,19 @@
 																<?php endwhile; ?>
 															</select>
 														</div>
+														<div class="form-group">
+															<label class="control-label mb-10" for="sel-type">Department</label>
+															<select class="form-control" id="sel-deparment">
+																<?php
+																	$selDep = "select * from departments";
+																	$rsDep = mysqli_query($mysqli, $selDep);
+
+																	while($dep = mysqli_fetch_assoc($rsDep)):
+																?>
+																	<option value="<?php echo $dep['id'] ?>"><?php echo $dep['description'] ?></option>
+																<?php endwhile; ?>
+															</select>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -199,6 +212,7 @@
 					data.mobile_number = $("#tb-mobile").val();
 					data.username = $("#tb-username").val();
 					data.user_type = $("#sel-type").val();
+					data.department = $("#sel-deparment").val();
 
 					$(".preloader").show();
 					$.ajax({

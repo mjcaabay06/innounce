@@ -268,22 +268,24 @@
 														<div class="form-group">
 															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
 															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
-																<!-- <div class="checkbox checkbox-success">
-																	<input id="a-check-prof" type="checkbox">
-																	
-																</div> -->
-																<!-- <label class="control-label mb-5 text-left">Professors</label> -->
-																<label for="a-sel-course" class="control-label mb-5 text-left">Courses</label>
-																<select class="form-control" id="a-sel-course">
-																	<?php 
-																		$selCourses = "select * from school_courses";
-																		$rsCourse = mysqli_query($mysqli, $selCourses);
+																<div class="mb-20">
+																	<label for="a-sel-course" class="control-label mb-5 text-left">Department:</label>
+																	<select class="form-control" id="a-sel-department">
+																		<?php 
+																			$selDep = "select * from departments";
+																			$rsDep = mysqli_query($mysqli, $selDep);
 
-																		while($course = mysqli_fetch_assoc($rsCourse)):
-																	?>
-																		<option value="<?php echo $course['id'] ?>"><?php echo $course['description'] ?></option>
-																	<?php endwhile; ?>
-																</select>
+																			while($dep = mysqli_fetch_assoc($rsDep)):
+																		?>
+																			<option value="<?php echo $dep['id'] ?>"><?php echo $dep['description'] ?></option>
+																		<?php endwhile; ?>
+																	</select>
+																</div>
+																<div>
+																	<label for="a-sel-course" class="control-label mb-5 text-left">Course:</label>
+																	<select class="form-control" id="a-sel-course">
+																	</select>
+																</div>
 															</div>
 															<div class="form-group col-md-4 col-sm-12 col-xs-12">
 																<!-- <div class="checkbox checkbox-success">
@@ -358,6 +360,9 @@
 															<div class="clearfix"></div>
 														</div>
 														<div class="form-group" id="g-alert-message"></div>
+														
+														<!-- PROFESSOR -->
+														<?php if ($rowUser['user_type_id'] == 2): ?>
 														<div class="form-group col-md-4 col-sm-12 col-xs-12">
 															<label for="g-sel-course" class="control-label mb-5 text-left">Courses</label>
 															<select class="form-control" id="g-sel-course">
@@ -382,6 +387,44 @@
 															<select multiple class="form-control" id="g-sel-students" style="height: 200px">
 															</select>
 														</div>
+														<?php endif; ?>
+														<!-- END PROFESSOR -->
+
+														<!-- DEAN -->
+														<?php if (in_array($rowUser['user_type_id'], array(8))): ?>
+														<div class="form-group col-md-4 col-sm-12 col-xs-12">
+															<label for="g-sel-course" class="control-label mb-5 text-left">Courses</label>
+															<select class="form-control" id="g-sel-course">
+																<?php 
+																	$selCourses = "select * from school_courses where department_id = " . $rowUser['department_id'];
+																	$rsCourse = mysqli_query($mysqli, $selCourses);
+
+																	while($course = mysqli_fetch_assoc($rsCourse)):
+																?>
+																	<option value="<?php echo $course['id'] ?>"><?php echo $course['description'] ?></option>
+																<?php endwhile; ?>
+															</select>
+														</div>
+														<?php endif; ?>
+														<!-- END DEAN -->
+
+														<!-- CHAIRMAN -->
+														<?php if (in_array($rowUser['user_type_id'], array(7,8))): ?>
+														<div class="form-group col-md-4 col-sm-12 col-xs-12">
+															<label for="g-sel-year" class="control-label mb-5 text-left">Year Levels</label>
+															<select multiple class="form-control" id="g-sel-year" style="height: 200px">
+																<?php
+																	$selLevel= "select * from school_levels order by level";
+																	$rsLevel = mysqli_query($mysqli, $selLevel);
+
+																	while($level = mysqli_fetch_assoc($rsLevel)):
+																?>
+																	<option value="<?php echo $level['id'] ?>"><?php echo $level['description'] ?></option>
+																<?php endwhile; ?>
+															</select>
+														</div>
+														<?php endif; ?>
+														<!-- END CHAIRMAN -->
 														
 														<div class="form-group col-xs-12 mt-50">
 															<label class="control-label mb-10 text-left">Message:</label>
@@ -507,24 +550,24 @@
 														<div class="form-group">
 															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
 															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
-																<!-- <div class="checkbox checkbox-success">
-																	<input id="s-check-prof" type="checkbox">
-																	<label for="s-check-prof" class="control-label mb-5 text-left">
-																		Professors
-																	</label>
-																</div> -->
-																<label for="s-sel-course" class="control-label mb-5 text-left">Courses</label>
-																<!-- <label class="control-label mb-5 text-left">Professors</label> -->
-																<select class="form-control" id="s-sel-course">
-																	<?php 
-																		$selCourses = "select * from school_courses";
-																		$rsCourse = mysqli_query($mysqli, $selCourses);
+																<div class="mb-20">
+																	<label for="s-sel-department" class="control-label mb-5 text-left">Department:</label>
+																	<select class="form-control" id="s-sel-department">
+																		<?php 
+																			$selDep = "select * from departments";
+																			$rsDep = mysqli_query($mysqli, $selDep);
 
-																		while($course = mysqli_fetch_assoc($rsCourse)):
-																	?>
-																		<option value="<?php echo $course['id'] ?>"><?php echo $course['description'] ?></option>
-																	<?php endwhile; ?>
-																</select>
+																			while($dep = mysqli_fetch_assoc($rsDep)):
+																		?>
+																			<option value="<?php echo $dep['id'] ?>"><?php echo $dep['description'] ?></option>
+																		<?php endwhile; ?>
+																	</select>
+																</div>
+																<div>
+																	<label for="s-sel-course" class="control-label mb-5 text-left">Course:</label>
+																	<select class="form-control" id="s-sel-course">
+																	</select>
+																</div>
 															</div>
 															<div class="form-group col-md-4 col-sm-12 col-xs-12">
 																<!-- <div class="checkbox checkbox-success">
@@ -747,6 +790,8 @@
 			
 			isCheckProf();
 			isCheckStud();
+			fetchCourse($("#a-sel-department option:first").val(),'a');
+			fetchCourse($("#s-sel-department option:first").val(),'s');
 
 			// $("#a-sel-course").val(1);
 			// fetchYear(1);
@@ -789,8 +834,9 @@
 				}
 			});
 
-			fetchSections(1);
-			$("#g-sel-course").val(1);
+
+			fetchSections($("#g-sel-course option:first").val());
+			$("#g-sel-course").val($("#g-sel-course option:first").val());
 			$("#g-sel-course").on('change', function(){
 				fetchSections($(this).val());
 			});
@@ -814,7 +860,13 @@
 				} else if ($("#g-message").val().trim() == "") {
 					alert("Please compose a message.");
 				} else {
-					sendGrouping("include/send_grouping.php");
+					<?php if (in_array($rowUser['user_type_id'], array(2))): ?>
+						sendGrouping("include/send_grouping.php");
+					<?php elseif (in_array($rowUser['user_type_id'], array(7))): ?>
+						sendGroupingChairman("include/send_grouping.php",<?php echo $rowUser['department_id'] ?>);
+					<?php elseif (in_array($rowUser['user_type_id'], array(8))): ?>
+						sendGroupingDean("include/send_grouping.php");
+					<?php endif; ?>
 				}
 			});
 
@@ -900,8 +952,29 @@
 				data.sections = $(this).val();
 				fetchStudents(data);
 			});
+
+			$("#a-sel-department").on("change", function(){
+				fetchCourse($(this).val(),'a');
+			});
+			$("#s-sel-department").on("change", function(){
+				fetchCourse($(this).val(),'s');
+			});
 		});
 		
+		function fetchCourse(depId, type) {
+			$.ajax({
+				url: '_fetch.php',
+				type: 'post',
+				data: { action: 'departments', depId: depId },
+				success: function(response) {
+					var result = $.parseJSON(response);
+
+					if (result['status'] == 'success') {
+						$("#" + type + "-sel-course").html(result['output']);
+					}
+				}
+			});
+		}
 
 		function fetchYear(courseId){
 			$.ajax({

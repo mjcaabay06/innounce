@@ -8,7 +8,7 @@
 		$data = $_POST['params'];
 		$out = array();
 
-		$upUser = "update users set email_address='".$data['email_address']."', user_type_id=".$data['user_type'].", status_id=".$data['status']." where id = " . $id;
+		$upUser = "update users set email_address='".$data['email_address']."', user_type_id=".$data['user_type'].", department_id = ".$data['department'].", status_id=".$data['status']." where id = " . $id;
 		$rsUpUser = mysqli_query($mysqli, $upUser);
 
 		if ($rsUpUser !== false) {

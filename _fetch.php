@@ -159,6 +159,18 @@
 					$data['status'] = 'success';
 				}
 				break;
+			case 'departments':
+				$selCourse = "select * from school_courses where department_id = " . $_POST['depId'] . ' order by description';
+				$rsCourse = mysqli_query($mysqli, $selCourse);
+				if ($rsCourse !== false) {
+					$opt = '';
+					while ($course = mysqli_fetch_assoc($rsCourse)) {
+						$opt .= '<option value="' . $course['id'] . '">' . $course['description'] . '</option>';
+					}
+					$data['status'] = 'success';
+					$data['output'] = $opt;
+				}
+				break;
 			default:
 				# code...
 				break;

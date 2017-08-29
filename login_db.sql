@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 28, 2017 at 04:07 PM
+-- Generation Time: Aug 29, 2017 at 10:28 AM
 -- Server version: 5.7.19-0ubuntu0.16.04.1
 -- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
@@ -33,6 +33,27 @@ CREATE TABLE `account_activations` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `departments`
+--
+
+CREATE TABLE `departments` (
+  `id` bigint(20) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `departments`
+--
+
+INSERT INTO `departments` (`id`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'Information Technology', '2017-08-28 23:27:59', '2017-08-28 23:27:59'),
+(2, 'Accounting', '2017-08-28 23:27:59', '2017-08-28 23:27:59');
 
 -- --------------------------------------------------------
 
@@ -116,7 +137,7 @@ INSERT INTO `enrollees` (`id`, `student_id`, `school_year_id`, `school_course_id
 (8, 8, 1, 1, 3, '2017-08-10 17:12:04', '2017-08-10 17:12:04'),
 (9, 9, 1, 2, 5, '2017-08-10 17:12:04', '2017-08-10 17:12:04'),
 (10, 10, 1, 2, 6, '2017-08-10 17:12:04', '2017-08-10 17:12:04'),
-(11, 11, 1, 1, 8, '2017-08-27 02:10:58', '2017-08-27 02:10:58');
+(11, 11, 1, 4, 8, '2017-08-27 02:10:58', '2017-08-27 02:10:58');
 
 -- --------------------------------------------------------
 
@@ -209,7 +230,10 @@ INSERT INTO `login_logs` (`id`, `user_id`, `ip_address`, `remarks`, `status_id`,
 (153, 2, '127.0.0.1', 'Successful', 1, '2017-08-27 02:11:43', '2017-08-27 02:11:43'),
 (154, 1, '127.0.0.1', 'Successful', 1, '2017-08-27 02:12:07', '2017-08-27 02:12:07'),
 (155, 1, '127.0.0.1', 'Successful', 1, '2017-08-28 14:34:00', '2017-08-28 14:34:00'),
-(156, 2, '127.0.0.1', 'Successful', 1, '2017-08-28 14:46:57', '2017-08-28 14:46:57');
+(156, 2, '127.0.0.1', 'Successful', 1, '2017-08-28 14:46:57', '2017-08-28 14:46:57'),
+(157, 1, '127.0.0.1', 'Successful', 1, '2017-08-28 23:22:35', '2017-08-28 23:22:35'),
+(158, 2, '127.0.0.1', 'Successful', 1, '2017-08-28 23:53:17', '2017-08-28 23:53:17'),
+(159, 1, '127.0.0.1', 'Successful', 1, '2017-08-29 09:58:30', '2017-08-29 09:58:30');
 
 -- --------------------------------------------------------
 
@@ -349,6 +373,7 @@ CREATE TABLE `school_courses` (
   `id` bigint(20) NOT NULL,
   `description` varchar(255) NOT NULL,
   `acronym` varchar(255) NOT NULL,
+  `department_id` bigint(20) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -357,10 +382,11 @@ CREATE TABLE `school_courses` (
 -- Dumping data for table `school_courses`
 --
 
-INSERT INTO `school_courses` (`id`, `description`, `acronym`, `created_at`, `updated_at`) VALUES
-(1, 'Information Technology', 'i', '2017-06-27 21:14:02', '2017-06-27 21:14:02'),
-(2, 'Accounting', 'a', '2017-06-27 21:14:02', '2017-06-27 21:14:02'),
-(4, 'Management', 'm', '2017-08-16 21:47:50', '2017-08-16 21:47:50');
+INSERT INTO `school_courses` (`id`, `description`, `acronym`, `department_id`, `created_at`, `updated_at`) VALUES
+(1, 'AGD', 'i', 1, '2017-06-27 21:14:02', '2017-06-27 21:14:02'),
+(2, 'BSIT', 'i', 1, '2017-06-27 21:14:02', '2017-06-27 21:14:02'),
+(4, 'BSA', 'a', 2, '2017-08-16 21:47:50', '2017-08-16 21:47:50'),
+(5, 'BSBA Accounting', 'a', 2, '2017-08-28 23:34:16', '2017-08-28 23:34:16');
 
 -- --------------------------------------------------------
 
@@ -586,7 +612,7 @@ INSERT INTO `students` (`id`, `student_code`, `first_name`, `middle_name`, `last
 (8, 'i-00008', 'Jeremiah', NULL, 'Tolentino', 'jeremiah.tolentino@gmail.com', '09053451736', 1, 0, '2017-08-10 17:03:00', '2017-08-10 17:03:00'),
 (9, 'a-00009', 'Folah', '', 'Dimayuga', 'folah.dimayuga@gmail.com', '09059291642', 2, 0, '2017-08-10 17:03:00', '2017-08-20 14:13:14'),
 (10, 'a-00010', 'James', NULL, 'Virtucio', 'james.virtucio@gmail.com', '09278194356', 2, 0, '2017-08-10 17:03:00', '2017-08-10 17:03:00'),
-(11, 'i-00011', 'Marc', 'V', 'Caabay', 'mj_caabay@yahoo.com', '09176710089', 1, 0, '2017-08-27 02:09:33', '2017-08-27 02:09:33');
+(11, 'i-00011', 'Marc', 'V', 'Caabay', 'mj_caabay@yahoo.com', '09176710089', 4, 0, '2017-08-27 02:09:33', '2017-08-27 02:09:33');
 
 -- --------------------------------------------------------
 
@@ -615,6 +641,7 @@ CREATE TABLE `users` (
   `secret_question_id` bigint(20) DEFAULT NULL,
   `answer` text,
   `user_type_id` bigint(20) NOT NULL,
+  `department_id` bigint(20) DEFAULT '0',
   `status_id` bigint(20) NOT NULL,
   `password_type_id` bigint(20) NOT NULL,
   `password_expiry_date` datetime NOT NULL,
@@ -631,9 +658,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email_address`, `username`, `password`, `secret_question_id`, `answer`, `user_type_id`, `status_id`, `password_type_id`, `password_expiry_date`, `ip_address`, `failed_login_attempt`, `failed_login_time`, `disable_login_failure`, `last_access`, `created_at`, `updated_at`) VALUES
-(1, 'admin@gmail.com', 'admin', 'admin', 1, 'je', 1, 1, 2, '2017-09-09 00:00:00', '127.0.0.2', 0, '2017-08-10 12:56:14', 0, '2017-08-10 00:15:06', '2017-06-15 11:16:11', '2017-06-15 11:16:11'),
-(2, 'john.cena@gmail.com', 'jcena', 'John1234$', 1, 'JC', 2, 1, 2, '2017-07-26 00:00:00', '127.0.0.1', 0, '2017-08-16 15:12:31', 0, '2017-08-10 01:43:28', '2017-06-26 18:03:02', '2017-06-26 18:03:02');
+INSERT INTO `users` (`id`, `email_address`, `username`, `password`, `secret_question_id`, `answer`, `user_type_id`, `department_id`, `status_id`, `password_type_id`, `password_expiry_date`, `ip_address`, `failed_login_attempt`, `failed_login_time`, `disable_login_failure`, `last_access`, `created_at`, `updated_at`) VALUES
+(1, 'admin@gmail.com', 'admin', 'admin', 1, 'je', 1, 0, 1, 2, '2017-09-09 00:00:00', '127.0.0.2', 0, '2017-08-10 12:56:14', 0, '2017-08-10 00:15:06', '2017-06-15 11:16:11', '2017-06-15 11:16:11'),
+(2, 'john.cena@gmail.com', 'jcena', 'John1234$', 1, 'JC', 7, 1, 1, 2, '2017-07-26 00:00:00', '127.0.0.1', 0, '2017-08-16 15:12:31', 0, '2017-08-10 01:43:28', '2017-06-26 18:03:02', '2017-06-26 18:03:02');
 
 -- --------------------------------------------------------
 
@@ -680,7 +707,8 @@ CREATE TABLE `user_types` (
 INSERT INTO `user_types` (`id`, `type`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', '2017-06-14 23:24:20', '2017-06-14 23:24:20'),
 (2, 'Professor', '2017-06-14 23:24:20', '2017-06-14 23:24:20'),
-(7, 'IT-Chairman', '2017-08-21 12:52:44', '2017-08-21 12:52:44');
+(7, 'Chairman', '2017-08-21 12:52:44', '2017-08-21 12:52:44'),
+(8, 'Dean', '2017-08-28 23:30:18', '2017-08-28 23:30:18');
 
 -- --------------------------------------------------------
 
@@ -706,6 +734,12 @@ CREATE TABLE `year_sections` (
 -- Indexes for table `account_activations`
 --
 ALTER TABLE `account_activations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `departments`
+--
+ALTER TABLE `departments`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -874,6 +908,11 @@ ALTER TABLE `year_sections`
 ALTER TABLE `account_activations`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `departments`
+--
+ALTER TABLE `departments`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `emergencies`
 --
 ALTER TABLE `emergencies`
@@ -902,7 +941,7 @@ ALTER TABLE `handle_courses`
 -- AUTO_INCREMENT for table `login_logs`
 --
 ALTER TABLE `login_logs`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
 --
 -- AUTO_INCREMENT for table `logout_logs`
 --
@@ -932,7 +971,7 @@ ALTER TABLE `response_messages`
 -- AUTO_INCREMENT for table `school_courses`
 --
 ALTER TABLE `school_courses`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `school_fix_sections`
 --
@@ -952,7 +991,7 @@ ALTER TABLE `school_sections`
 -- AUTO_INCREMENT for table `school_subjects`
 --
 ALTER TABLE `school_subjects`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `school_years`
 --
@@ -987,17 +1026,17 @@ ALTER TABLE `surveys`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `user_infos`
 --
 ALTER TABLE `user_infos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `user_types`
 --
 ALTER TABLE `user_types`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `year_sections`
 --
