@@ -16,6 +16,7 @@
 				last_name = '".$data['last_name']."',
 				email_address = '".$data['email_address']."',
 				mobile_number = '".$data['mobile_number']."',
+				course_id = ".$data['course'].",
 				updated_at = NOW()
 			where
 				id = ".$id."
