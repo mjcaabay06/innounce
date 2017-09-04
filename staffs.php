@@ -65,6 +65,9 @@
 							</div>
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
+									<div class="form-group">
+										<div id="del-alert-message"></div>
+									</div>
 									<div class="table-wrap">
 										<div class="table-responsive">
 											<table class="table mb-0">
@@ -103,6 +106,7 @@
 														<td>
 															<button id="btn-view" class="btn-view btn btn-primary btn-icon-anim btn-square btn-sm" title="View Sections" data-id="<?php echo $staff['user_id'] ?>"><i class="fa fa-eye"></i></button>
 															<button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $staff['user_id'] ?>"><i class="fa fa-pencil"></i></button>
+															<button id="btn-delete" class="btn-delete btn btn-primary btn-icon-anim btn-square btn-sm" title="Delete" data-id="<?php echo $staff['user_id'] ?>"><i class="fa fa-trash-o"></i></button>
 														</td>
 													</tr>
 													<?php endwhile; ?>
@@ -296,6 +300,37 @@
 				type($("#type-" + id).val());
 				$("#edit-staff-modal").modal('show');
 				
+			});
+
+			$(".btn-delete").on("click", function(){
+				var answer = confirm('Are you sure you want to delete the staff?');
+				var id = $(this).data('id');
+				var data = new Object();
+				data.id = id;
+
+				if (answer) {
+					$(".preloader").show();
+					$.ajax({
+						url: 'include/delete_maintenance.php',
+						type: 'post',
+						data: { action: 'staff', params: data  },
+						success: function(response){
+							$(".preloader").hide();
+							var result = $.parseJSON(response);
+
+							if (result["status"] == 'success'){
+								$("table tr#row-staff" + id).remove();
+								$("#del-alert-message").html('<div class="alert alert-success">Staff successfully deleted.</div>');
+								setTimeout(function(){
+									$("#del-alert-message").html('');
+								},1500);
+							} else {
+								$("#del-alert-message").html('<div class="alert alert-danger">There was and error deleting the staff.</div>');
+							}
+
+						}
+					});
+				}
 			});
 
 			$(".btn-view").on("click", function(){

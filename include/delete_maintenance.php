@@ -102,6 +102,23 @@
 					$out['message'] = mysqli_error($mysqli);
 				}
 				break;
+			case 'staff':
+				$delInfo = "delete from user_infos where user_id = " . $data['id'];
+				$rsInfo = mysqli_query($mysqli, $delInfo);
+				if ($rsInfo !== false) {
+					$del = "delete from users where id = " . $data['id'];
+					$rs = mysqli_query($mysqli, $del);
+					if ($rs !== false) {
+						$out['status'] = 'success';
+					} else {
+						$out['status'] = 'failed';
+						$out['message'] = mysqli_error($mysqli);
+					}
+				} else {
+					$out['status'] = 'failed';
+					$out['message'] = mysqli_error($mysqli);
+				}
+				break;
 			default:
 				# code...
 				break;

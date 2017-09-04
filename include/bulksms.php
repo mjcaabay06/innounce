@@ -130,7 +130,9 @@ function seven_bit_sms ($message, $msisdn ) {
   'message'  => $message,
   'msisdn'   => $msisdn,
   'allow_concat_text_sms' => 0, # Change to 1 to enable long messages
-  'concat_text_sms_max_parts' => 2
+  'concat_text_sms_max_parts' => 2,
+  'repliable' => 1,
+  'sender' => 'iNnounce'
   );
 
   return make_post_body($post_fields);
