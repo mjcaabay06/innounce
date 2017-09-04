@@ -323,7 +323,7 @@
 
 	function setDate($format, $date) {
 		$date = new DateTime($date);
-		//$date->setTimezone(new DateTimeZone('Asia/Manila'));
+		$date->setTimezone(new DateTimeZone('Asia/Manila'));
 		return $date->format($format);
 	}
 
