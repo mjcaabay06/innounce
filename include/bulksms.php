@@ -126,7 +126,7 @@ function seven_bit_sms ($message, $msisdn ) {
   $post_fields = array (
   // 'username' => 'xcellence1',
   // 'password' => 'unonatayo1',
-  'username' => 'emilykenney5481',
+  'username' => 'pilipinas5481',
   'password' => 'sabert00th3693',
   //'message'  => character_resolve( $message ),
   'message'  => $message,
