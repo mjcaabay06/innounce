@@ -321,5 +321,11 @@
 		}
 	}
 
+	function setDate($format, $date) {
+		$date = new DateTime($date);
+		$date->setTimezone(new DateTimeZone('Asia/Manila'));
+		return $date->format($format);
+	}
+
 	#sendViaBulksms('639176710089', 'This is just a test message.');
 ?>

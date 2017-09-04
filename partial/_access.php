@@ -14,16 +14,12 @@
 
 	$access_login = '';
 	if (isset($rowLastLogin)) {
-		$login = new DateTime($rowLastLogin['created_at']);
-		$login->setTimezone(new DateTimeZone('Asia/Manila'));
-		$access_login = 'Last Login' . $login->format("l, F j, Y") . '<br/>' . $login->format("g:i:s A (e O)");
+		$access_login = 'Last Login: ' . setDate("l, F j, Y", $rowLastLogin['created_at']) . '<br/>' . setDate("g:i:s A (e O)", $rowLastLogin['created_at']);
 	}
 
 	$access_logout = '';
 	if (isset($rowLastLogout)) {
-		$logout = new DateTime($rowLastLogout['created_at']);
-		$logout->setTimezone(new DateTimeZone('Asia/Manila'));
-		$access_logout = 'Last Access' . $logout->format("l, F j, Y") . '<br/>' . $logout->format("g:i:s A (e O)");
+		$access_logout = 'Last Access: ' . setDate("l, F j, Y", $rowLastLogout['created_at']) . '<br/>' . setDate("g:i:s A (e O)", $rowLastLogout['created_at']);
 	}
 ?>
 <div class="row">
