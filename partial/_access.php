@@ -1,4 +1,5 @@
 <?php
+	date_default_timezone_set('Asia/Manila');
 	$checkLogs = "select * from login_logs inner join users on users.id = login_logs.user_id where login_logs.user_id = " . $userId . " and login_logs.status_id = 1 and users.password_type_id = 1";
 	$rsLogs = mysqli_query($mysqli, $checkLogs);
 	$rowLogs = mysqli_num_rows($rsLogs);
