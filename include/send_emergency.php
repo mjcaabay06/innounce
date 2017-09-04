@@ -17,6 +17,8 @@
 			// }
 			if (!$response['success']) {
 				$errorSending[] = $rcvr['name'];
+			} else {
+				storeRecipient($response['api_batch_id'],$rcvr['mobile_number']);
 			}
 		}
 
@@ -43,4 +45,11 @@
 
 		$insert = "insert into emergencies(message) values('" . $message . "')";
 		$rsInsert = mysqli_query($mysqli, $insert);
+	}
+
+	function storeRecipient($batchId, $recipient){
+		global $mysqli;
+
+		$insert = "insert into emergency_recipients(batch_id,recipient) values(" . $batchId . ",'" . $recipient . "')";
+		$rs = mysqli_query($mysqli, $insert);
 	}

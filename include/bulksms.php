@@ -124,14 +124,16 @@ function send_message ( $post_body ) {
 
 function seven_bit_sms ($message, $msisdn ) {
   $post_fields = array (
-  'username' => 'xcellence1',
-  'password' => 'unonatayo1',
+  // 'username' => 'xcellence1',
+  // 'password' => 'unonatayo1',
+  'username' => 'emilykenney5481',
+  'password' => 'sabert00th3693',
   //'message'  => character_resolve( $message ),
   'message'  => $message,
   'msisdn'   => $msisdn,
   'allow_concat_text_sms' => 0, # Change to 1 to enable long messages
-  'concat_text_sms_max_parts' => 2,
-  'sender' => '639176710089'
+  'concat_text_sms_max_parts' => 2
+  //'sender' => '639176710089'
   //'repliable' => 0
   );
 
