@@ -267,7 +267,7 @@
 		$data = array();
 
 		//select students
-		$selStud = "select students.first_name, students.last_name, students.mobile_number, year_sections.section from students inner join year_sections on students.year_section_id = year_sections.id";
+		$selStud = "select students.first_name, students.last_name, students.mobile_number, school_sections.section from enrollees inner join students on students.id = enrollees.student_id inner join school_sections on school_sections.id = enrollees.school_section_id where trim(students.mobile_number) != ''";
 		$rsStud = mysqli_query($mysqli, $selStud);
 		while($studNumber = mysqli_fetch_assoc($rsStud)) {
 			$studData = array(
