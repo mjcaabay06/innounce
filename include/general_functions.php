@@ -278,7 +278,7 @@
 		}
 
 		//select prof
-		$selProf = "select user_infos.first_name, user_infos.last_name, user_infos.mobile_number from users inner join user_infos on users.id = user_infos.user_id";
+		$selProf = "select user_infos.first_name, user_infos.last_name, user_infos.mobile_number from users inner join user_infos on users.id = user_infos.user_id where users.id != " . $_SESSION['authId'];
 		$rsProf = mysqli_query($mysqli, $selProf);
 		while($profNumber = mysqli_fetch_assoc($rsProf)) {
 			$profData = array(
