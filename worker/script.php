@@ -1,6 +1,6 @@
 <?php
-	include("include/configurations.php");
-	include("include/general_functions.php");
+	include("../include/configurations.php");
+	include("../include/general_functions.php");
 	//date_default_timezone_set('Pacific/Efate');
 
 	//error_log("Hello: " . date('Y-m-d H:i:s',time()));
