@@ -10,7 +10,7 @@
 
 	if( $result['success'] ) {
 		print_ln( formatted_server_response( $result ) );
-		insertMessage(1,'This is just a test message.',2,$result);
+		//insertMessage(1,'This is just a test message.',2,$result);
 	}
 	else {
 		print_ln( formatted_server_response( $result ) );
