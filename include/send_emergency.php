@@ -25,7 +25,7 @@
 		#saveEmergency($message);
 
 		if(empty($errorSending)){
-			insertMessage($_SESSION['authId'],$message,3,$response);
+			insertMessage($_COOKIE['authId'],$message,3,$response);
 			$data['message'] = "Emergency message was sent to all recipients.";
 			$data['status'] = true;
 		}else{

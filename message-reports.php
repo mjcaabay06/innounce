@@ -3,7 +3,7 @@
 	include "include/configurations.php";
 	include "include/general_functions.php";
 
-	if(!isset($_SESSION['authId']) || empty($_SESSION['authId'])){
+	if(!isset($_COOKIE['authId']) || empty($_COOKIE['authId'])){
 		header("Location: login.php");
 		exit;
 	}

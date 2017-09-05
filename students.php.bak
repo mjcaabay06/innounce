@@ -3,12 +3,12 @@
 	include "include/configurations.php";
 	include "include/general_functions.php";
 
-	if(!isset($_SESSION['authId']) || empty($_SESSION['authId']) || $_SESSION['userType'] != 1){
+	if(!isset($_COOKIE['authId']) || empty($_COOKIE['authId']) || $_COOKIE['userType'] != 1){
 		header("Location: login.php");
 		exit;
 	}
 
-	$userId = $_SESSION['authId'];
+	$userId = $_COOKIE['authId'];
 	$checkPasswordDate = "select * from users where id = " . $userId . " and DATE(password_expiry_date) = DATE(NOW())";
 	$rsPasswordDate = mysqli_query($mysqli, $checkPasswordDate);
 	$cntPasswordDate = mysqli_num_rows($rsPasswordDate);
@@ -99,7 +99,7 @@
 				</li>
 				<li>
 					<a href="#"><div class="pull-left"><i class="zmdi zmdi-landscape mr-20"></i><span class="right-nav-text">Dashboard</span></div><div class="clearfix"></div></a>
-					<?php if ($_SESSION['userType'] == 1) : ?>
+					<?php if ($_COOKIE['userType'] == 1) : ?>
 						<a class="active" href="javascript:void(0);" data-toggle="collapse" data-target="#users_dr"><div class="pull-left"><i class="zmdi zmdi-accounts mr-20"></i><span class="right-nav-text">Users</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
 						<ul id="users_dr" class="collapse collapse-level-1">
 							<li>
@@ -302,27 +302,27 @@
 								<div  class="panel-body pb-0">
 									<div  class="tab-struct custom-tab-1">
 										<ul role="tablist" class="nav nav-tabs nav-tabs-responsive" id="myTabs_8">
-											<li class="<?php echo $_SESSION['userType'] == 1 ? 'active' : 'hidden' ?>" role="presentation">
+											<li class="<?php echo $_COOKIE['userType'] == 1 ? 'active' : 'hidden' ?>" role="presentation">
 												<a  data-toggle="tab" id="announcement_tab_8" role="tab" href="#announcement_8" aria-expanded="false">
 													<span>announcement</span>
 												</a>
 											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] == 2 ? 'active' : 'hidden' ?>">
+											<li role="presentation" class="<?php echo $_COOKIE['userType'] == 2 ? 'active' : 'hidden' ?>">
 												<a data-toggle="tab" id="grouping_tab_8" role="tab" href="#grouping_8" aria-expanded="false">
 													<span>grouping</span>
 												</a>
 											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
+											<li role="presentation" class="<?php echo $_COOKIE['userType'] == 1 ? '' : 'hidden' ?>">
 												<a data-toggle="tab" id="emergency_tab_8" role="tab" href="#emergency_8" aria-expanded="false">
 													<span>emergency</span>
 												</a>
 											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
+											<li role="presentation" class="<?php echo $_COOKIE['userType'] == 1 ? '' : 'hidden' ?>">
 												<a data-toggle="tab" id="survey_tab_8" role="tab" href="#survey_8" aria-expanded="false">
 													<span>survey</span>
 												</a>
 											</li>
-											<li role="presentation" class="next <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
+											<li role="presentation" class="next <?php echo $_COOKIE['userType'] == 1 ? '' : 'hidden' ?>">
 												<a aria-expanded="true"  data-toggle="tab" role="tab" id="reports_tab_8" href="#reports_8">
 													<span>reports</span>
 												</a>
@@ -339,7 +339,7 @@
 											</li> -->
 										</ul>
 										<div class="tab-content" id="myTabContent_8">
-											<div  id="announcement_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? 'in active' : 'hidden' ?>" role="tabpanel">
+											<div  id="announcement_8" class="tab-pane fade <?php echo $_COOKIE['userType'] == 1 ? 'in active' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
 													<div class="pt-20">
 														<div class="form-group" id="a-alert-message"></div>
@@ -355,7 +355,7 @@
 																<!-- <label class="control-label mb-5 text-left">Professors</label> -->
 																<select multiple class="form-control" id="a-sel-prof" style="height: 200px" disabled>
 																	<?php
-																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.status_id = 1 and users.id != " . $_SESSION["authId"] . " order by user_infos.last_name";
+																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.status_id = 1 and users.id != " . $_COOKIE['authId'] . " order by user_infos.last_name";
 																		$rsProf = mysqli_query($mysqli, $selProf);
 
 																		while($prof = mysqli_fetch_assoc($rsProf)):
@@ -405,7 +405,7 @@
 													</div>
 												</div>
 											</div>
-											<div  id="grouping_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 2 ? 'in active' : 'hidden' ?>" role="tabpanel">
+											<div  id="grouping_8" class="tab-pane fade <?php echo $_COOKIE['userType'] == 2 ? 'in active' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
 													<div class="pt-20">
 														<div class="form-group" id="g-alert-message"></div>
@@ -414,13 +414,13 @@
 															<div class="form-group col-md-4 col-sm-12 col-xs-12">
 																<select multiple class="form-control" id="g-sel-stud" style="height: 200px">
 																	<?php
-																		$selCourse = "select courses.* from courses inner join year_sections on courses.id = year_sections.course_id where year_sections.prof_id = " . $_SESSION['authId'] . " group by courses.id";
+																		$selCourse = "select courses.* from courses inner join year_sections on courses.id = year_sections.course_id where year_sections.prof_id = " . $_COOKIE['authId'] . " group by courses.id";
 																		$rsCourse = mysqli_query($mysqli, $selCourse);
 																		while($course = mysqli_fetch_assoc($rsCourse)):
 																	?>
 																		<optgroup label="<?php echo $course['description'] ?>">
 																			<?php
-																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'] . " and year_sections.prof_id = " . $_SESSION['authId'];
+																				$selYS = "select year_sections.id, year_sections.section from year_sections inner join school_years on year_sections.school_year_id = school_years.id where year_sections.course_id = " . $course['id'] . " and year_sections.prof_id = " . $_COOKIE['authId'];
 																				$rsYS = mysqli_query($mysqli, $selYS);
 
 																				while($ys = mysqli_fetch_assoc($rsYS)):
@@ -445,7 +445,7 @@
 													</div>
 												</div>
 											</div>
-											<div  id="emergency_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
+											<div  id="emergency_8" class="tab-pane fade <?php echo $_COOKIE['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
 													<div class="pt-20">
 														<div class="form-group" id="e-alert-message"></div>
@@ -460,7 +460,7 @@
 													</div>
 												</div>
 											</div>
-											<div  id="survey_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
+											<div  id="survey_8" class="tab-pane fade <?php echo $_COOKIE['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
 												<!-- Row -->
 												<div class="col-md-12">
 													<div class="pt-20">
@@ -477,7 +477,7 @@
 																<!-- <label class="control-label mb-5 text-left">Professors</label> -->
 																<select multiple class="form-control" id="s-sel-prof" style="height: 200px" disabled>
 																	<?php
-																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.status_id = 1 and users.id != " . $_SESSION["authId"] . " order by user_infos.last_name";
+																		$selProf = "select * from users inner join user_infos on users.id = user_infos.user_id where users.status_id = 1 and users.id != " . $_COOKIE['authId'] . " order by user_infos.last_name";
 																		$rsProf = mysqli_query($mysqli, $selProf);
 
 																		while($prof = mysqli_fetch_assoc($rsProf)):
@@ -528,7 +528,7 @@
 												</div>
 											</div>
 											
-											<div  id="reports_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
+											<div  id="reports_8" class="tab-pane fade <?php echo $_COOKIE['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
 												<div class="row">
 													<div class="col-lg-12">
 														<div class="followers-wrap">
@@ -818,7 +818,7 @@
 					$.ajax({
 						url: 'include/admin_functions.php',
 						type: 'post',
-						data: { action: 'change-password', pwd: $("#tb-password").val(), userId: <?php echo $_SESSION['authId'] ?>  },
+						data: { action: 'change-password', pwd: $("#tb-password").val(), userId: <?php echo $_COOKIE['authId'] ?>  },
 						success: function(response){
 							console.log(response);
 							$("#responsive-modal").modal('hide');
@@ -855,7 +855,7 @@
 				$.ajax({
 					url: 'include/admin_functions.php',
 					type: 'post',
-					data: { action: 'disable-login', val: $("#tb-disable-login").val(), userId: <?php echo $_SESSION['authId'] ?>  },
+					data: { action: 'disable-login', val: $("#tb-disable-login").val(), userId: <?php echo $_COOKIE['authId'] ?>  },
 					success: function(response){
 						console.log(response);
 						$("#panel-notif").html(response);

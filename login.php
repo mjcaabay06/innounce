@@ -3,8 +3,8 @@
 	include "include/configurations.php";
 	include "include/general_functions.php";
 
-	if (isset($_SESSION['authId'])) {
-		header("Location: /admin/index.php");
+	if (isset($_COOKIE['authId'])) {
+		header("Location: ./");
 	}
 
 	$errorMessage = '';

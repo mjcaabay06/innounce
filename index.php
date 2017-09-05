@@ -3,12 +3,12 @@
 	include "include/configurations.php";
 	include "include/general_functions.php";
 
-	if(!isset($_SESSION['authId']) || empty($_SESSION['authId'])){
+	if(!isset($_COOKIE['authId']) || empty($_COOKIE['authId'])){
 		header("Location: login.php");
 		exit;
 	}
 
-	$userId = $_SESSION['authId'];
+	$userId = $_COOKIE['authId'];
 	$checkPasswordDate = "select * from users where id = " . $userId . " and DATE(password_expiry_date) = DATE(NOW())";
 	$rsPasswordDate = mysqli_query($mysqli, $checkPasswordDate);
 	$cntPasswordDate = mysqli_num_rows($rsPasswordDate);
@@ -184,27 +184,27 @@
 								<div  class="panel-body pb-0">
 									<div  class="tab-struct custom-tab-1">
 										<ul role="tablist" class="nav nav-tabs nav-tabs-responsive" id="myTabs_8">
-											<li class="<?php echo $_SESSION['userType'] == 1 ? 'active' : 'hidden' ?>" role="presentation">
+											<li class="<?php echo $_COOKIE['userType'] == 1 ? 'active' : 'hidden' ?>" role="presentation">
 												<a  data-toggle="tab" id="announcement_tab_8" role="tab" href="#announcement_8" aria-expanded="false">
 													<span>announcement</span>
 												</a>
 											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] != 1 ? 'active' : 'hidden' ?>">
+											<li role="presentation" class="<?php echo $_COOKIE['userType'] != 1 ? 'active' : 'hidden' ?>">
 												<a data-toggle="tab" id="grouping_tab_8" role="tab" href="#grouping_8" aria-expanded="false">
 													<span>announcement</span>
 												</a>
 											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
+											<li role="presentation" class="<?php echo $_COOKIE['userType'] == 1 ? '' : 'hidden' ?>">
 												<a data-toggle="tab" id="emergency_tab_8" role="tab" href="#emergency_8" aria-expanded="false">
 													<span>emergency</span>
 												</a>
 											</li>
-											<li role="presentation" class="<?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
+											<li role="presentation" class="<?php echo $_COOKIE['userType'] == 1 ? '' : 'hidden' ?>">
 												<a data-toggle="tab" id="survey_tab_8" role="tab" href="#survey_8" aria-expanded="false">
 													<span>survey</span>
 												</a>
 											</li>
-											<!-- <li role="presentation" class="next <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>">
+											<!-- <li role="presentation" class="next <?php echo $_COOKIE['userType'] == 1 ? '' : 'hidden' ?>">
 												<a aria-expanded="true"  data-toggle="tab" role="tab" id="reports_tab_8" href="#reports_8">
 													<span>reports</span>
 												</a>
@@ -221,7 +221,7 @@
 											</li> -->
 										</ul>
 										<div class="tab-content" id="myTabContent_8">
-											<div  id="announcement_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? 'in active' : 'hidden' ?>" role="tabpanel">
+											<div  id="announcement_8" class="tab-pane fade <?php echo $_COOKIE['userType'] == 1 ? 'in active' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
 													<div class="pt-20 mb-20" id="a-message-list">
 														<div class="">
@@ -318,7 +318,7 @@
 													</div>
 												</div>
 											</div>
-											<div  id="grouping_8" class="tab-pane fade <?php echo $_SESSION['userType'] != 1 ? 'in active' : 'hidden' ?>" role="tabpanel">
+											<div  id="grouping_8" class="tab-pane fade <?php echo $_COOKIE['userType'] != 1 ? 'in active' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
 													<div class="pt-20 mb-20" id="g-message-list">
 														<div class="">
@@ -337,7 +337,7 @@
 															</thead>
 															<tbody>
 																<?php
-																	$selGrouping = "select sent_messages.*, user_infos.*, date_format(sent_messages.created_at, '%b %e, %Y [ %H:%i:%s ]') as date_sent from sent_messages inner join (users inner join user_infos on user_infos.user_id = users.id) on users.id = sent_messages.user_id where sent_messages.message_type_id = 4 and users.id = " . $_SESSION['authId'] . " order by sent_messages.created_at desc";
+																	$selGrouping = "select sent_messages.*, user_infos.*, date_format(sent_messages.created_at, '%b %e, %Y [ %H:%i:%s ]') as date_sent from sent_messages inner join (users inner join user_infos on user_infos.user_id = users.id) on users.id = sent_messages.user_id where sent_messages.message_type_id = 4 and users.id = " . $_COOKIE['authId'] . " order by sent_messages.created_at desc";
 																	$rsGrouping = mysqli_query($mysqli, $selGrouping);
 
 																	while($grouping = mysqli_fetch_assoc($rsGrouping)):
@@ -367,8 +367,8 @@
 																<label for="g-sel-course" class="control-label mb-5 text-left">Courses</label>
 																<select class="form-control" id="g-sel-course">
 																	<?php 
-																		//$selCourses = "select school_courses.* from users inner join (professor_subjects inner join (enrolled_subjects inner join (enrollees inner join school_courses on school_courses.id = enrollees.school_course_id) on enrollees.id = enrolled_subjects.enrollee_id) on enrolled_subjects.subject_id = professor_subjects.school_subject_id) on professor_subjects.professor_id = users.id where users.id = " . $_SESSION['authId'] . " group by school_courses.id";
-																		$selCourses = "select school_courses.* from handle_courses inner join school_courses on school_courses.id = handle_courses.school_course_id inner join users on users.user_type_id = handle_courses.user_type_id where users.id = " . $_SESSION['authId'];
+																		//$selCourses = "select school_courses.* from users inner join (professor_subjects inner join (enrolled_subjects inner join (enrollees inner join school_courses on school_courses.id = enrollees.school_course_id) on enrollees.id = enrolled_subjects.enrollee_id) on enrolled_subjects.subject_id = professor_subjects.school_subject_id) on professor_subjects.professor_id = users.id where users.id = " . $_COOKIE['authId'] . " group by school_courses.id";
+																		$selCourses = "select school_courses.* from handle_courses inner join school_courses on school_courses.id = handle_courses.school_course_id inner join users on users.user_type_id = handle_courses.user_type_id where users.id = " . $_COOKIE['authId'];
 																		$rsCourse = mysqli_query($mysqli, $selCourses);
 
 																		while($course = mysqli_fetch_assoc($rsCourse)):
@@ -437,7 +437,7 @@
 													</div>
 												</div>
 											</div>
-											<div  id="emergency_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
+											<div  id="emergency_8" class="tab-pane fade <?php echo $_COOKIE['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
 												<div class="col-md-12">
 													<div class="pt-20 mb-20" id="e-message-list">
 														<div class="">
@@ -497,7 +497,7 @@
 													</div>
 												</div>
 											</div>
-											<div  id="survey_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
+											<div  id="survey_8" class="tab-pane fade <?php echo $_COOKIE['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
 												<!-- Row -->
 												<div class="col-md-12">
 													<div class="pt-20 mb-20" id="s-message-list">
@@ -603,7 +603,7 @@
 												</div>
 											</div>
 											
-											<!-- <div  id="reports_8" class="tab-pane fade <?php echo $_SESSION['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
+											<!-- <div  id="reports_8" class="tab-pane fade <?php echo $_COOKIE['userType'] == 1 ? '' : 'hidden' ?>" role="tabpanel">
 												<div class="row">
 													<div class="col-lg-12">
 														<div class="followers-wrap">
@@ -1023,7 +1023,7 @@
 			$.ajax({
 				url: '_fetch.php',
 				type: 'post',
-				data: { action: 'fetch-sections', courseId: courseId, profId: <?php echo $_SESSION['authId'] ?> },
+				data: { action: 'fetch-sections', courseId: courseId, profId: <?php echo $_COOKIE['authId'] ?> },
 				success: function(response) {
 					var result = $.parseJSON(response);
 

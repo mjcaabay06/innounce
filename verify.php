@@ -10,7 +10,7 @@
 		// 	$insertProduct = $dbh->prepare("insert into product_categories(category_name, created_at, updated_at, user_id) values(:category_name, NOW(), NOW(), :user_id)");
 		// 	$insertProduct->execute(array(
 		// 			':category_name' => $_REQUEST['category_name'],
-		// 			':user_id' => $_SESSION['AuthId'],
+		// 			':user_id' => $_COOKIE['authId'],
 		// 		));
 		// 	header("Location: list-category.php");
 		// }

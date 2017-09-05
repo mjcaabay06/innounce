@@ -60,7 +60,7 @@
 				$.ajax({
 					url: 'include/admin_functions.php',
 					type: 'post',
-					data: { action: 'change-password', pwd: $("#tb-password").val(), userId: <?php echo $_SESSION['authId'] ?>  },
+					data: { action: 'change-password', pwd: $("#tb-password").val(), userId: <?php echo $_COOKIE['authId'] ?>  },
 					success: function(response){
 						console.log(response);
 						$("#responsive-modal").modal('hide');
@@ -79,7 +79,7 @@
 				$.ajax({
 					url: 'include/admin_functions.php',
 					type: 'post',
-					data: { action: 'change-password', pwd: $("#tb-change-password").val(), userId: <?php echo $_SESSION['authId'] ?>  },
+					data: { action: 'change-password', pwd: $("#tb-change-password").val(), userId: <?php echo $_COOKIE['authId'] ?>  },
 					success: function(response){
 						console.log(response);
 						$("#alert-change-message").html('<div class="alert alert-success">' + response + '</div>');
@@ -121,7 +121,7 @@
 			$.ajax({
 				url: 'include/admin_functions.php',
 				type: 'post',
-				data: { action: 'disable-login', val: $("#tb-disable-login").val(), userId: <?php echo $_SESSION['authId'] ?>  },
+				data: { action: 'disable-login', val: $("#tb-disable-login").val(), userId: <?php echo $_COOKIE['authId'] ?>  },
 				success: function(response){
 					console.log(response);
 					$("#panel-notif").html(response);

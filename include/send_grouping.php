@@ -27,7 +27,7 @@
 				}
 
 				if(empty($errorSending)){
-					insertMessage($_SESSION['authId'],$message,4,$response);
+					insertMessage($_COOKIE['authId'],$message,4,$response);
 					$data['message'] = "Announcement was sent to all recipients.";
 					$data['status'] = true;
 				}else{
@@ -58,7 +58,7 @@
 				}
 
 				if(empty($errorSending)){
-					insertMessage($_SESSION['authId'],$message,4,$response);
+					insertMessage($_COOKIE['authId'],$message,4,$response);
 					$data['message'] = "Announcement was sent to all recipients.";
 					$data['status'] = true;
 				}else{
@@ -89,7 +89,7 @@
 				}
 
 				if(empty($errorSending)){
-					insertMessage($_SESSION['authId'],$message,4,$response);
+					insertMessage($_COOKIE['authId'],$message,4,$response);
 					$data['message'] = "Announcement was sent to all recipients.";
 					$data['status'] = true;
 				}else{

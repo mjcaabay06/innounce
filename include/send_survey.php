@@ -49,7 +49,7 @@
 			}
 
 			if(empty($errorSending)){
-				insertMessage($_SESSION['authId'],$message,2,$response);
+				insertMessage($_COOKIE['authId'],$message,2,$response);
 				$data['message'] = "Survey was sent to: [" . implode(', ', $hasWordLvl) . "]";
 				$data['status'] = "success";
 
@@ -82,7 +82,7 @@
 
 
 		// if(empty($errorSending)){
-		// 	insertMessage($_SESSION['authId'],$message,2);
+		// 	insertMessage($_COOKIE['authId'],$message,2);
 		// 	$data['message'] = "Survey was sent to all recipients.";
 		// 	$data['status'] = true;
 		// }else{

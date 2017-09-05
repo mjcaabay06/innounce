@@ -51,7 +51,7 @@
 			}
 
 			if(empty($errorSending)){
-				insertMessage($_SESSION['authId'],$message,1,$response);
+				insertMessage($_COOKIE['authId'],$message,1,$response);
 				$data['message'] = "Announcement was sent to: [" . implode(', ', $hasWordLvl) . "]";
 				$data['status'] = "success";
 
@@ -91,7 +91,7 @@
 		// }
 
 		// if(empty($errorSending)){
-		// 	insertMessage($_SESSION['authId'],$message,1);
+		// 	insertMessage($_COOKIE['authId'],$message,1);
 		// 	$data['message'] = "Announcement was sent to all recipients.";
 		// 	$data['status'] = true;
 

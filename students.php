@@ -3,12 +3,12 @@
 	include "include/configurations.php";
 	include "include/general_functions.php";
 
-	if(!isset($_SESSION['authId']) || empty($_SESSION['authId']) || $_SESSION['userType'] != 1){
+	if(!isset($_COOKIE['authId']) || empty($_COOKIE['authId']) || $_COOKIE['userType'] != 1){
 		header("Location: login.php");
 		exit;
 	}
 
-	$userId = $_SESSION['authId'];
+	$userId = $_COOKIE['authId'];
 	$checkPasswordDate = "select * from users where id = " . $userId . " and DATE(password_expiry_date) = DATE(NOW())";
 	$rsPasswordDate = mysqli_query($mysqli, $checkPasswordDate);
 	$cntPasswordDate = mysqli_num_rows($rsPasswordDate);
