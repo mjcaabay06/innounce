@@ -2,7 +2,7 @@
 	include("configurations.php");
 	include("general_functions.php");
 
-	$result = sendViaBulksms('09176710089','09053179446', 'This is just a test message.');
+	$result = sendViaBulksms({'09176710089','09053179446'}, 'This is just a test message.');
 	
 
 	// $var = "639157559924";
