@@ -331,5 +331,30 @@
 		return $date->format($format);
 	}
 
+	function insertRecipient($recipient, $bacthId, $typeId){
+		global $mysqli;
+
+		$insert = "
+			insert into
+			message_recipients(
+				batch_id,
+				recipient,
+				message_type_id
+			)
+			values(
+				" . $bacthId . ",
+				'" . $recipient . "',
+				" . $typeId . "
+			)
+			";
+		$result = mysqli_query($mysqli, $insert);
+
+		if ($result !== false) {
+
+		} else {
+			error_log(mysqli_error($mysqli));
+		}
+	}
+
 	#sendViaBulksms('639176710089', 'This is just a test message.');
 ?>

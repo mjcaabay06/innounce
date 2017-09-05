@@ -8,6 +8,7 @@
 		$data = array();
 		$num = '';
 		$response = '';
+		$mobile = array();
 
 		switch (strtolower($_POST['action'])) {
 			case 'professor':
@@ -15,27 +16,20 @@
 				$students = $_POST['students'];
 				foreach($students as $student) {
 					foreach (getStudentViaSection($student) as $studNumber) {
-						$response = sendViaBulksms($studNumber['mobile_number'], $message);
-
-						// if(empty($response) || !isset($response[0]->status)){
-						// 	$errorSending[] = $studNumber['name'];
-						// }
-						if (!$response['success']) {
-							$errorSending[] = $studNumber['name'];
-						}
+						$mobile[] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 					}
 				}
 
-				if(empty($errorSending)){
+				$response = sendViaBulksms(implode(',', $mobile), $message);
+				if ($response['success']) {
 					insertMessage($_COOKIE['authId'],$message,4,$response);
-					$data['message'] = "Announcement was sent to all recipients.";
-					$data['status'] = true;
-				}else{
-					$name = '';
-					foreach($errorSending as $errorName){
-						$name .= $errorName.", ";
+					foreach ($mobile as $recipient) {
+						insertRecipient($recipient,$response['api_batch_id'],4);
 					}
-					$data['message'] = "There was an error sending announcement to the following:<br/>".$name;
+					$data['message'] = "Announcement was sent successfully.";
+					$data['status'] = true;
+				} else {
+					$data['message'] = "There was an error sending the announcement. Please try again.";
 					$data['status'] = false;
 				}
 				break;
@@ -46,27 +40,20 @@
 
 				foreach($years as $year) {
 					foreach (getStudentViaDeparment($year, $depId) as $studNumber) {
-						$response = sendViaBulksms($studNumber['mobile_number'], $message);
-
-						// if(empty($response) || !isset($response[0]->status)){
-						// 	$errorSending[] = $studNumber['name'];
-						// }
-						if (!$response['success']) {
-							$errorSending[] = $studNumber['name'];
-						}
+						$mobile[] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 					}
 				}
 
-				if(empty($errorSending)){
+				$response = sendViaBulksms(implode(',', $mobile), $message);
+				if ($response['success']) {
 					insertMessage($_COOKIE['authId'],$message,4,$response);
-					$data['message'] = "Announcement was sent to all recipients.";
-					$data['status'] = true;
-				}else{
-					$name = '';
-					foreach($errorSending as $errorName){
-						$name .= $errorName.", ";
+					foreach ($mobile as $recipient) {
+						insertRecipient($recipient,$response['api_batch_id'],4);
 					}
-					$data['message'] = "There was an error sending announcement to the following:<br/>".$name;
+					$data['message'] = "Announcement was sent successfully.";
+					$data['status'] = true;
+				} else {
+					$data['message'] = "There was an error sending the announcement. Please try again.";
 					$data['status'] = false;
 				}
 				break;
@@ -77,27 +64,20 @@
 
 				foreach($years as $year) {
 					foreach (getStudentReceivers($year, $course) as $studNumber) {
-						$response = sendViaBulksms($studNumber['mobile_number'], $message);
-
-						// if(empty($response) || !isset($response[0]->status)){
-						// 	$errorSending[] = $studNumber['name'];
-						// }
-						if (!$response['success']) {
-							$errorSending[] = $studNumber['name'];
-						}
+						$mobile[] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 					}
 				}
 
-				if(empty($errorSending)){
+				$response = sendViaBulksms(implode(',', $mobile), $message);
+				if ($response['success']) {
 					insertMessage($_COOKIE['authId'],$message,4,$response);
-					$data['message'] = "Announcement was sent to all recipients.";
-					$data['status'] = true;
-				}else{
-					$name = '';
-					foreach($errorSending as $errorName){
-						$name .= $errorName.", ";
+					foreach ($mobile as $recipient) {
+						insertRecipient($recipient,$response['api_batch_id'],4);
 					}
-					$data['message'] = "There was an error sending announcement to the following:<br/>".$name;
+					$data['message'] = "Announcement was sent successfully.";
+					$data['status'] = true;
+				} else {
+					$data['message'] = "There was an error sending the announcement. Please try again.";
 					$data['status'] = false;
 				}
 				break;

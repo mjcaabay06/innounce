@@ -14,6 +14,8 @@
 		$hasWordLvl = array();
 		$noLvl = array();
 		$response = '';
+		$mobile = array();
+
 		foreach ($_POST['year'] as $year) {
 			$selLevel = "select * from enrollees inner join school_sections on school_sections.id = enrollees.school_section_id where school_level_id = " . $year;
 			$rsLevel = mysqli_query($mysqli, $selLevel);
@@ -37,37 +39,43 @@
 		} else {
 			foreach ($hasLvl as $year) {
 				foreach (getStudentReceivers($year,$course) as $studNumber) {
-					$response = sendViaBulksms($studNumber['mobile_number'], $message);
-
-					// if(empty($response) || !isset($response[0]->status)){
-					// 	$errorSending[] = $studNumber['name'];
-					// }
-					if (!$response['success']) {
-						$errorSending[] = $studNumber['name'];
-					}
+					$mobile[] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 				}
 			}
 
-			if(empty($errorSending)){
+			$response = sendViaBulksms(implode(',', $mobile), $message);
+			if ($response['success']) {
 				insertMessage($_COOKIE['authId'],$message,2,$response);
-				$data['message'] = "Survey was sent to: [" . implode(', ', $hasWordLvl) . "]";
+				foreach ($mobile as $recipient) {
+					insertRecipient($recipient,$response['api_batch_id'],2);
+				}
+				$data['message'] = "Survey was sent successfully.";
 				$data['status'] = "success";
-
-				if (isset($noLvl)) {
-					$yrlvl = '';
-					foreach ($noLvl as $lvl) {
-						$yrlvl .= $lvl . ', ';
-					}
-					$data['message'] .= "<br/>No enrollee for the year level: [" . implode(', ', $noLvl) . "]";
-				}
-			}else{
-				$name = '';
-				foreach($errorSending as $errorName){
-					$name .= $errorName.", ";
-				}
-				$data['message'] = "There was an error sending survey to the following:<br/>".$name;
+			} else {
+				$data['message'] = "There was an error sending the survey. Please try again.";
 				$data['status'] = "failed";
 			}
+
+			// if(empty($errorSending)){
+				
+			// 	$data['message'] = "Survey was sent to: [" . implode(', ', $hasWordLvl) . "]";
+			// 	$data['status'] = "success";
+
+			// 	if (isset($noLvl)) {
+			// 		$yrlvl = '';
+			// 		foreach ($noLvl as $lvl) {
+			// 			$yrlvl .= $lvl . ', ';
+			// 		}
+			// 		$data['message'] .= "<br/>No enrollee for the year level: [" . implode(', ', $noLvl) . "]";
+			// 	}
+			// }else{
+			// 	$name = '';
+			// 	foreach($errorSending as $errorName){
+			// 		$name .= $errorName.", ";
+			// 	}
+			// 	$data['message'] = "There was an error sending survey to the following:<br/>".$name;
+			// 	$data['status'] = "failed";
+			// }
 		}
 
 		// foreach ($_POST['year'] as $year) {
