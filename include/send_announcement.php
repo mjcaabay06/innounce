@@ -47,9 +47,9 @@
 			}
 
 			$imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
-			$response = sendViaBulksms($imploded, $message);
-			// $response['success'] = true;
-			// $response['api_batch_id'] = randomActivationCode();
+			//$response = sendViaBulksms($imploded, $message);
+			$response['success'] = true;
+			$response['api_batch_id'] = randomActivationCode();
 			if ($response['success']) {
 				insertMessage($_COOKIE['authId'],$message,1,$response);
 				foreach ($mobile as $recipient) {

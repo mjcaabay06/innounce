@@ -91,7 +91,14 @@
 			";
 			$rsResponse = mysqli_query($mysqli, $insResponse);
 			if ($rsResponse !== false) {
-				$output = "A message with body " . $message . " was sent from " . $sender . " to " . $msisdn ."\n";
+				$up = "update message_recipients set remarks = '" . $message . "' where sender = '" . $sender . "' and batch_id = " . $referring_batch_id;
+				$rs = mysqli_query($mysqli, $up);
+				if ($rs !== false) {
+					$output = "A message with body " . $message . " was sent from " . $sender . " to " . $msisdn ."\n";
+				} else {
+					
+				}
+				
 			} else {
 				$output = mysqli_error($mysqli);
 			}

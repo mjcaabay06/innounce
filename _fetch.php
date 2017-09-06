@@ -151,16 +151,57 @@
 				
 				break;
 			case 'view-response':
-				$selResponse = "select *, date_format(received_time, '%b %e, %Y [ %H:%i:%s ]') as date_receive from response_messages where referring_batch_id = " . $_POST['id'] . " order by received_time desc";
-				$rsResponse = mysqli_query($mysqli, $selResponse);
-				if ($rsResponse !== false) {
-					$html = '';
-					while ($res = mysqli_fetch_assoc($rsResponse)) {
-						$html .= '<tr><td>' . $res['message'] . '</td><td>' . $res['sender'] . '</td><td>' . $res['date_receive'] . '</td></tr>';
+				//$selResponse = "select *, date_format(received_time, '%b %e, %Y [ %H:%i:%s ]') as date_receive from response_messages where referring_batch_id = " . $_POST['id'] . " order by received_time desc";
+				$selSent = "select * from sent_messages where batch_id = " . $_POST['id'] . " limit 1";
+				$rsSent = mysqli_query($mysqli, $selSent);
+				$rowSent = mysqli_fetch_assoc($rsSent);
+
+				$data['mt_id'] = $rowSent['message_type_id'];
+				$html = '';
+
+				if ($data['mt_id'] == 3) {
+					$selEmergency = "select * from emergency_recipients where batch_id = " . $_POST['id'];
+					$rsEmergency = mysqli_query($mysqli, $selEmergency);
+					while ($em = mysqli_fetch_assoc($rsEmergency)) {
+						$role = explode(":", $em['recipient_id']);
+						$response = trim($em['remarks']) == '' || trim($em['remarks']) == 'a:no' ? '<span style="font-style: italic;">No response.</span>' : $em['remarks'] ;
+						$query = '';
+
+						if ($role[0] == 's') {
+							$query = "select students.student_code,students.first_name, students.middle_name, students.last_name, school_courses.description, school_sections.section as dep from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id inner join school_courses on school_courses.id = enrollees.school_course_id) on enrollees.student_id = students.id where students.id = " . $role[1] . " order by students.student_code limit 1";
+						} elseif ($role[0] == 'p') {
+							$query = "select user_infos.first_name, user_infos.middle_name, user_infos.last_name, user_types.type, departments.description as dep from users inner join user_infos on user_infos.user_id = users.id inner join user_types on user_types.id = users.user_type_id inner join departments on departments.id = users.department_id where users.id = " . $role[1] . " limit 1";
+						}
+						$rs = mysqli_query($mysqli, $query);
+						$row = mysqli_fetch_assoc($rs);
+						$type = "";
+						if ($role[0] == 's'){
+							$type = "Students";
+						} elseif ($role[0] == 'p'){
+							$type = $row['type'];
+						}
+						$html .= '<tr><td>' . $row['last_name'] . ', ' . $row['first_name'] . '</td><td>' . $type . '</td><td>' . $row['dep'] . '</td><td>' . $response . '</td></tr>';
 					}
-					$data['output'] = $html;
-					$data['status'] = 'success';
+				} else {
+					$selResponse = "select students.student_code,students.first_name, students.middle_name, students.last_name, school_courses.description, school_sections.section, message_recipients.remarks, message_recipients.message_type_id from message_recipients inner join (students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id inner join school_courses on school_courses.id = enrollees.school_course_id) on enrollees.student_id = students.id) on students.id = message_recipients.student_id where message_recipients.batch_id = " . $_POST['id'] . " order by students.student_code";
+					$rsResponse = mysqli_query($mysqli, $selResponse);
+					while ($res = mysqli_fetch_assoc($rsResponse)) {
+						$response = trim($res['remarks']) == '' ? '<span style="font-style: italic;">No response.</span>' : $res['remarks'] ;
+						$html .= '<tr><td>' . $res['last_name'] . ', ' . $res['first_name'] . '</td><td>' . $res['description'] . '</td><td>' . $res['section'] . '</td>';
+						
+						if ($res['message_type_id'] == 2) {
+							$html .= '<td>' . $response . '</td>';
+						}
+
+						$html .= '</tr>';
+
+						//$html .= '<tr><td>' . $res['last_name'] . ', ' . $res['first_name'] . '</td><td>' . $res['description'] . '</td><td>' . $res['section'] . '</td></tr>';
+					}
 				}
+
+				$data['output'] = $html;
+				$data['status'] = 'success';
+
 				break;
 			case 'departments':
 				$selCourse = "select * from school_courses where department_id = " . $_POST['depId'] . ' order by description';

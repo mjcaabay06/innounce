@@ -118,9 +118,12 @@
 					<table class="table mb-0">
 						<thead>
 							<tr>
-								<th>Reply Message</th>
-								<th>Sender Number</th>
-								<th>Date Receive</th>
+								<th>Recipient Name</th>
+								<th class="a-tab">Course</th>
+								<th class="a-tab">Section</th>
+								<th class="b-tab" style="display: none">Role</th>
+								<th class="b-tab" style="display: none">Section/Department</th>
+								<th class="r-tab" style="display: none">Response</th>
 							</tr>
 						</thead>
 						<tbody>

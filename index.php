@@ -237,6 +237,7 @@
 																	<th>Message</th>
 																	<th>User</th>
 																	<th>Date Sent</th>
+																	<th></th>
 																</tr>
 															</thead>
 															<tbody>
@@ -251,6 +252,9 @@
 																	<td><?php echo $announcement['message'] ?></td>
 																	<td><?php echo $announcement['last_name'] . ', ' . $announcement['first_name'] ?></td>
 																	<td><?php echo $announcement['date_sent'] ?></td>
+																	<td>
+																		<button data-id="<?php echo $announcement['batch_id'] ?>" id="a-btn-view" class="response-btn-view btn btn-primary btn-square btn-sm" title="View Recipients"><i class="fa fa-eye"></i></button>
+																	</td>
 																</tr>
 																<?php endwhile; ?>
 															</tbody>
@@ -333,6 +337,7 @@
 																	<th>Batch ID</th>
 																	<th>Message</th>
 																	<th>Date Sent</th>
+																	<th></th>
 																</tr>
 															</thead>
 															<tbody>
@@ -346,6 +351,9 @@
 																	<td><?php echo $grouping['batch_id'] ?></td>
 																	<td><?php echo $grouping['message'] ?></td>
 																	<td><?php echo $grouping['date_sent'] ?></td>
+																	<td>
+																		<button data-id="<?php echo $grouping['batch_id'] ?>" id="g-btn-view" class="response-btn-view btn btn-primary btn-square btn-sm" title="View Recipients"><i class="fa fa-eye"></i></button>
+																	</td>
 																</tr>
 																<?php endwhile; ?>
 															</tbody>
@@ -469,7 +477,7 @@
 																	<td><?php echo $emergency['last_name'] . ', ' . $emergency['first_name'] ?></td>
 																	<td><?php echo $emergency['date_sent'] ?></td>
 																	<td>
-																		<button data-id="<?php echo $emergency['batch_id'] ?>" id="e-btn-view" class="response-btn-view btn btn-primary btn-square btn-sm" title="View Response" data-id="<?php echo $emergency['batch_id'] ?>"><i class="fa fa-eye"></i></button>
+																		<button data-id="<?php echo $emergency['batch_id'] ?>" id="e-btn-view" class="response-btn-view btn btn-primary btn-square btn-sm" title="View Recipients" data-id="<?php echo $emergency['batch_id'] ?>"><i class="fa fa-eye"></i></button>
 																	</td>
 																</tr>
 																<?php endwhile; ?>
@@ -512,13 +520,12 @@
 																	<th>Message</th>
 																	<th>User</th>
 																	<th>Date Sent</th>
-																	<th>Response Count</th>
 																	<th></th>
 																</tr>
 															</thead>
 															<tbody>
 																<?php
-																	$selSurvey = "select (select count(id) from response_messages where referring_batch_id = sent_messages.batch_id) as response_count, sent_messages.*, user_infos.*, date_format(sent_messages.created_at, '%b %e, %Y [ %H:%i:%s ]') as date_sent from sent_messages inner join (users inner join user_infos on user_infos.user_id = users.id) on users.id = sent_messages.user_id where sent_messages.message_type_id = 2 order by sent_messages.created_at desc";
+																	$selSurvey = "select sent_messages.*, user_infos.*, date_format(sent_messages.created_at, '%b %e, %Y [ %H:%i:%s ]') as date_sent from sent_messages inner join (users inner join user_infos on user_infos.user_id = users.id) on users.id = sent_messages.user_id where sent_messages.message_type_id = 2 order by sent_messages.created_at desc";
 																	$rsSurvey = mysqli_query($mysqli, $selSurvey);
 
 																	while($survey = mysqli_fetch_assoc($rsSurvey)):
@@ -528,9 +535,8 @@
 																	<td><?php echo $survey['message'] ?></td>
 																	<td><?php echo $survey['last_name'] . ', ' . $survey['first_name'] ?></td>
 																	<td><?php echo $survey['date_sent'] ?></td>
-																	<td><?php echo $survey['response_count'] ?></td>
 																	<td>
-																		<button data-id="<?php echo $survey['batch_id'] ?>" id="s-btn-view" class="response-btn-view btn btn-primary btn-square btn-sm <?php echo $survey['response_count'] > 0 ? '' : 'disabled' ?>" title="View Response" data-id="<?php echo $survey['batch_id'] ?>"><i class="fa fa-eye"></i></button>
+																		<button data-id="<?php echo $survey['batch_id'] ?>" id="s-btn-view" class="response-btn-view btn btn-primary btn-square btn-sm" title="View Recipients"><i class="fa fa-eye"></i></button>
 																	</td>
 																</tr>
 																<?php endwhile; ?>
@@ -944,8 +950,22 @@
 						var result = $.parseJSON(response);
 
 						if (result['status'] == 'success') {
+							$("table th.a-tab").hide();
+							$("table th.b-tab").hide();
+							$("table th.r-tab").hide();
+
+							if (result['mt_id'] == 3) {
+								$("table th.b-tab").show();
+								$("table th.r-tab").show();
+							} else if (result['mt_id'] == 2) {
+								$("table th.a-tab").show();
+								$("table th.r-tab").show();
+							} else {
+								$("table th.a-tab").show();
+							}
+
 							$("#viewResponseModal table tbody").html(result['output']);
-							$("#viewResponseModal #response-title").html('Response messages for: ' + id);
+							$("#viewResponseModal #response-title").html('Recipients for: ' + id);
 							$("#viewResponseModal").modal('show');
 							$(".preloader").hide();
 						}
