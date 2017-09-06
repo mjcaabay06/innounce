@@ -28,6 +28,8 @@
 				error_log(mysqli_error($mysqli));
 			}
 		}
+	} else {
+		error_log("No message to update.");
 	}
 
 	//echo date_default_timezone_get();
