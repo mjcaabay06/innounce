@@ -11,11 +11,18 @@
 		$response = '';
 
 		$mobile = array();
+		$aa = array();
 		foreach(getAllReceivers() as $rcvr) {
-			$mobile[] = substr_replace($rcvr['mobile_number'], '63', 0, 1);
+			//$mobile[] = substr_replace($rcvr['mobile_number'], '63', 0, 1);
+			$aa['number'] = substr_replace($rcvr['mobile_number'], '63', 0, 1);
+			$aa['id'] = $rcvr['recipient_id'];
+			array_push($mobile, $aa);
 		}
 
-		$response = sendViaBulksms(implode(',', $mobile), $message);
+		$imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
+		$response = sendViaBulksms($imploded, $message);
+		// $response['success'] = true;
+		// $response['api_batch_id'] = randomActivationCode();
 		if (!$response['success']) {
 			$data['message'] = "There was an error sending the emergency. Please try again.";
 			$data['status'] = false;
@@ -56,6 +63,6 @@
 	function storeRecipient($batchId, $recipient){
 		global $mysqli;
 
-		$insert = "insert into emergency_recipients(batch_id,recipient) values(" . $batchId . ",'" . $recipient . "')";
+		$insert = "insert into emergency_recipients(batch_id,recipient_id,recipient) values(" . $batchId . ",'" . $recipient['id'] . "','" . $recipient['number'] . "')";
 		$rs = mysqli_query($mysqli, $insert);
 	}

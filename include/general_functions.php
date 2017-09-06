@@ -197,14 +197,15 @@
 	function getStudentReceivers($year, $course) {
 		global $mysqli;
 
-		$selStud = "select students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on enrollees.school_section_id = school_sections.id) on enrollees.student_id = students.id where enrollees.school_course_id = " . $course . " and school_sections.school_level_id = " . $year;
+		$selStud = "select students.id, students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on enrollees.school_section_id = school_sections.id) on enrollees.student_id = students.id where enrollees.school_course_id = " . $course . " and school_sections.school_level_id = " . $year;
 		$rsStud = mysqli_query($mysqli, $selStud);
 
 		$data = array();
 		while($studNumber = mysqli_fetch_assoc($rsStud)) {
 			$studData = array(
 					'name' => '[' . $studNumber['last_name'] . ',' . $studNumber['first_name'] . '(' . $studNumber['section'] . ')]',
-					'mobile_number' => $studNumber['mobile_number']
+					'mobile_number' => $studNumber['mobile_number'],
+					'student_id' => $studNumber['id']
 					);
 			array_push($data, $studData);
 		}
@@ -215,14 +216,15 @@
 	function getStudentViaSection($section) {
 		global $mysqli;
 
-		$selSection = "select students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id where students.id = " . $section;
+		$selSection = "select students.id, students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id where students.id = " . $section;
 		$rsSection = mysqli_query($mysqli, $selSection);
 
 		$data = array();
 		while($studNumber = mysqli_fetch_assoc($rsSection)) {
 			$studData = array(
 					'name' => '[' . $studNumber['last_name'] . ',' . $studNumber['first_name'] . '(' . $studNumber['section'] . ')]',
-					'mobile_number' => $studNumber['mobile_number']
+					'mobile_number' => $studNumber['mobile_number'],
+					'student_id' => $studNumber['id']
 					);
 			array_push($data, $studData);
 		}
@@ -233,14 +235,15 @@
 	function getStudentViaDeparment($year, $depId) {
 		global $mysqli;
 
-		$selSection = "select students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id inner join (school_courses inner join departments on departments.id = school_courses.department_id) on school_courses.id = students.course_id where departments.id = " . $depId . " and school_sections.school_level_id = " . $year;
+		$selSection = "select students.id, students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id inner join (school_courses inner join departments on departments.id = school_courses.department_id) on school_courses.id = students.course_id where departments.id = " . $depId . " and school_sections.school_level_id = " . $year;
 		$rsSection = mysqli_query($mysqli, $selSection);
 
 		$data = array();
 		while($studNumber = mysqli_fetch_assoc($rsSection)) {
 			$studData = array(
 					'name' => '[' . $studNumber['last_name'] . ',' . $studNumber['first_name'] . '(' . $studNumber['section'] . ')]',
-					'mobile_number' => $studNumber['mobile_number']
+					'mobile_number' => $studNumber['mobile_number'],
+					'student_id' => $studNumber['id']
 					);
 			array_push($data, $studData);
 		}
@@ -271,23 +274,25 @@
 		$data = array();
 
 		//select students
-		$selStud = "select students.first_name, students.last_name, students.mobile_number, school_sections.section from enrollees inner join students on students.id = enrollees.student_id inner join school_sections on school_sections.id = enrollees.school_section_id where trim(students.mobile_number) != '' and students.id = 11";
+		$selStud = "select students.id, students.first_name, students.last_name, students.mobile_number, school_sections.section from enrollees inner join students on students.id = enrollees.student_id inner join school_sections on school_sections.id = enrollees.school_section_id where trim(students.mobile_number) != ''";
 		$rsStud = mysqli_query($mysqli, $selStud);
 		while($studNumber = mysqli_fetch_assoc($rsStud)) {
 			$studData = array(
 					'name' => '[' . $studNumber['last_name'] . ',' . $studNumber['first_name'] . '(' . $studNumber['section'] . ')]',
-					'mobile_number' => $studNumber['mobile_number']
+					'mobile_number' => $studNumber['mobile_number'],
+					'recipient_id' => 's:' . $studNumber['id']
 					);
 			array_push($data, $studData);
 		}
 
 		//select prof
-		$selProf = "select user_infos.first_name, user_infos.last_name, user_infos.mobile_number from users inner join user_infos on users.id = user_infos.user_id where users.id != " . $_COOKIE['authId'] . " and users.status_id = 1";
+		$selProf = "select users.id, user_infos.first_name, user_infos.last_name, user_infos.mobile_number from users inner join user_infos on users.id = user_infos.user_id where users.id != " . $_COOKIE['authId'] . " and users.status_id = 1";
 		$rsProf = mysqli_query($mysqli, $selProf);
 		while($profNumber = mysqli_fetch_assoc($rsProf)) {
 			$profData = array(
 					'name' => '[' . $profNumber['last_name'] . ',' . $profNumber['first_name'] . '(Prof)]',
-					'mobile_number' => $profNumber['mobile_number']
+					'mobile_number' => $profNumber['mobile_number'],
+					'recipient_id' => 'p:' . $profNumber['id']
 					);
 			array_push($data, $profData);
 		}
@@ -338,12 +343,14 @@
 			insert into
 			message_recipients(
 				batch_id,
+				student_id,
 				recipient,
 				message_type_id
 			)
 			values(
 				" . $bacthId . ",
-				'" . $recipient . "',
+				" . $recipient['id'] . ",
+				'" . $recipient['number'] . "',
 				" . $typeId . "
 			)
 			";

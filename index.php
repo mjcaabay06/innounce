@@ -453,13 +453,12 @@
 																	<th>Message</th>
 																	<th>User</th>
 																	<th>Date Sent</th>
-																	<th>Response Count</th>
 																	<th></th>
 																</tr>
 															</thead>
 															<tbody>
 																<?php
-																	$selEmergency = "select (select count(id) from response_messages where referring_batch_id = sent_messages.batch_id) as response_count, sent_messages.*, user_infos.*, date_format(sent_messages.created_at, '%b %e, %Y [ %H:%i:%s ]') as date_sent from sent_messages inner join (users inner join user_infos on user_infos.user_id = users.id) on users.id = sent_messages.user_id where sent_messages.message_type_id = 3 order by sent_messages.created_at desc";
+																	$selEmergency = "select sent_messages.*, user_infos.*, date_format(sent_messages.created_at, '%b %e, %Y [ %H:%i:%s ]') as date_sent from sent_messages inner join (users inner join user_infos on user_infos.user_id = users.id) on users.id = sent_messages.user_id where sent_messages.message_type_id = 3 order by sent_messages.created_at desc";
 																	$rsEmergency = mysqli_query($mysqli, $selEmergency);
 
 																	while($emergency = mysqli_fetch_assoc($rsEmergency)):
@@ -469,9 +468,8 @@
 																	<td><?php echo $emergency['message'] ?></td>
 																	<td><?php echo $emergency['last_name'] . ', ' . $emergency['first_name'] ?></td>
 																	<td><?php echo $emergency['date_sent'] ?></td>
-																	<td><?php echo $emergency['response_count'] ?></td>
 																	<td>
-																		<button data-id="<?php echo $emergency['batch_id'] ?>" id="e-btn-view" class="response-btn-view btn btn-primary btn-square btn-sm <?php echo $emergency['response_count'] > 0 ? '' : 'disabled' ?>" title="View Response" data-id="<?php echo $emergency['batch_id'] ?>"><i class="fa fa-eye"></i></button>
+																		<button data-id="<?php echo $emergency['batch_id'] ?>" id="e-btn-view" class="response-btn-view btn btn-primary btn-square btn-sm" title="View Response" data-id="<?php echo $emergency['batch_id'] ?>"><i class="fa fa-eye"></i></button>
 																	</td>
 																</tr>
 																<?php endwhile; ?>

@@ -147,6 +147,9 @@
 				}
 				$data['output'] = $result;
 				break;
+			case 'view-recipient':
+				
+				break;
 			case 'view-response':
 				$selResponse = "select *, date_format(received_time, '%b %e, %Y [ %H:%i:%s ]') as date_receive from response_messages where referring_batch_id = " . $_POST['id'] . " order by received_time desc";
 				$rsResponse = mysqli_query($mysqli, $selResponse);

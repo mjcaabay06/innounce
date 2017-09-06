@@ -37,14 +37,19 @@
 		} else {
 			$response = "";
 			$mobile = array();
+			$aa = array();
 			foreach ($hasLvl as $year) {
 				foreach (getStudentReceivers($year,$course) as $studNumber) {
-					$mobile[] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
+					$aa['number'] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
+					$aa['id'] = $studNumber['student_id'];
+					array_push($mobile, $aa);
 				}
 			}
 
-			$response = sendViaBulksms(implode(',', $mobile), $message);
-			
+			$imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
+			$response = sendViaBulksms($imploded, $message);
+			// $response['success'] = true;
+			// $response['api_batch_id'] = randomActivationCode();
 			if ($response['success']) {
 				insertMessage($_COOKIE['authId'],$message,1,$response);
 				foreach ($mobile as $recipient) {
