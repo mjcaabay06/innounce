@@ -19,7 +19,6 @@
 				$rsMsg = mysqli_query($mysqli, $upMsg);
 
 				if ($rsMsg !== false) {
-					echo 'success';
 					error_log('success');
 				} else {
 					error_log(mysqli_error($mysqli));
