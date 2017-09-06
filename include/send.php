@@ -42,15 +42,15 @@
 		$aa['id'] = $rcvr['recipient_id'];
 		array_push($mobile, $aa);
 	}
-
+	$message = "test";
 	$imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
 	$response = sendViaBulksms($imploded, $message);
 	echo $imploded;
-	if( $result['success'] ) {
-		print_ln( formatted_server_response( $result ) );
+	if( $response['success'] ) {
+		print_ln( formatted_server_response( $response ) );
 		//insertMessage(1,'This is just a test message.',2,$result);
 	}
 	else {
-		print_ln( formatted_server_response( $result ) );
+		print_ln( formatted_server_response( $response ) );
 	}
 ?>
