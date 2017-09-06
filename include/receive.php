@@ -22,7 +22,7 @@
 		//enter if message type is emergency
 		if ($rowMsg['message_type_id'] == 3) {
 			//check if sender exist on the emergency message sent
-			$selResponse = "select * from emergency_recipients where batch_id = " . $referring_batch_id . " AND recipient = '" . $sender . "' order by created_at desc limit 1";
+			$selResponse = "select * from emergency_recipients where batch_id = " . $referring_batch_id . " AND recipient = '" . $sender . "' and (remarks != 'a:no' or remarks is null) order by created_at desc limit 1";
 			$rsSelResponse = mysqli_query($mysqli, $selResponse);
 			$cntSelResponse = mysqli_num_rows($rsSelResponse);
 
