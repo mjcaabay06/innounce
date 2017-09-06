@@ -45,6 +45,7 @@
 
 	$imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
 	$response = sendViaBulksms($imploded, $message);
+	echo $imploded;
 	if( $result['success'] ) {
 		print_ln( formatted_server_response( $result ) );
 		//insertMessage(1,'This is just a test message.',2,$result);
