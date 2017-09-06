@@ -63,6 +63,6 @@
 	function storeRecipient($batchId, $recipient){
 		global $mysqli;
 
-		$insert = "insert into emergency_recipients(batch_id,recipient_id,recipient) values(" . $batchId . "," . $recipient['id'] . ",'" . $recipient['number'] . "')";
+		$insert = "insert into emergency_recipients(batch_id,recipient_id,recipient) values(" . $batchId . ",'" . $recipient['id'] . "','" . $recipient['number'] . "')";
 		$rs = mysqli_query($mysqli, $insert);
 	}
