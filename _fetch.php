@@ -147,9 +147,6 @@
 				}
 				$data['output'] = $result;
 				break;
-			case 'view-recipient':
-				
-				break;
 			case 'view-response':
 				//$selResponse = "select *, date_format(received_time, '%b %e, %Y [ %H:%i:%s ]') as date_receive from response_messages where referring_batch_id = " . $_POST['id'] . " order by received_time desc";
 				$selSent = "select * from sent_messages where batch_id = " . $_POST['id'] . " limit 1";
@@ -170,7 +167,7 @@
 						if ($role[0] == 's') {
 							$query = "select students.student_code,students.first_name, students.middle_name, students.last_name, school_courses.description, school_sections.section as dep from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id inner join school_courses on school_courses.id = enrollees.school_course_id) on enrollees.student_id = students.id where students.id = " . $role[1] . " order by students.student_code limit 1";
 						} elseif ($role[0] == 'p') {
-							$query = "select user_infos.first_name, user_infos.middle_name, user_infos.last_name, user_types.type, departments.description as dep from users inner join user_infos on user_infos.user_id = users.id inner join user_types on user_types.id = users.user_type_id inner join departments on departments.id = users.department_id where users.id = " . $role[1] . " limit 1";
+							$query = "select user_infos.first_name, user_infos.middle_name, user_infos.last_name, user_types.type, departments.description as dep from users inner join user_infos on user_infos.user_id = users.id inner join user_types on user_types.id = users.user_type_id left join departments on departments.id = users.department_id where users.id = " . $role[1] . " limit 1";
 						}
 						$rs = mysqli_query($mysqli, $query);
 						$row = mysqli_fetch_assoc($rs);
