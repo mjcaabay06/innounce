@@ -2,7 +2,7 @@
 	include("configurations.php");
 	include("general_functions.php");
 
-	// $result = sendViaBulksms('639176710089, 639053179446', 'This is just a test message.');
+	$result = sendViaBulksms('639176710089', 'This is just a test message.');
 	
 
 	// // $var = "639157559924";
@@ -34,18 +34,18 @@
 	// 	echo $recipient['id'] . '<br/>';
 	// }
 
-	$mobile = array();
-	$aa = array();
-	foreach(getAllReceivers() as $rcvr) {
-		//$mobile[] = substr_replace($rcvr['mobile_number'], '63', 0, 1);
-		$aa['number'] = substr_replace($rcvr['mobile_number'], '63', 0, 1);
-		$aa['id'] = $rcvr['recipient_id'];
-		array_push($mobile, $aa);
-	}
-	$message = "test";
-	$imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
-	$response = sendViaBulksms($imploded, $message);
-	echo $imploded;
+	// $mobile = array();
+	// $aa = array();
+	// foreach(getAllReceivers() as $rcvr) {
+	// 	//$mobile[] = substr_replace($rcvr['mobile_number'], '63', 0, 1);
+	// 	$aa['number'] = substr_replace($rcvr['mobile_number'], '63', 0, 1);
+	// 	$aa['id'] = $rcvr['recipient_id'];
+	// 	array_push($mobile, $aa);
+	// }
+	// $message = "test";
+	// $imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
+	// $response = sendViaBulksms($imploded, $message);
+	// echo $imploded;
 	if( $response['success'] ) {
 		print_ln( formatted_server_response( $response ) );
 		//insertMessage(1,'This is just a test message.',2,$result);
