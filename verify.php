@@ -259,8 +259,7 @@
 							setTimeout(function(){
 								$("#alert-activate-success").addClass('hidden');
 								$("#alert-activate-success").html('');
-								<?php session_destroy(); ?>
-								window.location.href = 'login.php';
+								window.location.href = 'thank-you.php';
 							},1000);
 						}
 					});
