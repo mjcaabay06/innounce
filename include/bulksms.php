@@ -135,7 +135,7 @@ function seven_bit_sms ($message, $msisdn ) {
   'concat_text_sms_max_parts' => 2,
   // 'sender' => 'iNnounce',
   'repliable' => 1,
-  'routing_group' => 2
+  'routing_group' => 3
   );
 
   return make_post_body($post_fields);
