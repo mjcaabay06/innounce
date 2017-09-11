@@ -101,7 +101,8 @@ class ChikkaSMS {
         }
         
         //urlencode 
-        $message = urlencode($message);
+        //$message = urlencode($message);
+        $message = "'" . $message . "'";
 
         //sendText post params
         $sendData = array(

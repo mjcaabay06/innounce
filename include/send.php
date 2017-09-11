@@ -41,4 +41,5 @@
 <form action="" method="post">
 	<input type="text" name="numbers">
 	<button type="submit">Send</button>
+	<a href="test.php?aa=<?php echo "'This is just a test message'"; ?>" target="_blank">Click</a>
 </form>

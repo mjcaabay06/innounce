@@ -19,7 +19,7 @@
 	        $timestamp = $_POST["timestamp"];
 	        $request_id = $_POST["request_id"];
 
-	        error_log(implode(',',array_map(function($v, $k){ return sprintf("%s='%s'",$k, $v); }, $_POST) ) );
+	        //error_log(implode(',',array_map(function($v, $k){ return sprintf("%s='%s'",$k, $v); }, $_POST) ) );
 
         	$output = '';
 			$msisdn = $shortcode;
