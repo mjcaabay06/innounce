@@ -37,7 +37,7 @@
         exit(0);
     }
 
-	error_log($request_id);
+	error_log('-----'.$_POST["message_type"]);
 	// $output = '';
 	// $msisdn = $_REQUEST['msisdn'];
 	// $sender = $_REQUEST['sender'];
