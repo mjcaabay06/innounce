@@ -6,6 +6,7 @@
 	if ($_POST) {
 		$message = $_POST['message'];
 		$course = $_POST['course'];
+		$messageID = randomUniqueMsgID();
 
 		$errorSending = array();
 		$data = array();
