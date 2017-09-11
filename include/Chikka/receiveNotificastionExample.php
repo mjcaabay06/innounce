@@ -12,7 +12,7 @@ $shortCode = '292907886';
 $chikkaAPI = new ChikkaSMS($clientId, $secretKey, $shortCode);
 
 if($_POST){
-    error_log("----in");
+	
     if ($chikkaAPI->receiveNotifications() === null) {
             header("HTTP/1.1 400 Error");
             echo "Message has not been processed.";

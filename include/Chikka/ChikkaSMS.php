@@ -175,6 +175,7 @@ class ChikkaSMS {
      *  
      */
     public function receiveNotifications() {
+        error_log($_POST['message_type']);
         $fromChikka = $_POST;
         
         if (count(array_diff_key($this->expectedChikkaResponse, $fromChikka)) != 0) {
