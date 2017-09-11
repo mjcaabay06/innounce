@@ -2,6 +2,7 @@
 	include("configurations.php");
 	include("general_functions.php");
 
+	error_log($_POST); die();
 	$output = '';
 	$msisdn = $_REQUEST['msisdn'];
 	$sender = $_REQUEST['sender'];
