@@ -93,6 +93,30 @@
 		return $result;
 	}
 
+	function sendViaChikka($mobile, $message) {
+		include_once('ChikkaSMS.php');
+
+		$clientId = 'c315accbb28da59c05a6c0b4bc3248be5037c5ccc6cfed219a7507cfc2b01dc8';
+		$secretKey = '56f51f5c4a81dc64ba3e0d5be7bb1087c0cb299c5659355f68d7b4910c42e179';
+		$shortCode = '292907886';
+		$chikkaAPI = new ChikkaSMS($clientId,$secretKey,$shortCode);
+		$response = $chikkaAPI->sendText(randomUniqueMsgID(), $mobile, $message);
+
+		return $response;
+	}
+
+	function randomUniqueMsgID() {
+	    $alphabet = '1234567890';
+	    $pass = array(); //remember to declare $pass as an array
+	    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+	    $length = 10;
+	    for ($i = 0; $i < $length; $i++) {
+	        $n = rand(0, $alphaLength);
+	        $pass[] = $alphabet[$n];
+	    }
+	    return implode($pass); //turn the array into a string
+	}
+
 	function sendEmail() {
 		$message = 'Someone trying to force a login. IP Address is <b>' . getClientIp() . '</b>';
 		$adminEmail = 'doodledummy617@gmail.com';
