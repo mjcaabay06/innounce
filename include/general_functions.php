@@ -100,7 +100,7 @@
 		$secretKey = '56f51f5c4a81dc64ba3e0d5be7bb1087c0cb299c5659355f68d7b4910c42e179';
 		$shortCode = '292907886';
 		$chikkaAPI = new ChikkaSMS($clientId,$secretKey,$shortCode);
-		$response = $chikkaAPI->sendText($messageId, $mobile, urlencode($message));
+		$response = $chikkaAPI->sendText($messageId, $mobile, $message);
 
 		return $response;
 	}
