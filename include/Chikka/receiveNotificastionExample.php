@@ -19,6 +19,7 @@ if($_POST){
         }
     else{
         echo "Message has been successfully processed.";
+        error_log("----meron");
     }
     var_dump($chikkaAPI->receiveNotifications());
 }
