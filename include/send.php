@@ -13,7 +13,8 @@
 	// }
 
 	if (isset($_POST)) {
-		$response = sendViaChikka($_POST['numbers'], 'This is just a test message coming from Chikka');
+		$messageID = randomUniqueMsgID();
+		$response = sendViaChikka($_POST['numbers'], 'This is just a test message coming from Chikka', $messageID);
 		print_r($response);
 	}
 ?>
