@@ -12,7 +12,7 @@
 		$message_type = $_POST["message_type"];
 
 		if (strtoupper($message_type) == "OUTGOING") {
-			error_log('---------'.$_POST['request_id']);
+			error_log(implode(',',$_POST));
 		}
 	}
 ?>
