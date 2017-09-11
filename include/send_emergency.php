@@ -26,6 +26,7 @@
 				unset($aa);
 			} else {
 				$errorSending[] = $rcvr['name'];
+				error_log('---------' . $response->message);
 			}
 		}
 

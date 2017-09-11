@@ -51,6 +51,7 @@
 						unset($aa);
 					} else {
 						$errorSending[] = $studNumber['name'];
+						error_log('---------' . $response->message);
 					}
 				}
 			}
