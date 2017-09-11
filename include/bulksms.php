@@ -133,7 +133,7 @@ function seven_bit_sms ($message, $msisdn ) {
   'msisdn'   => $msisdn,
   'allow_concat_text_sms' => 0, # Change to 1 to enable long messages
   'concat_text_sms_max_parts' => 2,
-  'sender' => 'iNnounceJRU',
+  'sender' => 'iNnounce2',
   'repliable' => 0,
   'routing_group' => 1
   );
