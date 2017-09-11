@@ -43,46 +43,54 @@
 					//$mobile[] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 					$aa['number'] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 					$aa['id'] = $studNumber['student_id'];
-					array_push($mobile, $aa);
+					//array_push($mobile, $aa);
+
+					$response = sendViaChikka(substr_replace($studNumber['mobile_number'], '63', 0, 1), $message, $messageID);
+					if ((int)$response->status == 200) {
+						insertRecipient($aa,$messageID,2);
+						unset($aa);
+					} else {
+						$errorSending[] = $studNumber['name'];
+					}
 				}
 			}
 
-			$imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
-			$response = sendViaBulksms($imploded, $message);
-			// $response['success'] = true;
-			// $response['api_batch_id'] = randomActivationCode();
-			if ($response['success']) {
-				insertMessage($_COOKIE['authId'],$message,2,$response);
-				foreach ($mobile as $recipient) {
-					insertRecipient($recipient,$response['api_batch_id'],2);
-				}
-				$data['message'] = "Survey was sent successfully.";
-				$data['status'] = "success";
-			} else {
-				$data['message'] = "There was an error sending the survey. Please try again.";
-				$data['status'] = "failed";
-			}
-
-			// if(empty($errorSending)){
-				
-			// 	$data['message'] = "Survey was sent to: [" . implode(', ', $hasWordLvl) . "]";
+			// $imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
+			// $response = sendViaBulksms($imploded, $message);
+			// // $response['success'] = true;
+			// // $response['api_batch_id'] = randomActivationCode();
+			// if ($response['success']) {
+			// 	insertMessage($_COOKIE['authId'],$message,2,$response);
+			// 	foreach ($mobile as $recipient) {
+			// 		insertRecipient($recipient,$response['api_batch_id'],2);
+			// 	}
+			// 	$data['message'] = "Survey was sent successfully.";
 			// 	$data['status'] = "success";
-
-			// 	if (isset($noLvl)) {
-			// 		$yrlvl = '';
-			// 		foreach ($noLvl as $lvl) {
-			// 			$yrlvl .= $lvl . ', ';
-			// 		}
-			// 		$data['message'] .= "<br/>No enrollee for the year level: [" . implode(', ', $noLvl) . "]";
-			// 	}
-			// }else{
-			// 	$name = '';
-			// 	foreach($errorSending as $errorName){
-			// 		$name .= $errorName.", ";
-			// 	}
-			// 	$data['message'] = "There was an error sending survey to the following:<br/>".$name;
+			// } else {
+			// 	$data['message'] = "There was an error sending the survey. Please try again.";
 			// 	$data['status'] = "failed";
 			// }
+
+			if(empty($errorSending)){
+				insertMessage($_COOKIE['authId'],$message,2,$messageID);
+				$data['message'] = "Survey was sent to: [" . implode(', ', $hasWordLvl) . "]";
+				$data['status'] = "success";
+
+				if (isset($noLvl)) {
+					$yrlvl = '';
+					foreach ($noLvl as $lvl) {
+						$yrlvl .= $lvl . ', ';
+					}
+					$data['message'] .= "<br/>No enrollee for the year level: [" . implode(', ', $noLvl) . "]";
+				}
+			}else{
+				$name = '';
+				foreach($errorSending as $errorName){
+					$name .= $errorName.", ";
+				}
+				$data['message'] = "There was an error sending survey to the following:<br/>".$name;
+				$data['status'] = "failed";
+			}
 		}
 
 		// foreach ($_POST['year'] as $year) {

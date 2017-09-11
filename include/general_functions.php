@@ -93,14 +93,14 @@
 		return $result;
 	}
 
-	function sendViaChikka($mobile, $message) {
+	function sendViaChikka($mobile, $message, $messageId) {
 		require_once('Chikka/ChikkaSMS.php');
 
 		$clientId = 'c315accbb28da59c05a6c0b4bc3248be5037c5ccc6cfed219a7507cfc2b01dc8';
 		$secretKey = '56f51f5c4a81dc64ba3e0d5be7bb1087c0cb299c5659355f68d7b4910c42e179';
 		$shortCode = '292907886';
 		$chikkaAPI = new ChikkaSMS($clientId,$secretKey,$shortCode);
-		$response = $chikkaAPI->sendText(randomUniqueMsgID(), $mobile, urlencode($message));
+		$response = $chikkaAPI->sendText($messageId, $mobile, urlencode($message));
 
 		return $response;
 	}
@@ -324,7 +324,7 @@
 		return $data;
 	}
 
-	function insertMessage($userId, $message, $typeId, $response) {
+	function insertMessage($userId, $message, $typeId, $bacthId) {
 		global $mysqli;
 
 		$insertMessage = "
@@ -337,7 +337,7 @@
 				remarks
 			)
 			values(
-				" . $response['api_batch_id'] . ",
+				" . $bacthId . ",
 				'" . $message . "',
 				" . $userId . ",
 				" . $typeId . ",

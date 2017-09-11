@@ -10,6 +10,7 @@
 		$response = '';
 		$mobile = array();
 		$aa = array();
+		$messageID = randomUniqueMsgID();
 
 		switch (strtolower($_POST['action'])) {
 			case 'professor':
@@ -20,25 +21,46 @@
 						//$mobile[] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 						$aa['number'] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 						$aa['id'] = $studNumber['student_id'];
-						array_push($mobile, $aa);
+						//array_push($mobile, $aa);
+
+						$response = sendViaChikka(substr_replace($studNumber['mobile_number'], '63', 0, 1), $message, $messageID);
+						if ((int)$response->status == 200) {
+							insertRecipient($aa,$messageID,4);
+							unset($aa);
+						} else {
+							$errorSending[] = $studNumber['name'];
+						}
 					}
 				}
 
-				$imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
-				$response = sendViaBulksms($imploded, $message);
-				// $response['success'] = true;
-				// $response['api_batch_id'] = randomActivationCode();
-				if ($response['success']) {
-					insertMessage($_COOKIE['authId'],$message,4,$response);
-					foreach ($mobile as $recipient) {
-						insertRecipient($recipient,$response['api_batch_id'],4);
-					}
-					$data['message'] = "Announcement was sent successfully.";
+				if(empty($errorSending)){
+					insertMessage($_COOKIE['authId'],$message,4, $messageID);
+					$data['message'] = "Announcement was sent to all recipients.";
 					$data['status'] = true;
-				} else {
-					$data['message'] = "There was an error sending the announcement. Please try again.";
+				}else{
+					$name = '';
+					foreach($errorSending as $errorName){
+						$name .= $errorName.", ";
+					}
+					$data['message'] = "There was an error sending announcement to the following:<br/>".$name;
 					$data['status'] = false;
 				}
+
+				// $imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
+				// $response = sendViaBulksms($imploded, $message);
+				// // $response['success'] = true;
+				// // $response['api_batch_id'] = randomActivationCode();
+				// if ($response['success']) {
+				// 	insertMessage($_COOKIE['authId'],$message,4,$response);
+				// 	foreach ($mobile as $recipient) {
+				// 		insertRecipient($recipient,$response['api_batch_id'],4);
+				// 	}
+				// 	$data['message'] = "Announcement was sent successfully.";
+				// 	$data['status'] = true;
+				// } else {
+				// 	$data['message'] = "There was an error sending the announcement. Please try again.";
+				// 	$data['status'] = false;
+				// }
 				break;
 			case 'chairman':
 				$message = $_POST['message'];
@@ -50,25 +72,46 @@
 						//$mobile[] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 						$aa['number'] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 						$aa['id'] = $studNumber['student_id'];
-						array_push($mobile, $aa);
+						//array_push($mobile, $aa);
+
+						$response = sendViaChikka(substr_replace($studNumber['mobile_number'], '63', 0, 1), $message, $messageID);
+						if ((int)$response->status == 200) {
+							insertRecipient($aa,$messageID,4);
+							unset($aa);
+						} else {
+							$errorSending[] = $studNumber['name'];
+						}
 					}
 				}
 
-				$imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
-				$response = sendViaBulksms($imploded, $message);
-				// $response['success'] = true;
-				// $response['api_batch_id'] = randomActivationCode();
-				if ($response['success']) {
-					insertMessage($_COOKIE['authId'],$message,4,$response);
-					foreach ($mobile as $recipient) {
-						insertRecipient($recipient,$response['api_batch_id'],4);
-					}
-					$data['message'] = "Announcement was sent successfully.";
+				if(empty($errorSending)){
+					insertMessage($_COOKIE['authId'],$message,4, $messageID);
+					$data['message'] = "Announcement was sent to all recipients.";
 					$data['status'] = true;
-				} else {
-					$data['message'] = "There was an error sending the announcement. Please try again.";
+				}else{
+					$name = '';
+					foreach($errorSending as $errorName){
+						$name .= $errorName.", ";
+					}
+					$data['message'] = "There was an error sending announcement to the following:<br/>".$name;
 					$data['status'] = false;
 				}
+
+				// $imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
+				// $response = sendViaBulksms($imploded, $message);
+				// // $response['success'] = true;
+				// // $response['api_batch_id'] = randomActivationCode();
+				// if ($response['success']) {
+				// 	insertMessage($_COOKIE['authId'],$message,4,$response);
+				// 	foreach ($mobile as $recipient) {
+				// 		insertRecipient($recipient,$response['api_batch_id'],4);
+				// 	}
+				// 	$data['message'] = "Announcement was sent successfully.";
+				// 	$data['status'] = true;
+				// } else {
+				// 	$data['message'] = "There was an error sending the announcement. Please try again.";
+				// 	$data['status'] = false;
+				// }
 				break;
 			case 'dean':
 				$message = $_POST['message'];
@@ -80,25 +123,46 @@
 						//$mobile[] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 						$aa['number'] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 						$aa['id'] = $studNumber['student_id'];
-						array_push($mobile, $aa);
+						//array_push($mobile, $aa);
+
+						$response = sendViaChikka(substr_replace($studNumber['mobile_number'], '63', 0, 1), $message, $messageID);
+						if ((int)$response->status == 200) {
+							insertRecipient($aa,$messageID,4);
+							unset($aa);
+						} else {
+							$errorSending[] = $studNumber['name'];
+						}
 					}
 				}
 
-				$imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
-				$response = sendViaBulksms($imploded, $message);
-				// $response['success'] = true;
-				// $response['api_batch_id'] = randomActivationCode();
-				if ($response['success']) {
-					insertMessage($_COOKIE['authId'],$message,4,$response);
-					foreach ($mobile as $recipient) {
-						insertRecipient($recipient,$response['api_batch_id'],4);
-					}
-					$data['message'] = "Announcement was sent successfully.";
+				if(empty($errorSending)){
+					insertMessage($_COOKIE['authId'],$message,4, $messageID);
+					$data['message'] = "Announcement was sent to all recipients.";
 					$data['status'] = true;
-				} else {
-					$data['message'] = "There was an error sending the announcement. Please try again.";
+				}else{
+					$name = '';
+					foreach($errorSending as $errorName){
+						$name .= $errorName.", ";
+					}
+					$data['message'] = "There was an error sending announcement to the following:<br/>".$name;
 					$data['status'] = false;
 				}
+
+				// $imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
+				// $response = sendViaBulksms($imploded, $message);
+				// // $response['success'] = true;
+				// // $response['api_batch_id'] = randomActivationCode();
+				// if ($response['success']) {
+				// 	insertMessage($_COOKIE['authId'],$message,4,$response);
+				// 	foreach ($mobile as $recipient) {
+				// 		insertRecipient($recipient,$response['api_batch_id'],4);
+				// 	}
+				// 	$data['message'] = "Announcement was sent successfully.";
+				// 	$data['status'] = true;
+				// } else {
+				// 	$data['message'] = "There was an error sending the announcement. Please try again.";
+				// 	$data['status'] = false;
+				// }
 				break;
 			default:
 				# code...
