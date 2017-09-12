@@ -8,8 +8,8 @@
 		$course = $_POST['course'];
 		$messageID = randomUniqueMsgID();
 		$code = createCode('s');
-		$egReply = '\n\nReply: ' . $code . '<space><your reply>';
-		$message = $message . $egReply;
+		$egReply = $message . '(Reply: ' . $code . '<space><your reply>)';
+		//$message = $message . $egReply;
 
 		$errorSending = array();
 		$data = array();
@@ -49,7 +49,7 @@
 					$aa['id'] = $studNumber['student_id'];
 					//array_push($mobile, $aa);
 
-					$response = sendViaChikka(substr_replace($studNumber['mobile_number'], '63', 0, 1), $message, $messageID);
+					$response = sendViaChikka(substr_replace($studNumber['mobile_number'], '63', 0, 1), $egReply, $messageID);
 					if ((int)$response->status == 200) {
 						insertRecipient($aa,$messageID,2);
 						unset($aa);
