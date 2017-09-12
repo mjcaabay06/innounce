@@ -8,7 +8,7 @@
 		$course = $_POST['course'];
 		$messageID = randomUniqueMsgID();
 		$code = createCode('s');
-		$egReply = '\n\n' . $code . '<space><your reply>';
+		$egReply = '\n\nReply: ' . $code . '<space><your reply>';
 		$message = $message . $egReply;
 
 		$errorSending = array();

@@ -14,7 +14,7 @@
 		$aa = array();
 		$messageID = randomUniqueMsgID();
 		$code = createCode('e');
-		$egReply = '\n\n' . $code . '<space><your reply>';
+		$egReply = '\n\nReply: ' . $code . '<space><your reply>';
 		$message = $message . $egReply;
 
 		foreach(getAllReceivers() as $rcvr) {
