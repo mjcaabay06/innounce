@@ -32,7 +32,7 @@
 
 			//$response = sendViaChikka(substr_replace($rcvr['mobile_number'], '63', 0, 1), $egReply, $messageID);
 			$chikkaAPI = new ChikkaSMS($clientId,$secretKey,$shortCode);
-			$response = $chikkaAPI->sendText($messageID,$rcvr['mobile_number'], '63', 0, 1),$egReply);
+			$response = $chikkaAPI->sendText($messageID,substr_replace($rcvr['mobile_number'], '63', 0, 1),$egReply);
 			if ((int)$response->status == 200) {
 				//insertRecipient($aa,$messageID,1);
 				storeRecipient($messageID,$aa);
