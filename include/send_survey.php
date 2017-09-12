@@ -51,9 +51,10 @@
 
 					$response = sendViaChikka(substr_replace($studNumber['mobile_number'], '63', 0, 1), $egReply, $messageID);
 					if ((int)$response->status == 200) {
-						insertRecipient($aa,$messageID,2);
+						//insertRecipient($aa,$messageID,2);
 						unset($aa);
 						unset($response);
+						error_log('>>>>>>>>>>>'.$response->status);
 					} else {
 						$errorSending[] = $studNumber['name'];
 						error_log('---------' . $response->message);
