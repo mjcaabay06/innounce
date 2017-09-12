@@ -27,6 +27,7 @@
 				//insertRecipient($aa,$messageID,1);
 				storeRecipient($messageID,$aa);
 				unset($aa);
+				unset($response);
 			} else {
 				$errorSending[] = $rcvr['name'];
 				error_log('---------' . $response->description);

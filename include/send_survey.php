@@ -53,6 +53,7 @@
 					if ((int)$response->status == 200) {
 						insertRecipient($aa,$messageID,2);
 						unset($aa);
+						unset($response);
 					} else {
 						$errorSending[] = $studNumber['name'];
 						error_log('---------' . $response->message);
