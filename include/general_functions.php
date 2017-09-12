@@ -221,7 +221,7 @@
 	function getStudentReceivers($year, $course) {
 		global $mysqli;
 
-		$selStud = "select students.id, students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on enrollees.school_section_id = school_sections.id) on enrollees.student_id = students.id where enrollees.school_course_id = " . $course . " and school_sections.school_level_id = " . $year;
+		$selStud = "select students.id, students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on enrollees.school_section_id = school_sections.id) on enrollees.student_id = students.id where enrollees.school_course_id = " . $course . " and school_sections.school_level_id = " . $year . " and trim(students.mobile_number) != ''";
 		$rsStud = mysqli_query($mysqli, $selStud);
 
 		$data = array();
@@ -240,7 +240,7 @@
 	function getStudentViaSection($section) {
 		global $mysqli;
 
-		$selSection = "select students.id, students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id where students.id = " . $section;
+		$selSection = "select students.id, students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id where students.id = " . $section . " and trim(students.mobile_number) != ''";
 		$rsSection = mysqli_query($mysqli, $selSection);
 
 		$data = array();
@@ -259,7 +259,7 @@
 	function getStudentViaDeparment($year, $depId) {
 		global $mysqli;
 
-		$selSection = "select students.id, students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id inner join (school_courses inner join departments on departments.id = school_courses.department_id) on school_courses.id = students.course_id where departments.id = " . $depId . " and school_sections.school_level_id = " . $year;
+		$selSection = "select students.id, students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on school_sections.id = enrollees.school_section_id) on enrollees.student_id = students.id inner join (school_courses inner join departments on departments.id = school_courses.department_id) on school_courses.id = students.course_id where departments.id = " . $depId . " and school_sections.school_level_id = " . $year . " and trim(students.mobile_number) != ''";
 		$rsSection = mysqli_query($mysqli, $selSection);
 
 		$data = array();
@@ -278,7 +278,7 @@
 	function getProfReceivers($id) {
 		global $mysqli;
 
-		$selProf = "select user_infos.first_name, user_infos.last_name, user_infos.mobile_number from users inner join user_infos on users.id = user_infos.user_id where users.id = " . $id;
+		$selProf = "select user_infos.first_name, user_infos.last_name, user_infos.mobile_number from users inner join user_infos on users.id = user_infos.user_id where users.id = " . $id . " and trim(user_infos.mobile_number) != ''";
 		$rsProf = mysqli_query($mysqli, $selProf);
 
 		$data = array();
