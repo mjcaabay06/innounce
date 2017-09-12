@@ -2,6 +2,14 @@
 	session_start();
 	include("configurations.php");
 	include("general_functions.php");
+	include('Chikka/ChikkaSMS.php');
+
+	$clientId = 'c315accbb28da59c05a6c0b4bc3248be5037c5ccc6cfed219a7507cfc2b01dc8';
+	$secretKey = '56f51f5c4a81dc64ba3e0d5be7bb1087c0cb299c5659355f68d7b4910c42e179';
+	$shortCode = '292907886';
+	
+	//$response = $chikkaAPI->sendText($messageId, $mobile, $message);
+
 
 	if ($_POST) {
 		$message = $_POST['message'];
@@ -23,11 +31,13 @@
 			//array_push($mobile, $aa);
 
 			//$response = sendViaChikka(substr_replace($rcvr['mobile_number'], '63', 0, 1), $egReply, $messageID);
-			if ((int)sendViaChikka(substr_replace($rcvr['mobile_number'], '63', 0, 1), $egReply, $messageID)->status == 200) {
+			$chikkaAPI = new ChikkaSMS($clientId,$secretKey,$shortCode);
+			$response = $chikkaAPI->sendText($messageID,$rcvr['mobile_number'], '63', 0, 1),$egReply);
+			if ((int)$response->status == 200) {
 				//insertRecipient($aa,$messageID,1);
 				storeRecipient($messageID,$aa);
 				unset($aa);
-				//unset($response);
+				unset($response);
 			} else {
 				$errorSending[] = $rcvr['name'];
 				error_log('---------' . $response->description);
