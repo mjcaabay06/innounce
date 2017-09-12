@@ -22,12 +22,12 @@
 			$aa['id'] = $rcvr['recipient_id'];
 			//array_push($mobile, $aa);
 
-			$response = sendViaChikka(substr_replace($rcvr['mobile_number'], '63', 0, 1), $egReply, $messageID);
-			if ((int)$response->status == 200) {
+			//$response = sendViaChikka(substr_replace($rcvr['mobile_number'], '63', 0, 1), $egReply, $messageID);
+			if ((int)sendViaChikka(substr_replace($rcvr['mobile_number'], '63', 0, 1), $egReply, $messageID)->status == 200) {
 				//insertRecipient($aa,$messageID,1);
 				storeRecipient($messageID,$aa);
 				unset($aa);
-				unset($response);
+				//unset($response);
 			} else {
 				$errorSending[] = $rcvr['name'];
 				error_log('---------' . $response->description);
