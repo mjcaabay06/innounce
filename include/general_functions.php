@@ -387,5 +387,18 @@
 		}
 	}
 
+	function createCode($char) {
+		global $mysqli;
+		$char = strtoupper($char);
+
+		$getLast = "select auto_increment as id from information_schema.tables where table_name = 'sent_messages'";
+		$rs = mysqli_query($mysqli, $getLast);
+		$row = mysqli_fetch_assoc($rs);
+
+		$code = $char . $row['id'];
+
+		return $code;
+	}
+
 	#sendViaBulksms('639176710089', 'This is just a test message.');
 ?>
