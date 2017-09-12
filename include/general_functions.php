@@ -324,12 +324,13 @@
 		return $data;
 	}
 
-	function insertMessage($userId, $message, $typeId, $bacthId) {
+	function insertMessage($userId, $message, $typeId, $bacthId, $responseCode) {
 		global $mysqli;
 
 		$insertMessage = "
 			insert into
 			sent_messages(
+				response_code,
 				batch_id,
 				message,
 				user_id,
@@ -337,6 +338,7 @@
 				remarks
 			)
 			values(
+				'" . $responseCode . "',
 				" . $bacthId . ",
 				'" . $message . "',
 				" . $userId . ",

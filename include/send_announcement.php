@@ -73,7 +73,7 @@
 			// }
 
 			if(empty($errorSending)){
-				insertMessage($_COOKIE['authId'],$message,1,$messageID);
+				insertMessage($_COOKIE['authId'],$message,1,$messageID,'');
 				$data['message'] = "Announcement was sent to: [" . implode(', ', $hasWordLvl) . "]";
 				$data['status'] = "success";
 

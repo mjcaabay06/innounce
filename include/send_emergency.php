@@ -13,6 +13,9 @@
 		$mobile = array();
 		$aa = array();
 		$messageID = randomUniqueMsgID();
+		$code = createCode('e');
+		$egReply = '\n\n' . $code . '<space><your reply>';
+		$message = $message . $egReply;
 
 		foreach(getAllReceivers() as $rcvr) {
 			$aa['number'] = substr_replace($rcvr['mobile_number'], '63', 0, 1);
@@ -49,7 +52,7 @@
 		#saveEmergency($message);
 
 		if(empty($errorSending)){
-			insertMessage($_COOKIE['authId'],$message,3,$messageID);
+			insertMessage($_COOKIE['authId'],$message,3,$messageID,$code);
 			$data['message'] = "Emergency message was sent to all recipients.";
 			$data['status'] = true;
 		}else{

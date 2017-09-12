@@ -26,12 +26,14 @@
 			$sender = $mobile_number;
 			//$msg_id = $_REQUEST['msg_id'];
 			$message = $message;
+			$code = explode(' ', strtoupper($message));
+			$response = strtoupper($code[1]);
 			$received_time = $timestamp;
 			//$referring_msg_id = $_REQUEST['referring_msg_id'];
 			$referring_batch_id = $request_id;
 
 			//check the response batch id if exist
-			$selMsg = "select * from sent_messages where batch_id = " . $referring_batch_id . " order by created_at desc limit 1";
+			$selMsg = "select * from sent_messages where response_code = '" . $code[0] . "' order by created_at desc limit 1";
 			$rsMsg = mysqli_query($mysqli, $selMsg);
 			$cntMsg = mysqli_num_rows($rsMsg);
 
@@ -41,14 +43,14 @@
 				//enter if message type is emergency
 				if ($rowMsg['message_type_id'] == 3) {
 					//check if sender exist on the emergency message sent
-					$selResponse = "select * from emergency_recipients where batch_id = " . $referring_batch_id . " AND recipient = '" . $sender . "' and (remarks != 'a:no' or remarks is null) order by created_at desc limit 1";
+					$selResponse = "select * from emergency_recipients where batch_id = " . $rowMsg['batch_id'] . " AND recipient = '" . $sender . "' and (remarks != 'a:no' or remarks is null) order by created_at desc limit 1";
 					$rsSelResponse = mysqli_query($mysqli, $selResponse);
 					$cntSelResponse = mysqli_num_rows($rsSelResponse);
 
 					if ($cntSelResponse > 0) {
 						//update the remarks of recipient base on response
 						$rowSelResponse = mysqli_fetch_assoc($rsSelResponse);
-						$upEmergency = "update emergency_recipients set remarks='" . $message . "' where id=" . $rowSelResponse['id'];
+						$upEmergency = "update emergency_recipients set remarks='" . $response . "' where id=" . $rowSelResponse['id'];
 						$rsUpEmergency = mysqli_query($mysqli, $upEmergency);
 						if ($rsUpEmergency !== false) {
 							$output = 'success';
@@ -69,9 +71,9 @@
 							values(
 								'" . $msisdn . "',
 								'" . substr_replace($sender, '0', 0, 2) . "',
-								'" . $message . "',
+								'" . $response . "',
 								'" . $received_time . "',
-								" . $referring_batch_id . "
+								" . $rowMsg['batch_id'] . "
 							)
 						";
 						$rsUnkRes = mysqli_query($mysqli, $insUnkRes);
@@ -95,17 +97,17 @@
 						values(
 							'" . $msisdn . "',
 							'" . substr_replace($sender, '0', 0, 2) . "',
-							'" . $message . "',
+							'" . $response . "',
 							'" . $received_time . "',
-							" . $referring_batch_id . "
+							" . $rowMsg['batch_id'] . "
 						)
 					";
 					$rsResponse = mysqli_query($mysqli, $insResponse);
 					if ($rsResponse !== false) {
-						$up = "update message_recipients set remarks = '" . $message . "' where sender = '" . $sender . "' and batch_id = " . $referring_batch_id;
+						$up = "update message_recipients set remarks = '" . $response . "' where sender = '" . $sender . "' and batch_id = " . $rowMsg['batch_id'];
 						$rs = mysqli_query($mysqli, $up);
 						if ($rs !== false) {
-							$output = "A message with body " . $message . " was sent from " . $sender . " to " . $msisdn ."\n";
+							$output = "A message with body " . $response . " was sent from " . $sender . " to " . $msisdn ."\n";
 						} else {
 							
 						}
@@ -128,9 +130,9 @@
 					values(
 						'" . $msisdn . "',
 						'" . substr_replace($sender, '0', 0, 2) . "',
-						'" . $message . "',
+						'" . $response . "',
 						'" . $received_time . "',
-						" . $referring_batch_id . "
+						" . $rowMsg['batch_id'] . "
 					)
 				";
 				$rsUnkRes = mysqli_query($mysqli, $insUnkRes);

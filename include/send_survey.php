@@ -7,6 +7,9 @@
 		$message = $_POST['message'];
 		$course = $_POST['course'];
 		$messageID = randomUniqueMsgID();
+		$code = createCode('s');
+		$egReply = '\n\n' . $code . '<space><your reply>';
+		$message = $message . $egReply;
 
 		$errorSending = array();
 		$data = array();
@@ -74,7 +77,7 @@
 			// }
 
 			if(empty($errorSending)){
-				insertMessage($_COOKIE['authId'],$message,2,$messageID);
+				insertMessage($_COOKIE['authId'],$message,2,$messageID,$code);
 				$data['message'] = "Survey was sent to: [" . implode(', ', $hasWordLvl) . "]";
 				$data['status'] = "success";
 
