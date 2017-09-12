@@ -24,7 +24,7 @@
 
 			$response = sendViaChikka(substr_replace($rcvr['mobile_number'], '63', 0, 1), $egReply, $messageID);
 			if ((int)$response->status == 200) {
-				//storeRecipient($messageID,$aa);
+				storeRecipient($messageID,$aa);
 				unset($aa);
 				unset($response);
 			} else {
