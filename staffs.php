@@ -105,6 +105,7 @@
 														<td id="department-<?php echo $staff['user_id'] ?>"><?php echo $staff['description'] ?></td>
 														<td>
 															<button id="btn-view" class="btn-view btn btn-primary btn-icon-anim btn-square btn-sm" title="View Sections" data-id="<?php echo $staff['user_id'] ?>"><i class="fa fa-eye"></i></button>
+															<button id="btn-view-subject" class="btn-view-subject btn btn-primary btn-icon-anim btn-square btn-sm" title="View Subjects" data-id="<?php echo $staff['user_id'] ?>"><i class="zmdi zmdi-book"></i></button>
 															<button id="btn-edit" class="btn-edit btn btn-primary btn-icon-anim btn-square btn-sm" title="Edit" data-id="<?php echo $staff['user_id'] ?>"><i class="fa fa-pencil"></i></button>
 															<button id="btn-delete" class="btn-delete btn btn-primary btn-icon-anim btn-square btn-sm" title="Delete" data-id="<?php echo $staff['user_id'] ?>"><i class="fa fa-trash-o"></i></button>
 														</td>
@@ -224,6 +225,54 @@
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
+
+	<div id="view-subject-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h5 class="modal-title" id="myModalLabel">Subjects Handle</h5>
+				</div>
+				<div class="modal-body">
+					<!-- Row -->
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="">
+								<div class="panel-wrapper collapse in">
+									<div class="panel-body pa-0">
+										<div class="col-sm-12 col-xs-12">
+											<div class="form-wrap">
+												<form action="#">
+													<table class="table mb-0" id="table-view-subject">
+														<thead>
+															<tr>
+																<th>Code</th>
+																<th>Description</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" value="" name="hidden-subject-staffid">
+					<button type="button" class="btn btn-success waves-effect" id="btn-save-update" data-id="">Update</button>
+					<button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+
 	<div id="view-sections-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalSubject" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -348,6 +397,29 @@
 						}
 					}
 				});
+			});
+
+			$(".btn-view-subject").on("click", function(){
+				$("#view-subject-modal").modal('show');
+				$("input[name=hidden-subject-staffid]").val($(this).data('id'));
+
+				$.ajax({
+					url: '_fetch.php',
+					type: 'post',
+					data: { action: 'handled-subjects', id: $(this).data('id') },
+					success: function(response){
+						var result = $.parseJSON(response);
+
+						if (result['status'] == 'success') {
+							$("#table-view-subject tbody").html(result['output']);
+						}
+					}
+				});
+			});
+
+			$('#btn-save-update').on("click", function(){
+				var staffid = $("input[name=hidden-subject-staffid]").val();
+				window.location.href = 'staff-subjects.php?sid=' + staffid;
 			});
 
 			$("#btn-save-edit").on("click", function(){

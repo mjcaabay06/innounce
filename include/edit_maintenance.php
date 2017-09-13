@@ -92,6 +92,29 @@
 					$out['message'] = mysqli_error($mysqli);
 				}
 				break;
+			case 'staff-subject':
+				$delSubjects = "delete from professor_subjects where professor_id = " . $data['staffId'];
+				$rsDelSubjects = mysqli_query($mysqli, $delSubjects);
+				if ($rsDelSubjects !== false) {
+					$subArr = array();
+					foreach ($data['subjects'] as $subject) {
+						$aa = "(" . $data['staffId'] . "," . $subject . ")";
+						array_push($subArr, $aa);
+					}
+
+					$insSubject = "insert into professor_subjects(professor_id, school_subject_id) values" . implode(',', $subArr);
+					$rsInsSubject = mysqli_query($mysqli, $insSubject);
+					if ($rsInsSubject !== false) {
+						$out['status'] = 'success';
+					} else {
+						$out['status'] = 'failed';
+						$out['message'] = mysqli_error($mysqli);
+					}
+				} else {
+					$out['status'] = 'failed';
+					$out['message'] = mysqli_error($mysqli);
+				}
+				break;
 			case 'enrollee-section':
 				$upSection = "update enrollees set school_section_id = " . $data['section'] . " where id = " . $data['id'];
 				$rsSection = mysqli_query($mysqli, $upSection);

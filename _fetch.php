@@ -110,6 +110,22 @@
 					$data['output'] = mysqli_error($mysqli);
 				}
 				break;
+			case 'handled-subjects':
+				$selSubject = "select school_subjects.* from professor_subjects inner join school_subjects on school_subjects.id = professor_subjects.school_subject_id where professor_subjects.professor_id = " . $_POST['id'];
+				$rsSubject = mysqli_query($mysqli, $selSubject);
+				if ($rsSubject !== false) {
+					$result = '';
+
+					while ($subject = mysqli_fetch_assoc($rsSubject)) {
+						$result .= '<tr><td>' . $subject['code'] . '</td><td>' . $subject['description'] . '</td></tr>';
+					}
+					$data['status'] = 'success';
+					$data['output'] = $result;
+				} else {
+					$data['status'] = 'failed';
+					$data['output'] = mysqli_error($mysqli);
+				}
+				break;
 			case 'role-section':
 				$selHandleCourse = "select * from handle_courses where user_type_id = " . $_POST['id'];
 				$rsHandleCourse = mysqli_query($mysqli, $selHandleCourse);
