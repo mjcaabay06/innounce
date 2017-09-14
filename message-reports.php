@@ -22,7 +22,7 @@
 		$rsCountSent = mysqli_query($mysqli, $selCountSent);
 		$rowCount = mysqli_num_rows($rsCountSent);
 	} else {
-		$selCountRcv = "select *, date_format(received_time, '%b %e, %Y [ %H:%i:%s ]') as date_receive from response_messages where date_format(received_time, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by received_time";
+		$selCountRcv = "select *, date_format(received_time, '%b %e, %Y [ %H:%i:%s ]') as date_receive from response_messages where date_format(created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by created_at";
 		$rsCountRcv = mysqli_query($mysqli, $selCountRcv);
 		$rowCount = mysqli_num_rows($rsCountRcv);
 	}
