@@ -28,7 +28,7 @@
 			$message = $message;
 			$code = explode(' ', strtoupper($message));
 			$response = strtoupper($code[1]);
-			$received_time = $timestamp;
+			$received_time = date('M j, Y',strtotime($timestamp));
 			//$referring_msg_id = $_REQUEST['referring_msg_id'];
 			$referring_batch_id = $request_id;
 
@@ -50,7 +50,7 @@
 					if ($cntSelResponse > 0) {
 						//update the remarks of recipient base on response
 						$rowSelResponse = mysqli_fetch_assoc($rsSelResponse);
-						$upEmergency = "update emergency_recipients set remarks='" . $response . "' where id=" . $rowSelResponse['id'];
+						$upEmergency = "update emergency_recipients set remarks='" . $response . "', updated_at = '" . $received_time . "' where id=" . $rowSelResponse['id'];
 						$rsUpEmergency = mysqli_query($mysqli, $upEmergency);
 						if ($rsUpEmergency !== false) {
 							$output = 'success';
