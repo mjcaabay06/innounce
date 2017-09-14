@@ -22,9 +22,17 @@
 		$rsCountSent = mysqli_query($mysqli, $selCountSent);
 		$rowCount = mysqli_num_rows($rsCountSent);
 	} else {
-		$selCountRcv = "select *, date_format(received_time, '%b %e, %Y [ %H:%i:%s ]') as date_receive from response_messages where date_format(created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by created_at";
+		$selCountRcv = "select *, date_format(created_at, '%b %e, %Y [ %H:%i:%s ]') as date_receive from response_messages where date_format(created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by created_at";
 		$rsCountRcv = mysqli_query($mysqli, $selCountRcv);
 		$rowCount = mysqli_num_rows($rsCountRcv);
+
+		$selEmergency = "select *, date_format(created_at, '%b %e, %Y [ %H:%i:%s ]') as date_receive from emergency_recipients where remarks is not null and remarks != 'a:no' and date_format(created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by created_at";
+		$rsEmergency = mysqli_query($mysqli, $selEmergency);
+		$cntEmergency = mysqli_num_rows($rsEmergency);
+
+		$selUnk = "select *, date_format(created_at, '%b %e, %Y [ %H:%i:%s ]') as date_receive from unknown_responses where date_format(created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by created_at";
+		$rsUnk = mysqli_query($mysqli, $selUnk);
+		$cntUnk = mysqli_num_rows($rsUnk);
 	}
 
 	$rowPerPage = 10;
@@ -98,16 +106,17 @@
 			}
 		</style>
 	</head>
-	<body>
 		<body onload=""  style="background-color: #525659;margin: 30px;">
 			<div class="container-fluid">
 			<?php for($x = 1; $x <= $pageCount; $x++): ?>
 
 				<div class="per-page">
-					<div class="text-center">
-						<h2 class="mb-5"><?php echo $_GET['type'] == 'sent' ? 'Sent Message Report' : 'Response Message Report' ?></h2>
-						<div class="mb-20"><?php echo date('M j, Y',strtotime($_GET['startdate'])) . '  -  ' . date('M j, Y',strtotime($_GET['enddate'])) ?></div>
-					</div>
+					<?php if ($x == 1): ?>
+						<div class="text-center">
+							<h2 class="mb-5"><?php echo $_GET['type'] == 'sent' ? 'Sent Message Report' : 'Response Message Report' ?></h2>
+							<div class="mb-20"><?php echo date('M j, Y',strtotime($_GET['startdate'])) . '  -  ' . date('M j, Y',strtotime($_GET['enddate'])) ?></div>
+						</div>
+					<?php endif; ?>
 					<div class="col-sm-12">
 						<?php if ($_GET['type'] == 'sent'): ?>
 							<table class="table">
@@ -123,7 +132,7 @@
 								<tbody style="color: #333">
 									<?php
 										$limit = ($x - 1) * $rowPerPage;
-										$selCountSent .= " limit " . $limit . "," . $rowPerPage;
+										$selCountSent = "select sent_messages.*, user_infos.*, message_types.*, date_format(sent_messages.created_at, '%b %e, %Y [ %H:%i:%s ]') as date_sent from sent_messages inner join (users inner join user_infos on user_infos.user_id = users.id) on users.id = sent_messages.user_id inner join message_types on message_types.id = sent_messages.message_type_id where date_format(sent_messages.created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by sent_messages.created_at limit " . $limit . "," . $rowPerPage;
 										$rsSent = mysqli_query($mysqli, $selCountSent);
 
 										while($sent = mysqli_fetch_assoc($rsSent)):
@@ -151,7 +160,7 @@
 								<tbody style="color: #333">
 									<?php
 										$limit = ($x - 1) * $rowPerPage;
-										$selCountRcv .= " limit " . $limit . "," . $rowPerPage;
+										$selCountRcv = "select *, date_format(created_at, '%b %e, %Y [ %H:%i:%s ]') as date_receive from response_messages where date_format(created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by created_at limit " . $limit . "," . $rowPerPage;
 										$rsRcv = mysqli_query($mysqli, $selCountRcv);
 
 										while($rcv = mysqli_fetch_assoc($rsRcv)):
@@ -171,7 +180,95 @@
 				<div class="pagebreak"></div>
 
 			<?php endfor; ?>
+			<?php if ($_GET['type'] != 'sent'): ?>
+				<?php
+					$pageEmergency = intval($cntEmergency) == 0 ? 1 : ceil(intval($cntEmergency) / intval($rowPerPage));
+					for($x = 1; $x <= $pageEmergency; $x++):
+				?>
+				
+					<div class="per-page">
+						<?php if ($x == 1): ?>
+							<div class="text-center">
+								<h2 class="mb-5"><?php echo 'Emergency Response Message Report' ?></h2>
+								<div class="mb-20"><?php echo date('M j, Y',strtotime($_GET['startdate'])) . '  -  ' . date('M j, Y',strtotime($_GET['enddate'])) ?></div>
+							</div>
+						<?php endif; ?>
+						<div class="col-sm-12">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Batch ID</th>
+											<th>Reply Message</th>
+											<th>Sender Number</th>
+											<th>Date Receive</th>
+										</tr>
+									</thead>
+									<tbody style="color: #333">
+										<?php
+											$limit = ($x - 1) * $rowPerPage;
+											$selCountRcv = "select *, date_format(created_at, '%b %e, %Y [ %H:%i:%s ]') as date_receive from emergency_recipients where remarks is not null and remarks != 'a:no' and date_format(created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by created_at limit " . $limit . "," . $rowPerPage;
+											$rsRcv = mysqli_query($mysqli, $selCountRcv);
+
+											while($rcv = mysqli_fetch_assoc($rsRcv)):
+										?>
+										<tr>
+											<td><?php echo $rcv['batch_id'] ?></td>
+											<td><?php echo $rcv['remarks'] ?></td>
+											<td><?php echo $rcv['recipient'] ?></td>
+											<td><?php echo $rcv['date_receive'] ?></td>
+										</tr>
+										<?php endwhile; ?>
+									</tbody>
+								</table>
+						</div>
+					</div>
+					<div class="pagebreak"></div>
+				<?php endfor; ?>
+
+				<?php
+					$pageUnk = intval($cntUnk) == 0 ? 1 : ceil(intval($cntUnk) / intval($rowPerPage));
+					for($x = 1; $x <= $pageUnk; $x++):
+				?>
+				
+					<div class="per-page">
+						<?php if ($x == 1): ?>
+							<div class="text-center">
+								<h2 class="mb-5"><?php echo 'Unknown Response Message Report' ?></h2>
+								<div class="mb-20"><?php echo date('M j, Y',strtotime($_GET['startdate'])) . '  -  ' . date('M j, Y',strtotime($_GET['enddate'])) ?></div>
+							</div>
+						<?php endif; ?>
+						<div class="col-sm-12">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Batch ID</th>
+											<th>Reply Message</th>
+											<th>Sender Number</th>
+											<th>Date Receive</th>
+										</tr>
+									</thead>
+									<tbody style="color: #333">
+										<?php
+											$limit = ($x - 1) * $rowPerPage;
+											$selCountRcv = "select *, date_format(created_at, '%b %e, %Y [ %H:%i:%s ]') as date_receive from unknown_responses where date_format(created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by created_at limit " . $limit . "," . $rowPerPage;
+											$rsRcv = mysqli_query($mysqli, $selCountRcv);
+
+											while($rcv = mysqli_fetch_assoc($rsRcv)):
+										?>
+										<tr>
+											<td><?php echo $rcv['referring_batch_id'] ?></td>
+											<td><?php echo $rcv['message'] ?></td>
+											<td><?php echo $rcv['sender'] ?></td>
+											<td><?php echo $rcv['date_receive'] ?></td>
+										</tr>
+										<?php endwhile; ?>
+									</tbody>
+								</table>
+						</div>
+					</div>
+					<div class="pagebreak"></div>
+				<?php endfor; ?>
+			<?php endif; ?>
 			</div>
 		</body>
-	</body>
 </html>
