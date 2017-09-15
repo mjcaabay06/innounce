@@ -28,7 +28,7 @@
 			$message = $message;
 			$code = explode(' ', strtoupper($message));
 			$response = strtoupper($code[1]);
-			$received_time = date('M j, Y',strtotime($timestamp));
+			$received_time = date('M j, Y',$timestamp);
 			//$referring_msg_id = $_REQUEST['referring_msg_id'];
 			$referring_batch_id = $request_id;
 
@@ -71,7 +71,7 @@
 							values(
 								'" . $msisdn . "',
 								'" . substr_replace($sender, '0', 0, 2) . "',
-								'" . $response . "',
+								'" . $message . "',
 								'" . $received_time . "',
 								" . $rowMsg['batch_id'] . "
 							)
@@ -130,7 +130,7 @@
 					values(
 						'" . $msisdn . "',
 						'" . substr_replace($sender, '0', 0, 2) . "',
-						'" . $response . "',
+						'" . $message . "',
 						'" . $received_time . "',
 						" . $rowMsg['batch_id'] . "
 					)
