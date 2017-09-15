@@ -27,7 +27,7 @@ class ChikkaSMS {
     
     private $sendRequest = 'send';
     private $receiveRequest = 'incoming';
-    private $replyRequest = 'reply';
+    private $replyRequest = 'REPLY';
     private $notificationRequest = 'outgoing';
 
     //Based from Chikka's price breakdown
