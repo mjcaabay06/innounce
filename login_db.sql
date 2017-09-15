@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 29, 2017 at 10:28 AM
+-- Generation Time: Sep 15, 2017 at 08:22 AM
 -- Server version: 5.7.19-0ubuntu0.16.04.1
 -- PHP Version: 7.0.22-0ubuntu0.16.04.1
 
@@ -71,6 +71,54 @@ CREATE TABLE `emergencies` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `emergency_recipients`
+--
+
+CREATE TABLE `emergency_recipients` (
+  `id` bigint(20) NOT NULL,
+  `batch_id` bigint(20) NOT NULL,
+  `recipient_id` varchar(255) DEFAULT NULL,
+  `recipient` varchar(255) NOT NULL,
+  `remarks` text,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `emergency_recipients`
+--
+
+INSERT INTO `emergency_recipients` (`id`, `batch_id`, `recipient_id`, `recipient`, `remarks`, `created_at`, `updated_at`) VALUES
+(1, 911111, NULL, '639330442353', 'a:no', '2017-09-05 14:00:43', '2017-09-05 14:00:43'),
+(2, 911111, NULL, '639176710089', 'a:no', '2017-09-05 14:00:43', '2017-09-05 14:00:43'),
+(3, 759158, 's:5', '639157559924', NULL, '2017-09-06 16:11:43', '2017-09-06 16:11:43'),
+(4, 759158, 's:6', '639556898908', NULL, '2017-09-06 16:11:43', '2017-09-06 16:11:43'),
+(5, 759158, 's:7', '639052134991', NULL, '2017-09-06 16:11:43', '2017-09-06 16:11:43'),
+(6, 759158, 's:8', '639053451736', NULL, '2017-09-06 16:11:43', '2017-09-06 16:11:43'),
+(7, 759158, 's:9', '639059291642', NULL, '2017-09-06 16:11:43', '2017-09-06 16:11:43'),
+(8, 759158, 's:10', '639278194356', NULL, '2017-09-06 16:11:43', '2017-09-06 16:11:43'),
+(9, 759158, 'p:2', '639330442353', NULL, '2017-09-06 16:11:43', '2017-09-06 16:11:43'),
+(10, 759158, 'p:3', '639176710089', NULL, '2017-09-06 16:11:43', '2017-09-06 16:11:43'),
+(11, 1253907066, 's:5', '639157559924', NULL, '2017-09-06 18:37:20', '2017-09-06 18:37:20'),
+(12, 1253907066, 's:6', '639556898908', NULL, '2017-09-06 18:37:20', '2017-09-06 18:37:20'),
+(13, 1253907066, 's:7', '639052134991', NULL, '2017-09-06 18:37:20', '2017-09-06 18:37:20'),
+(14, 1253907066, 's:8', '639053451736', NULL, '2017-09-06 18:37:20', '2017-09-06 18:37:20'),
+(15, 1253907066, 's:9', '639059291642', NULL, '2017-09-06 18:37:20', '2017-09-06 18:37:20'),
+(16, 1253907066, 's:10', '639278194356', NULL, '2017-09-06 18:37:20', '2017-09-06 18:37:20'),
+(17, 1253907066, 'p:2', '639330442353', NULL, '2017-09-06 18:37:20', '2017-09-06 18:37:20'),
+(18, 1253907066, 'p:3', '639176710089', NULL, '2017-09-06 18:37:20', '2017-09-06 18:37:20'),
+(19, 527302, 's:5', '639157559924', NULL, '2017-09-06 19:18:48', '2017-09-06 19:18:48'),
+(20, 527302, 's:6', '639556898908', 'a:no', '2017-09-06 19:18:48', '2017-09-06 19:18:48'),
+(21, 527302, 's:7', '639052134991', '1', '2017-09-06 19:18:48', '2017-09-06 19:18:48'),
+(22, 527302, 's:8', '639053451736', NULL, '2017-09-06 19:18:48', '2017-09-06 19:18:48'),
+(23, 527302, 's:9', '639059291642', NULL, '2017-09-06 19:18:48', '2017-09-06 19:18:48'),
+(24, 527302, 's:10', '639278194356', NULL, '2017-09-06 19:18:48', '2017-09-06 19:18:48'),
+(25, 527302, 'p:2', '639330442353', NULL, '2017-09-06 19:18:48', '2017-09-06 19:18:48'),
+(26, 527302, 'p:3', '639176710089', NULL, '2017-09-06 19:18:48', '2017-09-06 19:18:48');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `emergency_responses`
 --
 
@@ -107,8 +155,7 @@ INSERT INTO `enrolled_subjects` (`id`, `enrollee_id`, `subject_id`, `created_at`
 (6, 7, 2, '2017-08-10 17:14:02', '2017-08-10 17:14:02'),
 (7, 8, 2, '2017-08-10 17:14:02', '2017-08-10 17:14:02'),
 (8, 9, 3, '2017-08-10 17:14:02', '2017-08-10 17:14:02'),
-(9, 10, 3, '2017-08-10 17:14:02', '2017-08-10 17:14:02'),
-(10, 11, 1, '2017-08-27 02:10:58', '2017-08-27 02:10:58');
+(9, 10, 3, '2017-08-10 17:14:02', '2017-08-10 17:14:02');
 
 -- --------------------------------------------------------
 
@@ -136,8 +183,7 @@ INSERT INTO `enrollees` (`id`, `student_id`, `school_year_id`, `school_course_id
 (7, 7, 1, 1, 4, '2017-08-10 17:12:04', '2017-08-10 17:12:04'),
 (8, 8, 1, 1, 3, '2017-08-10 17:12:04', '2017-08-10 17:12:04'),
 (9, 9, 1, 2, 5, '2017-08-10 17:12:04', '2017-08-10 17:12:04'),
-(10, 10, 1, 2, 6, '2017-08-10 17:12:04', '2017-08-10 17:12:04'),
-(11, 11, 1, 4, 8, '2017-08-27 02:10:58', '2017-08-27 02:10:58');
+(10, 10, 1, 2, 6, '2017-08-10 17:12:04', '2017-08-10 17:12:04');
 
 -- --------------------------------------------------------
 
@@ -162,7 +208,8 @@ INSERT INTO `handle_courses` (`id`, `user_type_id`, `school_course_id`, `created
 (2, 1, 2, '2017-08-21 11:53:08', '2017-08-21 11:53:08'),
 (7, 7, 1, '2017-08-21 12:52:44', '2017-08-21 12:52:44'),
 (9, 2, 1, '2017-08-21 13:16:47', '2017-08-21 13:16:47'),
-(10, 2, 2, '2017-08-21 13:16:47', '2017-08-21 13:16:47');
+(10, 2, 2, '2017-08-21 13:16:47', '2017-08-21 13:16:47'),
+(11, 9, 1, '2017-08-29 21:49:12', '2017-08-29 21:49:12');
 
 -- --------------------------------------------------------
 
@@ -233,7 +280,34 @@ INSERT INTO `login_logs` (`id`, `user_id`, `ip_address`, `remarks`, `status_id`,
 (156, 2, '127.0.0.1', 'Successful', 1, '2017-08-28 14:46:57', '2017-08-28 14:46:57'),
 (157, 1, '127.0.0.1', 'Successful', 1, '2017-08-28 23:22:35', '2017-08-28 23:22:35'),
 (158, 2, '127.0.0.1', 'Successful', 1, '2017-08-28 23:53:17', '2017-08-28 23:53:17'),
-(159, 1, '127.0.0.1', 'Successful', 1, '2017-08-29 09:58:30', '2017-08-29 09:58:30');
+(159, 1, '127.0.0.1', 'Successful', 1, '2017-08-29 09:58:30', '2017-08-29 09:58:30'),
+(160, 1, '127.0.0.1', 'Successful', 1, '2017-08-29 16:58:14', '2017-08-29 16:58:14'),
+(161, 1, '127.0.0.1', 'Successful', 1, '2017-08-29 21:09:56', '2017-08-29 21:09:56'),
+(162, 2, '127.0.0.1', 'Successful', 1, '2017-08-29 21:19:32', '2017-08-29 21:19:32'),
+(163, 1, '127.0.0.1', 'Successful', 1, '2017-08-29 21:37:37', '2017-08-29 21:37:37'),
+(164, 2, '127.0.0.1', 'Successful', 1, '2017-08-29 22:44:17', '2017-08-29 22:44:17'),
+(165, NULL, '127.0.0.1', 'Failed', 2, '2017-09-02 23:03:04', '2017-09-02 23:03:04'),
+(166, 1, '127.0.0.1', 'Successful', 1, '2017-09-02 23:03:40', '2017-09-02 23:03:40'),
+(167, 1, '127.0.0.1', 'Successful', 1, '2017-09-03 00:28:07', '2017-09-03 00:28:07'),
+(168, 2, '127.0.0.1', 'Successful', 1, '2017-09-03 00:28:38', '2017-09-03 00:28:38'),
+(169, 1, '127.0.0.1', 'Successful', 1, '2017-09-03 00:29:24', '2017-09-03 00:29:24'),
+(170, 1, '127.0.0.1', 'Successful', 1, '2017-09-03 23:23:40', '2017-09-03 23:23:40'),
+(171, 1, '127.0.0.1', 'Successful', 1, '2017-09-04 09:32:06', '2017-09-04 09:32:06'),
+(172, 1, '127.0.0.1', 'Successful', 1, '2017-09-04 10:35:17', '2017-09-04 10:35:17'),
+(173, 1, '127.0.0.1', 'Successful', 1, '2017-09-04 11:56:34', '2017-09-04 11:56:34'),
+(174, 1, '127.0.0.1', 'Successful', 1, '2017-09-04 12:48:31', '2017-09-04 12:48:31'),
+(175, 1, '127.0.0.1', 'Successful', 1, '2017-09-04 12:48:49', '2017-09-04 12:48:49'),
+(176, 1, '127.0.0.1', 'Successful', 1, '2017-09-04 12:49:57', '2017-09-04 12:49:57'),
+(177, 1, '127.0.0.1', 'Successful', 1, '2017-09-04 16:12:50', '2017-09-04 16:12:50'),
+(178, 1, '127.0.0.1', 'Successful', 1, '2017-09-05 09:51:27', '2017-09-05 09:51:27'),
+(179, 1, '127.0.0.1', 'Successful', 1, '2017-09-05 09:59:28', '2017-09-05 09:59:28'),
+(180, 1, '127.0.0.1', 'Successful', 1, '2017-09-05 10:02:06', '2017-09-05 10:02:06'),
+(181, 1, '127.0.0.1', 'Successful', 1, '2017-09-05 10:19:45', '2017-09-05 10:19:45'),
+(182, 2, '127.0.0.1', 'Successful', 1, '2017-09-05 14:31:02', '2017-09-05 14:31:02'),
+(183, 2, '127.0.0.1', 'Successful', 1, '2017-09-05 14:33:01', '2017-09-05 14:33:01'),
+(184, 1, '127.0.0.1', 'Successful', 1, '2017-09-05 15:00:36', '2017-09-05 15:00:36'),
+(185, 2, '127.0.0.1', 'Successful', 1, '2017-09-06 16:16:32', '2017-09-06 16:16:32'),
+(186, 1, '127.0.0.1', 'Successful', 1, '2017-09-13 00:23:21', '2017-09-13 00:23:21');
 
 -- --------------------------------------------------------
 
@@ -267,7 +341,65 @@ INSERT INTO `logout_logs` (`id`, `user_id`, `ip_address`, `remarks`, `created_at
 (19, 2, '127.0.0.1', 'Successful', '2017-08-27 01:54:57', '2017-08-27 01:54:57'),
 (20, 1, '127.0.0.1', 'Successful', '2017-08-27 02:11:35', '2017-08-27 02:11:35'),
 (21, 2, '127.0.0.1', 'Successful', '2017-08-27 02:12:02', '2017-08-27 02:12:02'),
-(22, 1, '127.0.0.1', 'Successful', '2017-08-28 14:46:49', '2017-08-28 14:46:49');
+(22, 1, '127.0.0.1', 'Successful', '2017-08-28 14:46:49', '2017-08-28 14:46:49'),
+(23, 1, '127.0.0.1', 'Successful', '2017-08-29 16:58:10', '2017-08-29 16:58:10'),
+(24, 1, '127.0.0.1', 'Successful', '2017-08-29 21:19:24', '2017-08-29 21:19:24'),
+(25, 2, '127.0.0.1', 'Successful', '2017-08-29 21:42:47', '2017-08-29 21:42:47'),
+(26, 1, '127.0.0.1', 'Successful', '2017-09-03 00:28:27', '2017-09-03 00:28:27'),
+(27, 1, '127.0.0.1', 'Successful', '2017-09-04 12:48:44', '2017-09-04 12:48:44'),
+(28, 1, '127.0.0.1', 'Successful', '2017-09-04 12:49:53', '2017-09-04 12:49:53'),
+(29, 1, '127.0.0.1', 'Successful', '2017-09-05 10:00:27', '2017-09-05 10:00:27'),
+(30, 1, '127.0.0.1', 'Successful', '2017-09-05 10:01:34', '2017-09-05 10:01:34'),
+(31, 1, '127.0.0.1', 'Successful', '2017-09-05 10:19:34', '2017-09-05 10:19:34'),
+(32, 1, '127.0.0.1', 'Successful', '2017-09-05 14:30:56', '2017-09-05 14:30:56'),
+(33, 2, '127.0.0.1', 'Successful', '2017-09-05 14:32:52', '2017-09-05 14:32:52'),
+(34, 2, '127.0.0.1', 'Successful', '2017-09-05 15:00:26', '2017-09-05 15:00:26'),
+(35, 1, '127.0.0.1', 'Successful', '2017-09-07 09:58:36', '2017-09-07 09:58:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `message_recipients`
+--
+
+CREATE TABLE `message_recipients` (
+  `id` bigint(20) NOT NULL,
+  `batch_id` bigint(20) NOT NULL,
+  `student_id` bigint(20) NOT NULL,
+  `recipient` varchar(255) DEFAULT NULL,
+  `remarks` text,
+  `message_type_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `message_recipients`
+--
+
+INSERT INTO `message_recipients` (`id`, `batch_id`, `student_id`, `recipient`, `remarks`, `message_type_id`, `created_at`, `updated_at`) VALUES
+(1, 1253508857, 0, '639157559924', NULL, 1, '2017-09-06 11:22:30', '2017-09-06 11:22:30'),
+(2, 1253508857, 0, '639556898908', NULL, 1, '2017-09-06 11:22:30', '2017-09-06 11:22:30'),
+(3, 1253508857, 0, '639052134991', NULL, 1, '2017-09-06 11:22:30', '2017-09-06 11:22:30'),
+(4, 1253508857, 0, '639053451736', NULL, 1, '2017-09-06 11:22:30', '2017-09-06 11:22:30'),
+(5, 934978, 0, '639278194356', NULL, 1, '2017-09-06 11:37:32', '2017-09-06 11:37:32'),
+(6, 934978, 0, '639059291642', NULL, 1, '2017-09-06 11:37:33', '2017-09-06 11:37:33'),
+(7, 779152, 0, '639556898908', NULL, 4, '2017-09-06 16:16:53', '2017-09-06 16:16:53'),
+(8, 779152, 0, '639157559924', NULL, 4, '2017-09-06 16:16:53', '2017-09-06 16:16:53'),
+(9, 832689, 0, '639278194356', NULL, 4, '2017-09-06 16:17:57', '2017-09-06 16:17:57'),
+(10, 832689, 0, '639059291642', NULL, 4, '2017-09-06 16:17:57', '2017-09-06 16:17:57'),
+(11, 832689, 0, '639157559924', NULL, 4, '2017-09-06 16:17:57', '2017-09-06 16:17:57'),
+(12, 832689, 0, '639556898908', NULL, 4, '2017-09-06 16:17:57', '2017-09-06 16:17:57'),
+(13, 832689, 0, '639052134991', NULL, 4, '2017-09-06 16:17:57', '2017-09-06 16:17:57'),
+(14, 832689, 0, '639053451736', NULL, 4, '2017-09-06 16:17:57', '2017-09-06 16:17:57'),
+(15, 478243, 0, '639278194356', NULL, 4, '2017-09-06 16:18:48', '2017-09-06 16:18:48'),
+(16, 478243, 0, '639059291642', NULL, 4, '2017-09-06 16:18:48', '2017-09-06 16:18:48'),
+(17, 752367, 10, '639278194356', 'survey', 2, '2017-09-06 16:22:42', '2017-09-06 16:22:42'),
+(18, 752367, 0, '639556898908', NULL, 2, '2017-09-06 16:22:42', '2017-09-06 16:22:42'),
+(19, 752367, 0, '639052134991', NULL, 2, '2017-09-06 16:22:42', '2017-09-06 16:22:42'),
+(20, 752367, 0, '639053451736', NULL, 2, '2017-09-06 16:22:42', '2017-09-06 16:22:42'),
+(21, 143872, 10, '639278194356', NULL, 1, '2017-09-06 16:54:55', '2017-09-06 16:54:55'),
+(22, 143872, 9, '639059291642', NULL, 1, '2017-09-06 16:54:55', '2017-09-06 16:54:55');
 
 -- --------------------------------------------------------
 
@@ -333,9 +465,9 @@ CREATE TABLE `professor_subjects` (
 --
 
 INSERT INTO `professor_subjects` (`id`, `professor_id`, `school_subject_id`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, '2017-08-09 22:17:02', '2017-08-09 22:17:02'),
-(2, 2, 2, '2017-08-09 22:17:02', '2017-08-09 22:17:02'),
-(3, 2, 3, '2017-08-10 17:20:43', '2017-08-10 17:20:43');
+(7, 2, 1, '2017-09-13 11:15:45', '2017-09-13 11:15:45'),
+(8, 2, 3, '2017-09-13 11:15:45', '2017-09-13 11:15:45'),
+(9, 2, 2, '2017-09-13 11:15:45', '2017-09-13 11:15:45');
 
 -- --------------------------------------------------------
 
@@ -347,10 +479,10 @@ CREATE TABLE `response_messages` (
   `id` bigint(20) NOT NULL,
   `msisdn` varchar(255) NOT NULL,
   `sender` varchar(255) NOT NULL,
-  `msg_id` bigint(20) NOT NULL,
+  `msg_id` bigint(20) DEFAULT NULL,
   `message` text NOT NULL,
   `received_time` datetime NOT NULL,
-  `referring_msg_id` bigint(20) NOT NULL,
+  `referring_msg_id` bigint(20) DEFAULT NULL,
   `referring_batch_id` bigint(20) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -361,7 +493,7 @@ CREATE TABLE `response_messages` (
 --
 
 INSERT INTO `response_messages` (`id`, `msisdn`, `sender`, `msg_id`, `message`, `received_time`, `referring_msg_id`, `referring_batch_id`, `created_at`, `updated_at`) VALUES
-(1, '44786201091', '63176710089', 29854363, 'sending reply 0826 0834', '2017-08-26 08:34:44', 1693951733, 1243690345, '2017-08-26 21:12:25', '2017-08-26 21:12:25');
+(1, '752367', '639278194356', 29854363, 'sending reply 0826 0834', '2017-08-26 08:34:44', 1693951733, 752367, '2017-08-26 21:12:25', '2017-08-26 21:12:25');
 
 -- --------------------------------------------------------
 
@@ -544,21 +676,36 @@ INSERT INTO `secret_questions` (`id`, `question`, `created_at`, `updated_at`) VA
 
 CREATE TABLE `sent_messages` (
   `id` bigint(20) NOT NULL,
+  `response_code` varchar(255) DEFAULT NULL,
   `batch_id` bigint(20) DEFAULT NULL,
   `message` text,
   `user_id` bigint(20) NOT NULL,
   `message_type_id` bigint(20) NOT NULL,
   `remarks` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sent_messages`
 --
 
-INSERT INTO `sent_messages` (`id`, `batch_id`, `message`, `user_id`, `message_type_id`, `remarks`, `created_at`, `updated_at`) VALUES
-(1, 1243690345, 'Sample survey', 2, 3, NULL, '2017-08-26 00:00:00', '2017-08-26 00:00:00');
+INSERT INTO `sent_messages` (`id`, `response_code`, `batch_id`, `message`, `user_id`, `message_type_id`, `remarks`, `created_at`, `updated_at`, `status`) VALUES
+(2, NULL, 911111, 'asdasd', 1, 1, '1', '2017-09-05 11:37:49', '2017-09-05 11:37:49', 1),
+(5, NULL, 911111, 'asd', 2, 4, '1', '2017-09-05 14:31:48', '2017-09-05 14:31:48', 1),
+(6, NULL, 911111, 'ads', 2, 4, '1', '2017-09-05 14:33:24', '2017-09-05 14:33:24', 1),
+(7, NULL, 911111, 'asd', 2, 4, '1', '2017-09-05 14:33:57', '2017-09-05 14:33:57', 1),
+(9, NULL, 1253508857, 'asdasd', 1, 1, '1', '2017-09-06 11:22:30', '2017-09-06 11:22:30', 0),
+(10, NULL, 694354, 'asd', 1, 1, '1', '2017-09-06 11:36:34', '2017-09-06 11:36:34', 0),
+(11, NULL, 934978, 'asdsad', 1, 1, '1', '2017-09-06 11:37:32', '2017-09-06 11:37:32', 0),
+(13, NULL, 779152, 'announcement as prof', 2, 4, '1', '2017-09-06 16:16:53', '2017-09-06 16:16:53', 0),
+(14, NULL, 832689, 'announcement as chairman', 2, 4, '1', '2017-09-06 16:17:57', '2017-09-06 16:17:57', 0),
+(15, NULL, 478243, 'message as dean', 2, 4, '1', '2017-09-06 16:18:48', '2017-09-06 16:18:48', 0),
+(16, NULL, 752367, 'survey message', 1, 2, '1', '2017-09-06 16:22:41', '2017-09-06 16:22:41', 0),
+(17, NULL, 143872, 'Hello announcement everyone', 1, 1, '1', '2017-09-06 16:54:54', '2017-09-06 16:54:54', 0),
+(18, NULL, 1253907066, 'asdasd', 1, 3, '1', '2017-09-06 18:37:20', '2017-09-06 18:37:20', 0),
+(19, NULL, 527302, 'asdsadsa', 1, 3, '1', '2017-09-06 19:18:48', '2017-09-06 19:18:48', 0);
 
 -- --------------------------------------------------------
 
@@ -608,11 +755,10 @@ CREATE TABLE `students` (
 INSERT INTO `students` (`id`, `student_code`, `first_name`, `middle_name`, `last_name`, `email_address`, `mobile_number`, `course_id`, `year_section_id`, `created_at`, `updated_at`) VALUES
 (5, 'i-00005', 'Natalia', NULL, 'Ibarra', 'natalia.ibarra@gmail.com', '09157559924', 1, 0, '2017-08-10 17:03:00', '2017-08-10 17:03:00'),
 (6, 'i-00006', 'Josh', NULL, 'David', 'josh.david@gmail.com', '09556898908', 1, 0, '2017-08-10 17:03:00', '2017-08-10 17:03:00'),
-(7, 'i-00007', 'Hadeya', NULL, 'Riga', 'hadeya.riga@gmail.com', '09052134991', 1, 0, '2017-08-10 17:03:00', '2017-08-10 17:03:00'),
+(7, 'i-00007', 'Hadeya', '', 'Riga', 'hadeya.riga@gmail.com', '09052134991', 1, 0, '2017-08-10 17:03:00', '2017-08-29 16:59:49'),
 (8, 'i-00008', 'Jeremiah', NULL, 'Tolentino', 'jeremiah.tolentino@gmail.com', '09053451736', 1, 0, '2017-08-10 17:03:00', '2017-08-10 17:03:00'),
 (9, 'a-00009', 'Folah', '', 'Dimayuga', 'folah.dimayuga@gmail.com', '09059291642', 2, 0, '2017-08-10 17:03:00', '2017-08-20 14:13:14'),
-(10, 'a-00010', 'James', NULL, 'Virtucio', 'james.virtucio@gmail.com', '09278194356', 2, 0, '2017-08-10 17:03:00', '2017-08-10 17:03:00'),
-(11, 'i-00011', 'Marc', 'V', 'Caabay', 'mj_caabay@yahoo.com', '09176710089', 4, 0, '2017-08-27 02:09:33', '2017-08-27 02:09:33');
+(10, 'a-00010', 'James', NULL, 'Virtucio', 'james.virtucio@gmail.com', '09278194356', 2, 0, '2017-08-10 17:03:00', '2017-08-10 17:03:00');
 
 -- --------------------------------------------------------
 
@@ -623,6 +769,25 @@ INSERT INTO `students` (`id`, `student_code`, `first_name`, `middle_name`, `last
 CREATE TABLE `surveys` (
   `id` bigint(20) NOT NULL,
   `content` text NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `unknown_responses`
+--
+
+CREATE TABLE `unknown_responses` (
+  `id` bigint(20) NOT NULL,
+  `msisdn` varchar(255) NOT NULL,
+  `sender` varchar(255) NOT NULL,
+  `msg_id` bigint(20) DEFAULT NULL,
+  `message` text NOT NULL,
+  `received_time` datetime NOT NULL,
+  `referring_msg_id` bigint(20) DEFAULT NULL,
+  `referring_batch_id` bigint(20) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -659,8 +824,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email_address`, `username`, `password`, `secret_question_id`, `answer`, `user_type_id`, `department_id`, `status_id`, `password_type_id`, `password_expiry_date`, `ip_address`, `failed_login_attempt`, `failed_login_time`, `disable_login_failure`, `last_access`, `created_at`, `updated_at`) VALUES
-(1, 'admin@gmail.com', 'admin', 'admin', 1, 'je', 1, 0, 1, 2, '2017-09-09 00:00:00', '127.0.0.2', 0, '2017-08-10 12:56:14', 0, '2017-08-10 00:15:06', '2017-06-15 11:16:11', '2017-06-15 11:16:11'),
-(2, 'john.cena@gmail.com', 'jcena', 'John1234$', 1, 'JC', 7, 1, 1, 2, '2017-07-26 00:00:00', '127.0.0.1', 0, '2017-08-16 15:12:31', 0, '2017-08-10 01:43:28', '2017-06-26 18:03:02', '2017-06-26 18:03:02');
+(1, 'admin@gmail.com', 'admin', 'Admin1234$', 1, 'je', 1, 0, 1, 2, '2017-09-28 00:00:00', '127.0.0.2', 0, '2017-09-02 23:03:04', 0, '2017-08-10 00:15:06', '2017-06-15 11:16:11', '2017-06-15 11:16:11'),
+(2, 'john.cena@gmail.com', 'jcena', 'John1234$', 1, 'JC', 8, 1, 1, 2, '2017-07-26 00:00:00', '127.0.0.1', 0, '2017-08-16 15:12:31', 0, '2017-08-10 01:43:28', '2017-06-26 18:03:02', '2017-06-26 18:03:02'),
+(3, 'mj_caabaya@yahoo.com', 'root', 'BXcm6HL33O', 1, 'Mac', 2, 1, 1, 1, '2017-09-28 22:18:24', '127.0.0.1', 0, NULL, 0, NULL, '2017-08-29 22:18:24', '2017-08-29 22:18:24'),
+(4, 'asdasd@gmail.com', 'aaaa', 'g1558FlAYY', 1, 'Mac', 2, 0, 1, 1, '2017-10-07 09:59:20', '127.0.0.1', 0, NULL, 0, NULL, '2017-09-07 09:59:20', '2017-09-07 09:59:20'),
+(5, 'mj_caabayb@yahoo.com', 'bbb', 'gJ3GRzkTi8', 1, 'Mac', 2, 0, 1, 1, '2017-10-07 10:22:47', '127.0.0.1', 0, NULL, 0, NULL, '2017-09-07 10:22:47', '2017-09-07 10:22:47');
 
 -- --------------------------------------------------------
 
@@ -685,7 +853,10 @@ CREATE TABLE `user_infos` (
 
 INSERT INTO `user_infos` (`id`, `user_id`, `first_name`, `middle_name`, `last_name`, `mobile_number`, `created_at`, `updated_at`) VALUES
 (1, 1, 'admin', '', 'admin', '', '2017-06-15 11:16:11', '2017-06-15 11:16:11'),
-(2, 2, 'John', 'M', 'Cena', '09330442353', '2017-06-26 18:03:39', '2017-06-26 18:03:39');
+(2, 2, 'John', 'M', 'Cena', '09330442353', '2017-06-26 18:03:39', '2017-06-26 18:03:39'),
+(3, 3, 'Marc', 'V', 'Caabay', '09176710089', '2017-08-29 22:18:24', '2017-08-29 22:18:24'),
+(4, 4, 'asdasd', 'asd', 'Caabay', '09176710089', '2017-09-07 09:59:20', '2017-09-07 09:59:20'),
+(5, 5, 'Marc', 'V', 'Caabay', '09176710089', '2017-09-07 10:22:47', '2017-09-07 10:22:47');
 
 -- --------------------------------------------------------
 
@@ -749,6 +920,12 @@ ALTER TABLE `emergencies`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `emergency_recipients`
+--
+ALTER TABLE `emergency_recipients`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `emergency_responses`
 --
 ALTER TABLE `emergency_responses`
@@ -782,6 +959,12 @@ ALTER TABLE `login_logs`
 -- Indexes for table `logout_logs`
 --
 ALTER TABLE `logout_logs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `message_recipients`
+--
+ALTER TABLE `message_recipients`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -875,6 +1058,12 @@ ALTER TABLE `surveys`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `unknown_responses`
+--
+ALTER TABLE `unknown_responses`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -911,12 +1100,17 @@ ALTER TABLE `account_activations`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `emergencies`
 --
 ALTER TABLE `emergencies`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `emergency_recipients`
+--
+ALTER TABLE `emergency_recipients`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT for table `emergency_responses`
 --
@@ -926,26 +1120,31 @@ ALTER TABLE `emergency_responses`
 -- AUTO_INCREMENT for table `enrolled_subjects`
 --
 ALTER TABLE `enrolled_subjects`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `enrollees`
 --
 ALTER TABLE `enrollees`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `handle_courses`
 --
 ALTER TABLE `handle_courses`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `login_logs`
 --
 ALTER TABLE `login_logs`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=187;
 --
 -- AUTO_INCREMENT for table `logout_logs`
 --
 ALTER TABLE `logout_logs`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+--
+-- AUTO_INCREMENT for table `message_recipients`
+--
+ALTER TABLE `message_recipients`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `message_types`
@@ -961,7 +1160,7 @@ ALTER TABLE `password_types`
 -- AUTO_INCREMENT for table `professor_subjects`
 --
 ALTER TABLE `professor_subjects`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `response_messages`
 --
@@ -971,7 +1170,7 @@ ALTER TABLE `response_messages`
 -- AUTO_INCREMENT for table `school_courses`
 --
 ALTER TABLE `school_courses`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `school_fix_sections`
 --
@@ -991,7 +1190,7 @@ ALTER TABLE `school_sections`
 -- AUTO_INCREMENT for table `school_subjects`
 --
 ALTER TABLE `school_subjects`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `school_years`
 --
@@ -1006,7 +1205,7 @@ ALTER TABLE `secret_questions`
 -- AUTO_INCREMENT for table `sent_messages`
 --
 ALTER TABLE `sent_messages`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `statuses`
 --
@@ -1016,22 +1215,27 @@ ALTER TABLE `statuses`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `surveys`
 --
 ALTER TABLE `surveys`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `unknown_responses`
+--
+ALTER TABLE `unknown_responses`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `user_infos`
 --
 ALTER TABLE `user_infos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `user_types`
 --
