@@ -171,7 +171,7 @@ class ChikkaSMS {
             'shortcode' => $this->shortCode,
             'message_id' => $messageID,
             'message' => $message,
-            'request_cost' => "FREE",
+            'request_cost' => 'FREE',
             'request_id' => $requestID
             );
         
