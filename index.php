@@ -64,7 +64,7 @@
 												<span class="btn-text">edit</span>
 												<input class="upload" type="file">
 											</div> -->
-											<div class="profile-image-overlay" style="background-image: url('dist/img/1024px-Seal_of_Jose_Rizal_University.png');background-position: center;background-size: cover;background-color: #00226c;opacity: 1;"></div>
+											<div class="profile-image-overlay" style="background-position: center;background-size: cover;background-color: #00226c;opacity: 1;"></div>
 										</div>
 										<div class="profile-info text-center">
 											<div class="profile-img-wrap" style="background-color: #eee">
