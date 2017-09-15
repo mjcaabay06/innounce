@@ -150,11 +150,11 @@
 			$messageID = randomUniqueMsgID();
 			$result = receiveResponse($request_id, $messageID, $mobile_number);
 			if ((int)$result->status == 200) {
-				insertLogs('Accepted response for: ' . $mobile_number);
-				error_log('>>>>>>>>>>e:'$result->status);
+				insertLogs('Accepted response for: ' . $mobile_number . ' - ' . $result->status);
+				error_log('>>>>>>>>>>e:' . $result->status);
 			} else {
-				insertLogs('Reject response for: ' . $mobile_number);
-				error_log('---------e:' . $result->description);
+				insertLogs('Reject response for: ' . $mobile_number . ' - ' . $result->description);
+				error_log('---------e: ' . $result->description);
 			}
         }
 	}
