@@ -151,10 +151,10 @@
 			$result = receiveResponse($request_id, $messageID, $mobile_number);
 			if ((int)$result->status == 200) {
 				insertLogs('Accepted response for: ' . $mobile_number);
-				error_log('>>>>>>>>>>e:'$response->status);
+				error_log('>>>>>>>>>>e:'$result->status);
 			} else {
 				insertLogs('Reject response for: ' . $mobile_number);
-				error_log('---------e:' . $response->description);
+				error_log('---------e:' . $result->description);
 			}
         }
 	}
