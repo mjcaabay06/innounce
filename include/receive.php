@@ -144,7 +144,6 @@
 					$output = mysqli_error($mysqli);
 				}
 			}
-			error_log('-----------'.$request_id);
 			error_log($output);
 
 			$messageID = randomUniqueMsgID();
@@ -153,7 +152,7 @@
 				insertLogs('Accepted response for: ' . $mobile_number . ' - ' . $result->status);
 				error_log('>>>>>>>>>>e:' . $result->status);
 			} else {
-				insertLogs('Reject response for: ' . $mobile_number . ' - ' . $result->description);
+				insertLogs('Reject response for: ' . $mobile_number . ' - ' . $result->message);
 				error_log('---------e: ' . $result->message);
 			}
         }
