@@ -112,7 +112,7 @@
 		$secretKey = '56f51f5c4a81dc64ba3e0d5be7bb1087c0cb299c5659355f68d7b4910c42e179';
 		$shortCode = '292907886';
 		$chikkaAPI = new ChikkaSMS($clientId,$secretKey,$shortCode);
-		$response = $chikkaAPI->reply($requestID, $messageID, $to, 'FREE', 'Your reply has been received.');
+		$response = $chikkaAPI->reply($requestID, $messageID, $to, 'free', 'Your reply has been received.');
 
 		return $response;
 	}

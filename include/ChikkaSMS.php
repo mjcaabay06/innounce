@@ -156,14 +156,22 @@ class ChikkaSMS {
         $message = $message;
 
         //reply post params
+        // $replyData = array(
+        //     'message_type' => $this->ReplyRequest,
+        //     'mobile_number' => $to,
+        //     'shortcode' => $this->shortCode,
+        //     'message_id' => $messageID,
+        //     'message' => $message,
+        //     'cost' => $this->requestCost[$cost],
+        //     'request_id' => $requestID
+        //     );
         $replyData = array(
             'message_type' => $this->ReplyRequest,
             'mobile_number' => $to,
             'shortcode' => $this->shortCode,
             'message_id' => $messageID,
             'message' => $message,
-            // 'cost' => $this->requestCost[$cost],
-            'cost' => 'free',
+            'request_cost' => $this->requestCost[$cost],
             'request_id' => $requestID
             );
         
