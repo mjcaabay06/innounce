@@ -19,6 +19,9 @@
 	        $timestamp = $_POST["timestamp"];
 	        $request_id = $_POST["request_id"];
 
+	        $insLogs = "insert into logs(response) value('" . $message . ' - ' . $mobile_number . "')";
+	        $rsLogs = mysqli_query($mysqli, $insLogs);
+
 	        //error_log(implode(',',array_map(function($v, $k){ return sprintf("%s='%s'",$k, $v); }, $_POST) ) );
 
         	$output = '';
