@@ -153,7 +153,7 @@ class ChikkaSMS {
             return false;
         }
 
-        $message = urlencode($message);
+        $message = $message;
 
         //reply post params
         $replyData = array(
@@ -162,7 +162,8 @@ class ChikkaSMS {
             'shortcode' => $this->shortCode,
             'message_id' => $messageID,
             'message' => $message,
-            'cost' => $this->requestCost[$cost],
+            // 'cost' => $this->requestCost[$cost],
+            'cost' => 'FREE',
             'request_id' => $requestID
             );
         

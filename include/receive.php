@@ -154,7 +154,7 @@
 				error_log('>>>>>>>>>>e:' . $result->status);
 			} else {
 				insertLogs('Reject response for: ' . $mobile_number . ' - ' . $result->description);
-				error_log('---------e: ' . $result->description);
+				error_log('---------e: ' . $result->message);
 			}
         }
 	}
