@@ -163,7 +163,7 @@ class ChikkaSMS {
             'message_id' => $messageID,
             'message' => $message,
             // 'cost' => $this->requestCost[$cost],
-            'cost' => 'FREE',
+            'cost' => 'free',
             'request_id' => $requestID
             );
         
