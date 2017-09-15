@@ -20,7 +20,9 @@
 
 	if (isset($_POST)) {
 		$messageID = randomUniqueMsgID();
-		$response = sendViaChikka($_POST['numbers'], 'This is just a test message coming from Chikka \n\n Reply E1<space><your reply>', $messageID);
+		$code = createCode('e');
+		$egReply = '(Reply: ' . $code . '<space><your reply>)';
+		$response = sendViaChikka($_POST['numbers'], 'This is just a test message coming from Chikka' . $egReply, $messageID);
 		//var_dump($response);
 	}
 	
