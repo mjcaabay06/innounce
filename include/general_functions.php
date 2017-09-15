@@ -105,6 +105,18 @@
 		return $response;
 	}
 
+	function receiveResponse($requestID, $messageID, $to) {
+		require_once('Chikka/ChikkaSMS.php');
+
+		$clientId = 'c315accbb28da59c05a6c0b4bc3248be5037c5ccc6cfed219a7507cfc2b01dc8';
+		$secretKey = '56f51f5c4a81dc64ba3e0d5be7bb1087c0cb299c5659355f68d7b4910c42e179';
+		$shortCode = '292907886';
+		$chikkaAPI = new ChikkaSMS($clientId,$secretKey,$shortCode);
+		$response = $chikkaAPI->reply($requestID, $messageID, $to, 'free', 'Your reply has been received.');
+
+		return $response;
+	}
+
 	function randomUniqueMsgID() {
 	    $alphabet = '1234567890';
 	    $pass = array(); //remember to declare $pass as an array
@@ -400,6 +412,13 @@
 		$code = $char . $row['id'];
 
 		return $code;
+	}
+
+	function insertLogs($message){
+		global $mysqli;
+
+		$insLogs = "insert into logs(response) value('" . $message . "')";
+	    $rsLogs = mysqli_query($mysqli, $insLogs);
 	}
 
 	#sendViaBulksms('639176710089', 'This is just a test message.');

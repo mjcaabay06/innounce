@@ -19,8 +19,7 @@
 	        $timestamp = $_POST["timestamp"];
 	        $request_id = $_POST["request_id"];
 
-	        $insLogs = "insert into logs(response) value('" . $message . ' - ' . $mobile_number . "')";
-	        $rsLogs = mysqli_query($mysqli, $insLogs);
+	        insertLogs($message . ' - ' . $mobile_number);
 
 	        //error_log(implode(',',array_map(function($v, $k){ return sprintf("%s='%s'",$k, $v); }, $_POST) ) );
 
@@ -147,6 +146,16 @@
 			}
 			error_log('-----------'.$request_id);
 			error_log($output);
+
+			$messageID = randomUniqueMsgID();
+			$result = receiveResponse($request_id, $messageID, $mobile_number);
+			if ((int)$result->status == 200) {
+				insertLogs('Accepted response for: ' . $mobile_number);
+				error_log('>>>>>>>>>>e:'$response->status);
+			} else {
+				insertLogs('Reject response for: ' . $mobile_number);
+				error_log('---------e:' . $response->description);
+			}
         }
 	}
 	// try

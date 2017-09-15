@@ -153,7 +153,7 @@ class ChikkaSMS {
             return false;
         }
 
-        $message = urlencode($message);
+        $message = $message;
 
         //reply post params
         $replyData = array(
