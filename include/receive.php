@@ -134,7 +134,7 @@
 						'" . substr_replace($sender, '0', 0, 2) . "',
 						'" . $message . "',
 						'" . $received_time . "',
-						" . $rowMsg['batch_id'] . "
+						0
 					)
 				";
 				$rsUnkRes = mysqli_query($mysqli, $insUnkRes);
