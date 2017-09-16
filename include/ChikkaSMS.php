@@ -157,7 +157,7 @@ class ChikkaSMS {
 
         //reply post params
         $replyData = array(
-            'message_type' => $this->ReplyRequest,
+            'message_type' => $this->replyRequest,
             'mobile_number' => $to,
             'shortcode' => $this->shortCode,
             'message_id' => $messageID,
