@@ -34,6 +34,7 @@
 			echo "----------success";
 			var_dump($response);
 		} else {
+			echo "----------error";
 			var_dump($response);
 			//error_log('---------e: ' . $result->message);
 		}
