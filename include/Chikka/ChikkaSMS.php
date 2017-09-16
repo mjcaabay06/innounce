@@ -148,23 +148,32 @@ class ChikkaSMS {
             return false;
         }
 
-        if (array_key_exists($cost, $this->requestCost)){
-            trigger_error('The cost value only allows FREE, 1, 2.5, 5, 10, and 15');
-            return false;
-        }
+        // if (array_key_exists($cost, $this->requestCost)){
+        //     trigger_error('The cost value only allows FREE, 1, 2.5, 5, 10, and 15');
+        //     return false;
+        // }
 
         $message = $message;
 
         //reply post params
         $replyData = array(
-            'message_type' => $this->ReplyRequest,
+            'message_type' => 'REPLY',
             'mobile_number' => $to,
             'shortcode' => $this->shortCode,
             'message_id' => $messageID,
             'message' => $message,
-            'cost' => $this->requestCost[$cost],
+            'request_cost' => 'FREE',
             'request_id' => $requestID
             );
+        // $replyData = array(
+        //     'message_type' => $this->ReplyRequest,
+        //     'mobile_number' => $to,
+        //     'shortcode' => $this->shortCode,
+        //     'message_id' => $messageID,
+        //     'message' => $message,
+        //     'cost' => $this->requestCost[$cost],
+        //     'request_id' => $requestID
+        //     );
         
         return $this->sendApiRequest($replyData);
     }
