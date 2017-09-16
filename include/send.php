@@ -18,7 +18,7 @@
 	$shortCode = '292907886';
 	$chikkaAPI = new ChikkaSMS($clientId, $secretKey, $shortCode);
 
-	if (isset($_POST)) {
+	if (!empty($_POST)) {
 		$messageID = randomUniqueMsgID();
 		// $code = createCode('e');
 		// $egReply = '(Reply: ' . $code . '<space><your reply>)';
@@ -53,7 +53,7 @@
 ?>
 
 <form action="" method="post">
-	<?php if (isset($_POST)): ?>
+	<?php if (!empty($_POST)): ?>
 		<label>To: <?php echo $to; ?></label><br />
 		<label>Cost: <?php echo $request_cost; ?></label><br />
 		<label>Request Id: <?php echo $request_id; ?></label><br />
