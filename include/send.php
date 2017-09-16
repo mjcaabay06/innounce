@@ -20,22 +20,10 @@
 
 	if (isset($_POST)) {
 		$messageID = randomUniqueMsgID();
-		// $code = createCode('e');
-		// $egReply = '(Reply: ' . $code . '<space><your reply>)';
-		// $response = sendViaChikka($_POST['numbers'], 'This is just a test message coming from Chikka' . $egReply, $messageID);
+		$code = createCode('e');
+		$egReply = '(Reply: ' . $code . '<space><your reply>)';
+		$response = sendViaChikka($_POST['numbers'], 'This is just a test message coming from Chikka' . $egReply, $messageID);
 		//var_dump($response);
-        $to = $_POST["mobile_number"];
-        $request_cost = $_POST["request_cost"];
-        $request_id = $_POST["request_id"];
-
-		$response = $chikkaAPI->reply($request_id, $messageID, $to, $request_cost, 'Your reply has been received.');
-		if ((int)$response->status == 200) {
-			// error_log('>>>>>>>>>>e:' . $result->status);
-			var_dump($response);
-		} else {
-			var_dump($response);
-			//error_log('---------e: ' . $result->message);
-		}
 	}
 	
 
@@ -53,13 +41,7 @@
 ?>
 
 <form action="" method="post">
-	<?php if (isset($_POST)): ?>
-		<label>To: <?php echo $to; ?></label><br />
-		<label>Cost: <?php echo $request_cost; ?></label><br />
-		<label>Request Id: <?php echo $request_id; ?></label><br />
-	<?php endif; ?>
-	<input type="text" name="mobile_number" placeholder="Mobile Number"><br />
-	<input type="text" name="request_cost" placeholder="Request Cost"><br />
-	<input type="text" name="request_id" placeholder="Request Id"><br />
+	<input type="text" name="numbers">
 	<button type="submit">Send</button>
+	<a href="test.php?aa=<?php echo "'This is just a test message'"; ?>" target="_blank">Click</a>
 </form>
