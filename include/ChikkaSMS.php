@@ -156,24 +156,24 @@ class ChikkaSMS {
         $message = $message;
 
         //reply post params
-        // $replyData = array(
-        //     'message_type' => $this->ReplyRequest,
-        //     'mobile_number' => $to,
-        //     'shortcode' => $this->shortCode,
-        //     'message_id' => $messageID,
-        //     'message' => $message,
-        //     'cost' => $this->requestCost[$cost],
-        //     'request_id' => $requestID
-        //     );
         $replyData = array(
             'message_type' => $this->ReplyRequest,
             'mobile_number' => $to,
             'shortcode' => $this->shortCode,
             'message_id' => $messageID,
             'message' => $message,
-            'request_cost' => 'FREE',
+            'cost' => $this->requestCost[$cost],
             'request_id' => $requestID
             );
+        // $replyData = array(
+        //     'message_type' => $this->ReplyRequest,
+        //     'mobile_number' => $to,
+        //     'shortcode' => $this->shortCode,
+        //     'message_id' => $messageID,
+        //     'message' => $message,
+        //     'request_cost' => 'FREE',
+        //     'request_id' => $requestID
+        //     );
         
         return $this->sendApiRequest($replyData);
     }

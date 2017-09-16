@@ -145,6 +145,7 @@
 				}
 			}
 			error_log($output);
+			error_log("---" . $request_id);
 
 			$messageID = randomUniqueMsgID();
 			$result = receiveResponse($request_id, $messageID, $mobile_number);
