@@ -31,6 +31,7 @@
 		$response = $chikkaAPI->reply($request_id, $messageID, $to, $request_cost, 'Your reply has been received.');
 		if ((int)$response->status == 200) {
 			// error_log('>>>>>>>>>>e:' . $result->status);
+			echo "----------success";
 			var_dump($response);
 		} else {
 			var_dump($response);
