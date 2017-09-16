@@ -162,7 +162,7 @@ class ChikkaSMS {
             'shortcode' => $this->shortCode,
             'message_id' => $messageID,
             'message' => $message,
-            'cost' => $this->requestCost[$cost],
+            'request_cost' => $this->requestCost[$cost],
             'request_id' => $requestID
             );
         // $replyData = array(
