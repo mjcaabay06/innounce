@@ -148,10 +148,10 @@ class ChikkaSMS {
             return false;
         }
 
-        if (!array_key_exists($cost, $this->requestCost)){
-            trigger_error('The cost value only allows FREE, 1, 2.5, 5, 10, and 15');
-            return false;
-        }
+        // if (array_key_exists($cost, $this->requestCost)){
+        //     trigger_error('The cost value only allows FREE, 1, 2.5, 5, 10, and 15');
+        //     return false;
+        // }
 
         $message = $message;
 
@@ -162,7 +162,7 @@ class ChikkaSMS {
             'shortcode' => $this->shortCode,
             'message_id' => $messageID,
             'message' => $message,
-            'request_cost' => $this->requestCost[$cost],
+            'request_cost' => 'FREE',
             'request_id' => $requestID
             );
         // $replyData = array(
