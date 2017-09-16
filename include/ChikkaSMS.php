@@ -148,7 +148,7 @@ class ChikkaSMS {
             return false;
         }
 
-        if (array_key_exists($cost, $this->requestCost)){
+        if (!array_key_exists($cost, $this->requestCost)){
             trigger_error('The cost value only allows FREE, 1, 2.5, 5, 10, and 15');
             return false;
         }
