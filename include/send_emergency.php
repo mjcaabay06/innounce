@@ -27,7 +27,7 @@
 				storeRecipient($messageID,$aa);
 				unset($aa);
 				unset($response);
-				error_log('>>>>>>>>>>e:'$response->status);
+				error_log('>>>>>>>>>>e:' . $response->status);
 			} else {
 				$errorSending[] = $rcvr['name'];
 				error_log('---------e:' . $response->description);
