@@ -8,7 +8,7 @@
 			case 'check-email':
 				$data = array();
 				$data['status'] = false;
-				$selEmail = "select * from users where email_address = '" . $_POST['email'] . "'";
+				$selEmail = "select * from users where email_address = '" . $_POST['email'] . "' and status_id = 1";
 				$rsEmail =  mysqli_query($mysqli, $selEmail);
 
 				if (mysqli_num_rows($rsEmail) > 0) {
@@ -20,7 +20,7 @@
 			case 'check-username':
 				$data = array();
 				$data['status'] = false;
-				$selUsername = "select * from users where username = '" . $_POST['username'] . "'";
+				$selUsername = "select * from users where username = '" . $_POST['username'] . "' and status_id = 1";
 				$rsUsername =  mysqli_query($mysqli, $selUsername);
 
 				if (mysqli_num_rows($rsUsername) > 0) {

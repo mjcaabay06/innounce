@@ -113,7 +113,7 @@
 				<div class="per-page">
 					<?php if ($x == 1): ?>
 						<div class="text-center">
-							<h2 class="mb-5"><?php echo $_GET['type'] == 'sent' ? 'Sent Message Report' : 'Response Message Report' ?></h2>
+							<h2 class="mb-5"><?php echo $_GET['type'] == 'sent' ? 'Sent Message Report' : 'Survey Response Message Report' ?></h2>
 							<div class="mb-20"><?php echo date('M j, Y',strtotime($_GET['startdate'])) . '  -  ' . date('M j, Y',strtotime($_GET['enddate'])) ?></div>
 						</div>
 					<?php endif; ?>
