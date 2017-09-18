@@ -11,7 +11,7 @@
 	if ($_POST) {
 		$message_type = $_POST["message_type"];
 
-		if (strtoupper($message_type) == "OUTGOING") {
+		if (strtoupper($message_type) == "SENT") {
 			error_log(implode(',',$_POST));
 		}
 	}
