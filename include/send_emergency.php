@@ -31,6 +31,8 @@
 			} else {
 				$errorSending[] = $rcvr['name'];
 				error_log('---------e:' . $response->description);
+				unset($aa);
+				unset($response);
 			}
 		}
 

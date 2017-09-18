@@ -58,6 +58,8 @@
 					} else {
 						$errorSending[] = $studNumber['name'];
 						error_log('---------s:' . $response->message);
+						unset($aa);
+						unset($response);
 					}
 				}
 			}
