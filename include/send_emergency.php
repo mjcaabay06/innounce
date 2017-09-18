@@ -26,14 +26,13 @@
 			$stat = (int)$response->status;
 			if ($stat == 200) {
 				storeRecipient($messageID,$aa);
-				$aa = array();
 				error_log('>>>>>>>>>>e:' . $stat);
-				$stat = 0;
 			} else {
 				$errorSending[] = $rcvr['name'];
 				error_log('---------e:' . $stat);
-				$stat = 0;
 			}
+			$aa = array();
+			$stat = 0;
 		}
 
 		// $imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));

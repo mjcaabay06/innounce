@@ -55,14 +55,13 @@
 					$stat = (int)$response->status;
 					if ($stat == 200) {
 						insertRecipient($aa,$messageID,2);
-						$aa = array();
 						error_log('>>>>>>>>>>s:' . $response->status);
-						$stat = 0;
 					} else {
 						$errorSending[] = $studNumber['name'];
 						error_log('---------s:' . $response->message);
-						$stat = 0;
 					}
+					$aa = array();
+					$stat = 0;
 				}
 			}
 
