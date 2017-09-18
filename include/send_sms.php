@@ -5,6 +5,7 @@
 
 	if($_POST){
 		$activationCode = randomActivationCode();
+		$messageID = randomUniqueMsgID();
 		
 		switch(strtolower($_POST['action'])){
 			case 'activation-sendsms':
@@ -14,6 +15,16 @@
 
 				$message = 'Your activation code is ' . $activationCode . '. And your Password: ' . $_POST['userpass'];
 
+				$response = sendViaChikka(trim($_POST['mobile']), '63', 0, 1), $message, $messageID);
+				$stat = (int)$response->status;
+				if ($stat == 200) {
+					echo "Activation code was sent to your mobile number.";
+					insertActivation($userId, $activationCode);
+					error_log('>>>>>>>>>>a:' . $stat);
+				} else {
+					echo "There was an error sending activation.";
+					error_log('---------a:' . $stat);
+				}
 				// $response = sendViaBulksms(trim($_POST['mobile']), $message);
 
 				// // if(empty($response) || !isset($response[0]->status)){
@@ -27,15 +38,14 @@
 				// 	$errorSending = $_POST['mobile'];
 				// }
 				
-				if(empty($errorSending)){
-					echo "Activation code was sent to your mobile number.";
-					insertActivation($userId, $activationCode);
-				}else{
-					echo "There was an error sending text message to:".$errorSending;
-					if($diffError != ''){
-						echo "Reason:".$diffError;
-					}	
-				}
+				// if(empty($errorSending)){
+					
+				// }else{
+				// 	echo "There was an error sending text message to:".$errorSending;
+				// 	if($diffError != ''){
+				// 		echo "Reason:".$diffError;
+				// 	}	
+				// }
 
 				break;
 			case 'recoverpass-sms':
@@ -62,7 +72,7 @@
 
 				if ($data['status']) {
 
-					$response = sendViaBulksms($row['mobile_number'], $message);
+					// $response = sendViaBulksms($row['mobile_number'], $message);
 
 					// if(empty($response) || !isset($response[0]->status)){
 					// 	if(isset($response[0])){ //different error
@@ -71,21 +81,31 @@
 					// 	$errorSending = $row['mobile_number'];
 					// }
 
-					if (!$response['success']) {
-						$errorSending = $row['mobile_number'];
+					$response = sendViaChikka(trim($mobile), '63', 0, 1), $message, $messageID);
+					$stat = (int)$response->status;
+					if ($stat == 200) {
+						echo "Message Sent!";
+						error_log('>>>>>>>>>>a:' . $stat);
+					} else {
+						echo "There was an error sending the message.";
+						error_log('---------a:' . $stat);
 					}
 
-					if(empty($errorSending)){
-						$data['message'] = "Message Sent!";
-						$data['status'] = true;
-					}else{
-						$data['message'] = "Message not sent. Please try to check your internet connection.";
-						$data['sms-error'] = "There was an error sending text message to: " . $errorSending;
-						if($diffError != ''){
-							$data['sms-error'] += "Reason: " .$diffError;
-						}
-						$data['status'] = false;
-					}
+					// if (!$response['success']) {
+					// 	$errorSending = $row['mobile_number'];
+					// }
+
+					// if(empty($errorSending)){
+					// 	$data['message'] = "Message Sent!";
+					// 	$data['status'] = true;
+					// }else{
+					// 	$data['message'] = "Message not sent. Please try to check your internet connection.";
+					// 	$data['sms-error'] = "There was an error sending text message to: " . $errorSending;
+					// 	if($diffError != ''){
+					// 		$data['sms-error'] += "Reason: " .$diffError;
+					// 	}
+					// 	$data['status'] = false;
+					// }
 				} else {
 					$data['message'] = $message;
 				}
