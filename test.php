@@ -19,14 +19,16 @@
 	// $row = mysqli_fetch_assoc($rs);
 	// echo $row['id'];
 
-	$requestCost = array(
-        'free' => 'FREE', 
-        '1' =>1, 
-        '2.5'=> 2.5, 
-        '5'=> 5, 
-        '10' => 10, 
-        '15' => 15
-        );
+	// $requestCost = array(
+ //        'free' => 'FREE', 
+ //        '1' =>1, 
+ //        '2.5'=> 2.5, 
+ //        '5'=> 5, 
+ //        '10' => 10, 
+ //        '15' => 15
+ //        );
 
-	echo $requestCost['free'];
+	// echo $requestCost['free'];
+	$x = 4;
+	echo ($x % 3);
  ?>
