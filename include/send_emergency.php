@@ -18,7 +18,7 @@
 		//$message = $message . $egReply;
 
 		foreach(getAllReceivers() as $rcvr) {
-			for ($x = 1; $x <= count(getAllReceivers()); x++) {
+			for ($x = 1; $x <= count(getAllReceivers()); $x++) {
 				if ($x % 3 == 0) {
 					sleep(15);
 				}
