@@ -29,7 +29,7 @@
 				$cntActivation = mysqli_num_rows($rsActivation);
 
 				if ($cntActivation > 0) {
-					$updateUser = "update users set status_id = 1 where id = " . $userId;
+					$updateUser = "update users set status_id = 1 where id = " . $userId . " and status_id = 2";
 					$rsUpUser = mysqli_query($mysqli, $updateUser);
 
 					$deleteActivation = "delete from account_activations where user_id = " . $userId . " and activation_key = '" . $activationCode . "'";
