@@ -35,7 +35,7 @@
 			$referring_batch_id = $request_id;
 
 			//check the response batch id if exist
-			$selMsg = "select * from sent_messages where response_code = '" . $code[0] . "' order by created_at desc limit 1";
+			$selMsg = "select * from sent_messages where response_code = '" . strtoupper($code[0]) . "' order by created_at desc limit 1";
 			$rsMsg = mysqli_query($mysqli, $selMsg);
 			$cntMsg = mysqli_num_rows($rsMsg);
 
