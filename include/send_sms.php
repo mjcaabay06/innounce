@@ -81,7 +81,7 @@
 					// 	$errorSending = $row['mobile_number'];
 					// }
 
-					$response = sendViaChikka(substr_replace(trim($mobile, '63', 0, 1), $message, $messageID);
+					$response = sendViaChikka(substr_replace(trim($mobile), '63', 0, 1), $message, $messageID);
 					$stat = (int)$response->status;
 					if ($stat == 200) {
 						echo "Message Sent!";
