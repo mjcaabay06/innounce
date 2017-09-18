@@ -18,26 +18,23 @@
 		//$message = $message . $egReply;
 
 		foreach(getAllReceivers() as $rcvr) {
-			for ($x = 1; $x <= count(getAllReceivers()); $x++) {
-				if ($x % 3 == 0) {
-					sleep(15);
-				}
-				$aa['number'] = substr_replace($rcvr['mobile_number'], '63', 0, 1);
-				$aa['id'] = $rcvr['recipient_id'];
-				//array_push($mobile, $aa);
+			$aa['number'] = substr_replace($rcvr['mobile_number'], '63', 0, 1);
+			$aa['id'] = $rcvr['recipient_id'];
+			//array_push($mobile, $aa);
 
-				$response = sendViaChikka(substr_replace($rcvr['mobile_number'], '63', 0, 1), $egReply, $messageID);
-				if ((int)$response->status == 200) {
-					storeRecipient($messageID,$aa);
-					unset($aa);
-					unset($response);
-					error_log('>>>>>>>>>>e:' . $response->status);
-				} else {
-					$errorSending[] = $rcvr['name'];
-					error_log('---------e:' . $response->description);
+			$response = sendViaChikka(substr_replace($rcvr['mobile_number'], '63', 0, 1), $egReply, $messageID);
+			if ((int)$response->status == 200) {
+				storeRecipient($messageID,$aa);
+				unset($aa);
+				unset($response);
+				error_log('>>>>>>>>>>e:' . $response->status);
+			} else {
+				$errorSending[] = $rcvr['name'];
+				error_log('---------e:' . $response->description);
 
-				}
 			}
+			
+			sleep(10);
 		}
 
 		// $imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
