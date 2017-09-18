@@ -29,6 +29,11 @@
  //        );
 
 	// echo $requestCost['free'];
-	$x = 4;
-	echo ($x % 3);
+	$aa = array();
+	$aa['number'] = "0912312";
+	$aa['id'] = "asd";
+	print_r($aa);
+	echo "<br/>";
+	$aa = array();
+	print_r($aa);
  ?>

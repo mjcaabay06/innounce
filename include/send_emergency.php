@@ -23,18 +23,17 @@
 			//array_push($mobile, $aa);
 
 			$response = sendViaChikka(substr_replace($rcvr['mobile_number'], '63', 0, 1), $egReply, $messageID);
-			if ((int)$response->status == 200) {
+			$stat = (int)$response->status;
+			if ($stat == 200) {
 				storeRecipient($messageID,$aa);
-				unset($aa);
-				unset($response);
-				error_log('>>>>>>>>>>e:' . $response->status);
+				$aa = array();
+				error_log('>>>>>>>>>>e:' . $stat);
+				$stat = 0;
 			} else {
 				$errorSending[] = $rcvr['name'];
-				error_log('---------e:' . $response->description);
-
+				error_log('---------e:' . $stat);
+				$stat = 0;
 			}
-			
-			sleep(5);
 		}
 
 		// $imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));

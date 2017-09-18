@@ -52,17 +52,17 @@
 					//array_push($mobile, $aa);
 
 					$response = sendViaChikka(substr_replace($studNumber['mobile_number'], '63', 0, 1), $egReply, $messageID);
-					if ((int)$response->status == 200) {
+					$stat = (int)$response->status;
+					if ($stat == 200) {
 						insertRecipient($aa,$messageID,2);
-						unset($aa);
-						unset($response);
+						$aa = array();
 						error_log('>>>>>>>>>>s:' . $response->status);
+						$stat = 0;
 					} else {
 						$errorSending[] = $studNumber['name'];
 						error_log('---------s:' . $response->message);
-
+						$stat = 0;
 					}
-					sleep(5);
 				}
 			}
 
