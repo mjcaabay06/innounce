@@ -62,7 +62,7 @@
 						error_log('---------s:' . $response->message);
 
 					}
-					sleep(10);
+					sleep(5);
 				}
 			}
 

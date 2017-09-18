@@ -34,7 +34,7 @@
 
 			}
 			
-			sleep(10);
+			sleep(5);
 		}
 
 		// $imploded = implode(',', array_map(function($e){ return $e['number']; }, $mobile));
