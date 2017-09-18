@@ -15,7 +15,7 @@
 
 				$message = 'Your activation code is ' . $activationCode . '. And your Password: ' . $_POST['userpass'];
 
-				$response = sendViaChikka(trim($_POST['mobile']), '63', 0, 1), $message, $messageID);
+				$response = sendViaChikka(substr_replace(trim($_POST['mobile']), '63', 0, 1), $message, $messageID);
 				$stat = (int)$response->status;
 				if ($stat == 200) {
 					echo "Activation code was sent to your mobile number.";
@@ -81,7 +81,7 @@
 					// 	$errorSending = $row['mobile_number'];
 					// }
 
-					$response = sendViaChikka(trim($mobile), '63', 0, 1), $message, $messageID);
+					$response = sendViaChikka(substr_replace(trim($mobile, '63', 0, 1), $message, $messageID);
 					$stat = (int)$response->status;
 					if ($stat == 200) {
 						echo "Message Sent!";
