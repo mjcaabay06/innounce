@@ -26,7 +26,7 @@
 		$rsCountRcv = mysqli_query($mysqli, $selCountRcv);
 		$rowCount = mysqli_num_rows($rsCountRcv);
 
-		$selEmergency = "select *, date_format(created_at, '%b %e, %Y [ %H:%i:%s ]') as date_receive from emergency_recipients where remarks is not null and remarks != 'a:no' and date_format(created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by created_at";
+		$selEmergency = "select *, date_format(created_at, '%b %e, %Y [ %H:%i:%s ]') as date_receive from emergency_recipients where remarks is not null and date_format(created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "'  order by created_at";
 		$rsEmergency = mysqli_query($mysqli, $selEmergency);
 		$cntEmergency = mysqli_num_rows($rsEmergency);
 
@@ -213,7 +213,7 @@
 										?>
 										<tr>
 											<td><?php echo $rcv['batch_id'] ?></td>
-											<td><?php echo $rcv['remarks'] ?></td>
+											<td><?php echo trim($rcv['remarks']) == 'a:no' ? 'Cellphone Unattended.' : $rcv['remarks'] ?></td>
 											<td><?php echo $rcv['recipient'] ?></td>
 											<td><?php echo $rcv['date_receive'] ?></td>
 										</tr>

@@ -177,7 +177,7 @@
 					$rsEmergency = mysqli_query($mysqli, $selEmergency);
 					while ($em = mysqli_fetch_assoc($rsEmergency)) {
 						$role = explode(":", $em['recipient_id']);
-						$response = trim($em['remarks']) == '' || trim($em['remarks']) == 'a:no' ? '<span style="font-style: italic;">No response.</span>' : $em['remarks'] ;
+						$response = trim($em['remarks']) == '' ? '<span style="font-style: italic;">No response.</span>' : trim($em['remarks']) == 'a:no' ? '<span style="font-style: italic;">Cellphone Unattended.</span>' : $em['remarks'];
 						$query = '';
 
 						if ($role[0] == 's') {
