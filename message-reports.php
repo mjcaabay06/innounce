@@ -122,7 +122,7 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<th>Batch ID</th>
+										<th class="hidden">Batch ID</th>
 										<th>Message</th>
 										<th>Message Type</th>
 										<th>User</th>
@@ -138,7 +138,7 @@
 										while($sent = mysqli_fetch_assoc($rsSent)):
 									?>
 									<tr>
-										<td><?php echo $sent['batch_id'] ?></td>
+										<td class="hidden"><?php echo $sent['batch_id'] ?></td>
 										<td><?php echo $sent['message'] ?></td>
 										<td><?php echo $sent['type'] ?></td>
 										<td><?php echo $sent['last_name'] . ', ' . $sent['first_name'] ?></td>
@@ -151,7 +151,7 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<th>Batch ID</th>
+										<th class="hidden">Batch ID</th>
 										<th>Reply Message</th>
 										<th>Sender Number</th>
 										<th>Date Receive</th>
@@ -166,7 +166,7 @@
 										while($rcv = mysqli_fetch_assoc($rsRcv)):
 									?>
 									<tr>
-										<td><?php echo $rcv['referring_batch_id'] ?></td>
+										<td class="hidden"><?php echo $rcv['referring_batch_id'] ?></td>
 										<td><?php echo $rcv['message'] ?></td>
 										<td><?php echo $rcv['sender'] ?></td>
 										<td><?php echo $rcv['date_receive'] ?></td>
@@ -197,7 +197,7 @@
 								<table class="table">
 									<thead>
 										<tr>
-											<th>Batch ID</th>
+											<th class="hidden">Batch ID</th>
 											<th>Reply Message</th>
 											<th>Sender Number</th>
 											<th>Date Receive</th>
@@ -212,7 +212,7 @@
 											while($rcv = mysqli_fetch_assoc($rsRcv)):
 										?>
 										<tr>
-											<td><?php echo $rcv['batch_id'] ?></td>
+											<td class="hidden"><?php echo $rcv['batch_id'] ?></td>
 											<td><?php echo trim($rcv['remarks']) == 'a:no' ? 'Cellphone Unattended.' : $rcv['remarks'] ?></td>
 											<td><?php echo $rcv['recipient'] ?></td>
 											<td><?php echo $rcv['date_receive'] ?></td>
@@ -241,7 +241,7 @@
 								<table class="table">
 									<thead>
 										<tr>
-											<th>Batch ID</th>
+											<th class="hidden">Batch ID</th>
 											<th>Reply Message</th>
 											<th>Sender Number</th>
 											<th>Date Receive</th>
@@ -256,7 +256,7 @@
 											while($rcv = mysqli_fetch_assoc($rsRcv)):
 										?>
 										<tr>
-											<td><?php echo $rcv['referring_batch_id'] ?></td>
+											<td class="hidden"><?php echo $rcv['referring_batch_id'] ?></td>
 											<td><?php echo $rcv['message'] ?></td>
 											<td><?php echo $rcv['sender'] ?></td>
 											<td><?php echo $rcv['date_receive'] ?></td>

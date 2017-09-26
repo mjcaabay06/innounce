@@ -135,7 +135,7 @@
 														<table class="table mb-0">
 															<thead>
 																<tr>
-																	<th>Batch ID</th>
+																	<th class="hidden">Batch ID</th>
 																	<th>Message</th>
 																	<th>User</th>
 																	<th>Date Sent</th>
@@ -150,7 +150,7 @@
 																	while($announcement = mysqli_fetch_assoc($rsAnnouncement)):
 																?>
 																<tr>
-																	<td><?php echo $announcement['batch_id'] ?></td>
+																	<td class="hidden"><?php echo $announcement['batch_id'] ?></td>
 																	<td><?php echo $announcement['message'] ?></td>
 																	<td><?php echo $announcement['last_name'] . ', ' . $announcement['first_name'] ?></td>
 																	<td><?php echo $announcement['date_sent'] ?></td>
@@ -236,7 +236,7 @@
 														<table class="table mb-0">
 															<thead>
 																<tr>
-																	<th>Batch ID</th>
+																	<th class="hidden">Batch ID</th>
 																	<th>Message</th>
 																	<th>Date Sent</th>
 																	<th></th>
@@ -250,7 +250,7 @@
 																	while($grouping = mysqli_fetch_assoc($rsGrouping)):
 																?>
 																<tr>
-																	<td><?php echo $grouping['batch_id'] ?></td>
+																	<td class="hidden"><?php echo $grouping['batch_id'] ?></td>
 																	<td><?php echo $grouping['message'] ?></td>
 																	<td><?php echo $grouping['date_sent'] ?></td>
 																	<td>
@@ -359,7 +359,7 @@
 														<table class="table mb-0">
 															<thead>
 																<tr>
-																	<th>Batch ID</th>
+																	<th class="hidden">Batch ID</th>
 																	<th>Message</th>
 																	<th>User</th>
 																	<th>Date Sent</th>
@@ -374,7 +374,7 @@
 																	while($emergency = mysqli_fetch_assoc($rsEmergency)):
 																?>
 																<tr>
-																	<td><?php echo $emergency['batch_id'] ?></td>
+																	<td class="hidden"><?php echo $emergency['batch_id'] ?></td>
 																	<td><?php echo $emergency['message'] ?></td>
 																	<td><?php echo $emergency['last_name'] . ', ' . $emergency['first_name'] ?></td>
 																	<td><?php echo $emergency['date_sent'] ?></td>
@@ -418,7 +418,7 @@
 														<table class="table mb-0">
 															<thead>
 																<tr>
-																	<th>Batch ID</th>
+																	<th class="hidden">Batch ID</th>
 																	<th>Message</th>
 																	<th>User</th>
 																	<th>Date Sent</th>
@@ -433,7 +433,7 @@
 																	while($survey = mysqli_fetch_assoc($rsSurvey)):
 																?>
 																<tr>
-																	<td><?php echo $survey['batch_id'] ?></td>
+																	<td class="hidden"><?php echo $survey['batch_id'] ?></td>
 																	<td><?php echo $survey['message'] ?></td>
 																	<td><?php echo $survey['last_name'] . ', ' . $survey['first_name'] ?></td>
 																	<td><?php echo $survey['date_sent'] ?></td>
