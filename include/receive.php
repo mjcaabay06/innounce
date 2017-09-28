@@ -52,7 +52,7 @@
 					if ($cntSelResponse > 0) {
 						//update the remarks of recipient base on response
 						$rowSelResponse = mysqli_fetch_assoc($rsSelResponse);
-						$upEmergency = "update emergency_recipients set remarks='" . $response . "', updated_at = '" . $received_time . "' where id=" . $rowSelResponse['id'];
+						$upEmergency = "update emergency_recipients set remarks='" . $response . "', updated_at = NOW() where id=" . $rowSelResponse['id'];
 						$rsUpEmergency = mysqli_query($mysqli, $upEmergency);
 						if ($rsUpEmergency !== false) {
 							$output = 'success';
