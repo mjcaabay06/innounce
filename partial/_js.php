@@ -143,6 +143,10 @@
 				$("#report-title").html('Generate Sent Messages Report');
 			} else if (type == 'receive') {
 				$("#report-title").html('Generate Response Messages Report');
+			} else if (type == 'percentage') {
+				$("#report-title").html('Generate Response Messages Report');
+				$("#reportsModal form").attr('action', 'percentage-report.php');
+				$("#reportsModal form").removeAttr('target');
 			} else {
 				$("#report-title").html('Generate Logout Report');
 			}
