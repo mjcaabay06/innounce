@@ -6,6 +6,8 @@
 	if ($_POST) {
 		$message = $_POST['message'];
 		$course = $_POST['course'];
+		$subject = $_POST['subject'];
+		$section = $_POST['section'];
 		$messageID = randomUniqueMsgID();
 
 		$errorSending = array();
@@ -16,7 +18,8 @@
 		$hasWordLvl = array();
 		$noLvl = array();
 		foreach ($_POST['year'] as $year) {
-			$selLevel = "select * from enrollees inner join school_sections on school_sections.id = enrollees.school_section_id where school_level_id = " . $year;
+			//$selLevel = "select * from enrollees inner join school_sections on school_sections.id = enrollees.school_section_id where school_sections.school_level_id = " . $year . " and enrollees.school_course_id = " . $course;
+			$selLevel = "select * from enrollees inner join school_sections on school_sections.id = enrollees.school_section_id inner join enrolled_subjects on enrolled_subjects.enrollee_id = enrollees.id where school_sections.school_level_id = " . $year . " and enrollees.school_course_id = " . $course . " and enrollees.school_section_id in (" . implode(',',$section) . ") and enrolled_subjects.subject_id in (" . implode(',',$subject) . ")";
 			$rsLevel = mysqli_query($mysqli, $selLevel);
 			$lvlCount = mysqli_num_rows($rsLevel);
 
@@ -40,7 +43,7 @@
 			$mobile = array();
 			$aa = array();
 			foreach ($hasLvl as $year) {
-				foreach (getStudentReceivers($year,$course) as $studNumber) {
+				foreach (getStudentReceivers2($year,$course,$subject,$section) as $studNumber) {
 					$aa['number'] = substr_replace($studNumber['mobile_number'], '63', 0, 1);
 					$aa['id'] = $studNumber['student_id'];
 					//array_push($mobile, $aa);

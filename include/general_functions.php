@@ -249,6 +249,26 @@
 		return $data;
 	}
 
+	function getStudentReceivers2($year, $course, $subject, $section) {
+		global $mysqli;
+
+		//$selStud = "select students.id, students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on enrollees.school_section_id = school_sections.id) on enrollees.student_id = students.id where enrollees.school_course_id = " . $course . " and school_sections.school_level_id = " . $year . " and trim(students.mobile_number) != ''";
+		$selStud = "select students.id, students.first_name, students.last_name, students.mobile_number, school_sections.section from students inner join (enrollees inner join school_sections on enrollees.school_section_id = school_sections.id inner join enrolled_subjects on enrolled_subjects.enrollee_id = enrollees.id) on enrollees.student_id = students.id where enrollees.school_course_id = " . $course . " and school_sections.school_level_id in (" . implode(',',$year) . ") and trim(students.mobile_number) != '' and enrollees.school_section_id in (" . implode(',',$section) . ")  and enrolled_subjects.subject_id in (" . implode(',',$subject) . ")";	
+		$rsStud = mysqli_query($mysqli, $selStud);
+
+		$data = array();
+		while($studNumber = mysqli_fetch_assoc($rsStud)) {
+			$studData = array(
+					'name' => '[' . $studNumber['last_name'] . ',' . $studNumber['first_name'] . '(' . $studNumber['section'] . ')]',
+					'mobile_number' => $studNumber['mobile_number'],
+					'student_id' => $studNumber['id']
+					);
+			array_push($data, $studData);
+		}
+
+		return $data;
+	}
+
 	function getStudentViaSection($section) {
 		global $mysqli;
 

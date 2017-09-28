@@ -9,6 +9,8 @@ function preloaderLoad() {
 function sendAnnouncement(url) {
 	course = $("#a-sel-course").val();
 	year = $("#a-sel-year").val();
+	subject = $("#a-sel-subject").val();
+	section = $("#a-sel-sections").val();
 
 
 	// prof = !$("#a-check-prof").is(':checked') ? null :$("#a-sel-prof").val();
@@ -19,7 +21,7 @@ function sendAnnouncement(url) {
 	$.ajax({
 		url: url,
 		type: "post",
-		data: { course: course, year: year, message: message },
+		data: { course: course, year: year, subject: subject, section: section, message: message },
 		success: function(response){
 			var result = $.parseJSON(response);
 

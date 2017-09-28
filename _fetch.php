@@ -228,6 +228,47 @@
 					$data['output'] = $opt;
 				}
 				break;
+			case 'a-subject':
+				$param = $_POST["params"];
+
+				$selSubject = "select school_subjects.* from enrollees inner join school_sections on school_sections.id = enrollees.school_section_id inner join (enrolled_subjects inner join school_subjects on school_subjects.id = enrolled_subjects.subject_id) on enrolled_subjects.enrollee_id = enrollees.id inner join school_courses on school_courses.id = enrollees.school_course_id where school_sections.school_level_id in (" . implode(',',$param['level']) . ") and enrollees.school_course_id = " . $param['course'] . " group by school_subjects.id order by school_subjects.description";
+				$rsSubject = mysqli_query($mysqli, $selSubject);
+				if ($rsSubject !== false) {
+					$opt = '';
+					$cnt = mysqli_num_rows($rsSubject);
+
+					if ($cnt > 0) {
+						while ($subject = mysqli_fetch_assoc($rsSubject)) {
+							$opt .= '<option value="' . $subject['id'] . '">' . $subject['description'] . '</option>';
+						}
+					} else {
+						$opt .= '<option disabled style="font-style: italic">No specific subjects.</option>';
+					}
+					
+					$data['status'] = 'success';
+					$data['output'] = $opt;
+				}
+				break;
+			case 'a-section':
+				$param = $_POST["params"];
+				$selSection = "select school_sections.* from enrollees inner join school_sections on school_sections.id = enrollees.school_section_id inner join (enrolled_subjects inner join school_subjects on school_subjects.id = enrolled_subjects.subject_id) on enrolled_subjects.enrollee_id = enrollees.id inner join school_courses on school_courses.id = enrollees.school_course_id where school_sections.school_level_id in (" . implode(',',$param['level']) . ") and enrollees.school_course_id = " . $param['course'] . " and school_subjects.id in (" . implode(',',$param['subject']) . ") group by school_sections.id order by school_sections.section";
+				$rsSection = mysqli_query($mysqli, $selSection);
+				if ($rsSection !== false) {
+					$opt = '';
+					$cnt = mysqli_num_rows($rsSection);
+
+					if ($cnt > 0) {
+						while ($section = mysqli_fetch_assoc($rsSection)) {
+							$opt .= '<option value="' . $section['id'] . '">' . $section['section'] . '</option>';
+						}
+					} else {
+						$opt .= '<option disabled style="font-style: italic">No specific sections.</option>';
+					}
+					$data['status'] = 'success';
+					$data['output'] = $opt;
+				}
+
+				break;
 			default:
 				# code...
 				break;

@@ -173,7 +173,7 @@
 														<div class="form-group" id="a-alert-message"></div>
 														<div class="form-group">
 															<label class="control-label mb-10 text-left col-xs-12">Recipients:</label>
-															<div class="form-group col-md-4 col-sm-12 col-xs-12 col-md-offset-1">
+															<div class="form-group col-md-4 col-sm-12 col-xs-12">
 																<div class="mb-20">
 																	<label for="a-sel-course" class="control-label mb-5 text-left">Department:</label>
 																	<select class="form-control" id="a-sel-department">
@@ -211,7 +211,22 @@
 																	<?php endwhile; ?>
 																</select>
 															</div>
+															<div class="form-group col-md-4 col-sm-12 col-xs-12">
+																<!-- <div class="checkbox checkbox-success">
+																	<input id="a-check-stud" type="checkbox">
+																	
+																</div> -->
+																<label for="a-sel-subject" class="control-label mb-5 text-left">Subjects</label>
+																<!-- <label class="control-label mb-5 text-left">Students</label> -->
+																<select multiple class="form-control" id="a-sel-subject" style="height: 200px">
+																</select>
+															</div>
 														</div>
+														<div class="col-sm-12 mt-20">
+																<label for="a-sel-sections" class="control-label mb-5 text-left">Sections</label>
+																<select multiple class="form-control" id="a-sel-sections" style="height: 200px">
+																</select>
+															</div>
 														
 														<div class="form-group col-xs-12">
 															<label class="control-label mb-10 text-left">Message:</label>
@@ -729,6 +744,14 @@
 					err += 1;
 				}
 
+				if ($("#a-sel-subject").val() == null) {
+					err += 1;
+				}
+
+				if ($("#a-sel-sections").val() == null) {
+					err += 1;
+				}
+
 				if (err > 0) {
 					alert("Please select a recipient.");
 				} else if ($("#a-message").val().trim() == "") {
@@ -886,6 +909,50 @@
 			});
 			$("#s-sel-department").on("change", function(){
 				fetchCourse($(this).val(),'s');
+			});
+
+			$("#a-sel-course").on("change", function(){
+				$("#a-sel-year option:selected").prop("selected", false);
+				$("#a-sel-subject").html('');
+				$("#a-sel-sections").html('');
+			});
+
+			$("#a-sel-year").on("change", function(){
+				var data = new Object();
+				data.course = $("#a-sel-course").val();
+				data.level = $(this).val();
+				$("#a-sel-sections").html('');
+				$.ajax({
+					url: '_fetch.php',
+					type: 'post',
+					data: { action: 'a-subject', params: data },
+					success: function(response) {
+						var result = $.parseJSON(response);
+
+						if (result['status'] == 'success') {
+							$("#a-sel-subject").html(result['output']);
+						}
+					}
+				});
+			});
+
+			$("#a-sel-subject").on("change", function(){
+				var data = new Object();
+				data.course = $("#a-sel-course").val();
+				data.level = $("#a-sel-year").val();
+				data.subject = $(this).val();
+				$.ajax({
+					url: '_fetch.php',
+					type: 'post',
+					data: { action: 'a-section', params: data },
+					success: function(response) {
+						var result = $.parseJSON(response);
+
+						if (result['status'] == 'success') {
+							$("#a-sel-sections").html(result['output']);
+						}
+					}
+				});
 			});
 		});
 		
