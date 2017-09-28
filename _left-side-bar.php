@@ -38,6 +38,11 @@
 					</li>
 				<?php endif; ?>
 			</ul>
+
+			<?php if ($_COOKIE['userType'] != 1) : ?>
+				<a <?php echo $page == 'handled-subjects.php' ? 'class="active"' : '' ?> href="handled-subjects.php"><div class="pull-left"><i class="zmdi zmdi-landscape mr-20"></i><span class="right-nav-text">Handled Subjects</span></div><div class="clearfix"></div></a>
+			<?php endif; ?>
+
 			<?php if ($_COOKIE['userType'] == 1) : ?>
 				<a <?php echo in_array($page, $users) ? 'class="active"' : '' ?> href="javascript:void(0);" data-toggle="collapse" data-target="#users_dr"><div class="pull-left"><i class="zmdi zmdi-accounts mr-20"></i><span class="right-nav-text">Users</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
 				<ul id="users_dr" class="collapse collapse-level-1">

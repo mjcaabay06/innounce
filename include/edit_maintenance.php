@@ -159,6 +159,15 @@
 					$out['message'] = mysqli_error($mysqli);
 				}
 				break;
+			case 'professor-subjects-active':
+				$up = "update professor_subjects set status_id = " . $data['isChecked'] . " where id = " . $data['id'];
+				$rs = mysqli_query($mysqli, $up);
+				if ($rs !== false) {
+					$out['status'] = 'success';
+				} else {
+					$out['status'] = 'failed';
+					$out['message'] = mysqli_error($mysqli);
+				}
 				break;
 			default:
 				# code...

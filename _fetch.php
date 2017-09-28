@@ -47,7 +47,7 @@
 				$prof = $_POST['profId'];
 
 				#$selSubject = "select school_subjects.* from professor_subjects inner join school_subjects on school_subjects.id = professor_subjects.school_subject_id where professor_id = " . $prof;
-				$selSubject = "select school_subjects.* from users inner join (professor_subjects inner join (enrolled_subjects inner join (enrollees inner join school_courses on school_courses.id = enrollees.school_course_id) on enrollees.id = enrolled_subjects.enrollee_id) on enrolled_subjects.subject_id = professor_subjects.school_subject_id) on professor_subjects.professor_id = users.id inner join school_subjects on school_subjects.id = professor_subjects.school_subject_id where users.id = " . $prof . " and school_courses.id = " . $course . " group by school_subjects.id";
+				$selSubject = "select school_subjects.* from users inner join (professor_subjects inner join (enrolled_subjects inner join (enrollees inner join school_courses on school_courses.id = enrollees.school_course_id) on enrollees.id = enrolled_subjects.enrollee_id) on enrolled_subjects.subject_id = professor_subjects.school_subject_id) on professor_subjects.professor_id = users.id inner join school_subjects on school_subjects.id = professor_subjects.school_subject_id where users.id = " . $prof . " and school_courses.id = " . $course . " and professor_subjects.status_id = 1 group by school_subjects.id";
 				$rsSubject = mysqli_query($mysqli, $selSubject);
 
 				$result = '';

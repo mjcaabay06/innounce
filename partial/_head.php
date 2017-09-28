@@ -9,6 +9,9 @@
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 
+<!-- switchery CSS -->
+<link href="vendors/bower_components/switchery/dist/switchery.min.css" rel="stylesheet" type="text/css"/>
+
 <!-- Morris Charts CSS -->
 <link href="vendors/bower_components/morris.js/morris.css" rel="stylesheet" type="text/css"/>
 
