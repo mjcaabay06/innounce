@@ -1,5 +1,6 @@
 <?php
 	$page = strtolower(basename($_SERVER['PHP_SELF']));
+	$send = array('send-announcement.php','send-emergency.php', 'send-survey.php');
 	$users = array('staffs.php','students.php', 'add-staff.php', 'add-student.php');
 	$staff = array('staffs.php', 'add-staff.php');
 	$student = array('students.php', 'add-student.php');
@@ -23,6 +24,20 @@
 		</li>
 		<li>
 			<a <?php echo $page == 'index.php' ? 'class="active"' : '' ?> href="index.php"><div class="pull-left"><i class="zmdi zmdi-landscape mr-20"></i><span class="right-nav-text">Dashboard</span></div><div class="clearfix"></div></a>
+			<a <?php echo in_array($page, $send) ? 'class="active"' : '' ?> href="javascript:void(0);" data-toggle="collapse" data-target="#send_dr"><div class="pull-left"><i class="fa fa-paper-plane mr-20"></i><span class="right-nav-text">Send</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+			<ul id="send_dr" class="collapse collapse-level-1">
+				<li>
+					<a <?php echo $page == 'send-announcement.php' ? 'class="active-page"' : '' ?> href="send-announcement.php">Announcement</a>
+				</li>
+				<?php if ($_COOKIE['userType'] == 1) : ?>
+					<li>
+						<a <?php echo $page == 'send-emergency.php' ? 'class="active-page"' : '' ?>  href="send-emergency.php">Emergency</a>
+					</li>
+					<li>
+						<a <?php echo $page == 'send-survey.php' ? 'class="active-page"' : '' ?>  href="send-survey.php">Survey</a>
+					</li>
+				<?php endif; ?>
+			</ul>
 			<?php if ($_COOKIE['userType'] == 1) : ?>
 				<a <?php echo in_array($page, $users) ? 'class="active"' : '' ?> href="javascript:void(0);" data-toggle="collapse" data-target="#users_dr"><div class="pull-left"><i class="zmdi zmdi-accounts mr-20"></i><span class="right-nav-text">Users</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
 				<ul id="users_dr" class="collapse collapse-level-1">
