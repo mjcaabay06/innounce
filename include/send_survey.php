@@ -57,6 +57,7 @@
 						insertRecipient($aa,$messageID,2);
 						error_log('>>>>>>>>>>s:' . $response->status);
 					} else {
+						insertFailed($aa,$messageID,2);
 						$errorSending[] = $studNumber['name'];
 						error_log('---------s:' . $response->message);
 					}

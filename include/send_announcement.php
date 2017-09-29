@@ -53,6 +53,7 @@
 						insertRecipient($aa,$messageID,1);
 						unset($aa);
 					} else {
+						insertFailed($aa,$messageID,1);
 						$errorSending[] = $studNumber['name'];
 						error_log('---------' . $response->message);
 					}

@@ -28,6 +28,7 @@
 							insertRecipient($aa,$messageID,4);
 							unset($aa);
 						} else {
+							insertFailed($aa,$messageID,4);
 							$errorSending[] = $studNumber['name'];
 							error_log('---------' . $response->message);
 						}
@@ -80,6 +81,7 @@
 							insertRecipient($aa,$messageID,4);
 							unset($aa);
 						} else {
+							insertFailed($aa,$messageID,4);
 							$errorSending[] = $studNumber['name'];
 							error_log('---------' . $response->message);
 						}
@@ -132,6 +134,7 @@
 							insertRecipient($aa,$messageID,4);
 							unset($aa);
 						} else {
+							insertFailed($aa,$messageID,4);
 							$errorSending[] = $studNumber['name'];
 							error_log('---------' . $response->message);
 						}

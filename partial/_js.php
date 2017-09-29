@@ -141,6 +141,9 @@
 				$("#report-title").html('Generate Login Report');
 			} else if (type == 'sent') {
 				$("#report-title").html('Generate Sent Messages Report');
+			} else if (type == 'failed') {
+				$("#report-title").html('Generate Failed Messages Report');
+				$("#reportsModal form").attr('action', 'failed-messages-report.php');
 			} else if (type == 'receive') {
 				$("#report-title").html('Generate Response Messages Report');
 			} else if (type == 'percentage') {

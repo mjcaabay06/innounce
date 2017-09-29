@@ -28,6 +28,7 @@
 				storeRecipient($messageID,$aa);
 				error_log('>>>>>>>>>>e:' . $stat);
 			} else {
+				insertFailed($aa,$messageID,3);
 				$errorSending[] = $rcvr['name'];
 				error_log('---------e:' . $stat);
 			}

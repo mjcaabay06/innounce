@@ -421,6 +421,33 @@
 		}
 	}
 
+	function insertFailed($recipient, $bacthId, $typeId) {
+		global $mysqli;
+
+		$insert = "
+			insert into
+			failed_messages(
+				batch_id,
+				student_id,
+				recipient,
+				message_type_id
+			)
+			values(
+				" . $bacthId . ",
+				" . $recipient['id'] . ",
+				'" . $recipient['number'] . "',
+				" . $typeId . "
+			)
+			";
+		$result = mysqli_query($mysqli, $insert);
+
+		if ($result !== false) {
+
+		} else {
+			error_log(mysqli_error($mysqli));
+		}
+	}
+
 	function createCode($char) {
 		global $mysqli;
 		$char = strtoupper($char);

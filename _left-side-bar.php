@@ -59,6 +59,9 @@
 						<a href="#" class="a-reports" data-value="sent">Sent Messages</a>
 					</li>
 					<li>
+						<a href="#" class="a-reports" data-value="failed">Failed Messages</a>
+					</li>
+					<li>
 						<a href="#" class="a-reports" data-value="receive">Response Messages</a>
 					</li>
 					<li>
