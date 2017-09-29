@@ -106,7 +106,7 @@
 					";
 					$rsResponse = mysqli_query($mysqli, $insResponse);
 					if ($rsResponse !== false) {
-						$up = "update message_recipients set remarks = '" . $response . "' where recipient = '" . $sender . "' and batch_id = " . $rowMsg['batch_id'];
+						$up = "update message_recipients set remarks = '" . $response . "', updated_at = NOW() where recipient = '" . $sender . "' and batch_id = " . $rowMsg['batch_id'];
 						$rs = mysqli_query($mysqli, $up);
 						if ($rs !== false) {
 							$output = "A message with body " . $response . " was sent from " . $sender . " to " . $msisdn ."\n";

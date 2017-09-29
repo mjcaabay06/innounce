@@ -44,6 +44,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<?php include('partial/_js.php'); ?>
     <?php include('partial/_head.php'); ?>
 </head>
 
@@ -71,7 +72,7 @@
 				<!-- Row -->
 				<div class="row">
 					<div class="col-sm-12">
-						<div class="panel panel-default card-view">
+						<!-- <div class="panel panel-default card-view">
 							<div class="panel-heading">
 								<div class="pull-left">
 									<h6 class="panel-title txt-dark">Percentage Report from <?php echo date('M j, Y',strtotime($_GET['startdate'])) ?> to <?php echo date('M j, Y',strtotime($_GET['enddate'])) ?></h6>
@@ -90,7 +91,334 @@
 									
 								</div>
 							</div>
+						</div> -->
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="text-center">
+									<h6 class="panel-title txt-dark">Percentage Report from <?php echo date('M j, Y',strtotime($_GET['startdate'])) ?> to <?php echo date('M j, Y',strtotime($_GET['enddate'])) ?></h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
 						</div>
+
+						<div class="panel panel-default border-panel card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Departments</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="row">
+										<?php
+											$selD = "select * from departments";
+											$rsD = mysqli_query($mysqli, $selD);
+
+											while($d = mysqli_fetch_assoc($rsD)):
+										?>
+											<div class="col-md-4 col-sm-6 col-xs-12">
+												<div class="panel panel-inverse card-view">
+													<div class="panel-heading">
+														<div class="pull-left">
+															<h6 class="panel-title txt-dark"><?php echo $d['description'] ?></h6>
+														</div>
+														<div class="clearfix"></div>
+													</div>
+													<div class="panel-wrapper collapse in">
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-xs-12">
+																	<div class="flot-container" style="height:250px">
+																		<div id="flot_pie_chart_d-<?php echo $d['id'] ?>" class="demo-placeholder"></div>
+																	</div>
+																	<?php
+																		$selDSent = "select count(message_recipients.id) as cnt from message_recipients inner join (students inner join (enrollees inner join (school_courses inner join departments on departments.id = school_courses.department_id) on school_courses.id = enrollees.school_course_id) on enrollees.student_id = students.id) on students.id = message_recipients.student_id where date_format(message_recipients.created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "' and school_courses.department_id = " . $d['id'];
+																		$rsDSent = mysqli_query($mysqli, $selDSent);
+																		$rowDSent = mysqli_fetch_assoc($rsDSent);
+
+																		$selES = "select count(emergency_recipients.id) as cnt from emergency_recipients inner join (students inner join (enrollees inner join (school_courses inner join departments on departments.id = school_courses.department_id) on school_courses.id = enrollees.school_course_id) on enrollees.student_id = students.id) on students.id = substring_index(emergency_recipients.recipient_id,':',-1) where date_format(emergency_recipients.created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "' and substring_index(emergency_recipients.recipient_id,':',1) = 's' and school_courses.department_id = " . $d['id'];
+																		$rsES = mysqli_query($mysqli, $selES);
+																		$rowES = mysqli_fetch_assoc($rsES);
+
+																		$selEP = "select count(emergency_recipients.id) as cnt from emergency_recipients inner join users on users.id = substring_index(emergency_recipients.recipient_id,':',-1) where date_format(emergency_recipients.created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "' and substring_index(emergency_recipients.recipient_id,':',1) = 'p' and users.department_id = " . $d['id'];
+																		$rsEP = mysqli_query($mysqli, $selEP);
+																		$rowEP = mysqli_fetch_assoc($rsEP);
+
+																		//REPLIED
+																		$selDR = "select count(message_recipients.id) as cnt from message_recipients inner join (students inner join (enrollees inner join (school_courses inner join departments on departments.id = school_courses.department_id) on school_courses.id = enrollees.school_course_id) on enrollees.student_id = students.id) on students.id = message_recipients.student_id where date_format(message_recipients.updated_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "' and message_recipients.remarks is not null and school_courses.department_id = " . $d['id'];
+																		$rsDR = mysqli_query($mysqli, $selDR);
+																		$rowDR = mysqli_fetch_assoc($rsDR);
+
+																		$selESR = "select count(emergency_recipients.id) as cnt from emergency_recipients inner join (students inner join (enrollees inner join (school_courses inner join departments on departments.id = school_courses.department_id) on school_courses.id = enrollees.school_course_id) on enrollees.student_id = students.id) on students.id = substring_index(emergency_recipients.recipient_id,':',-1) where date_format(emergency_recipients.updated_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "' and substring_index(emergency_recipients.recipient_id,':',1) = 's' and (emergency_recipients.remarks != 'a:no' and emergency_recipients.remarks is not null) and school_courses.department_id = " . $d['id'];
+																		$rsESR = mysqli_query($mysqli, $selESR);
+																		$rowESR = mysqli_fetch_assoc($rsESR);
+
+																		$selEPR = "select count(emergency_recipients.id) as cnt from emergency_recipients inner join users on users.id = substring_index(emergency_recipients.recipient_id,':',-1) where date_format(emergency_recipients.updated_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "' and substring_index(emergency_recipients.recipient_id,':',1) = 'p' and (emergency_recipients.remarks != 'a:no' and emergency_recipients.remarks is not null) and users.department_id = " . $d['id'];
+																		$rsEPR = mysqli_query($mysqli, $selEPR);
+																		$rowEPR = mysqli_fetch_assoc($rsEPR);
+																	?>
+																	<script type="text/javascript">
+																		$(document).ready(function(){
+																			if($("#flot_pie_chart_d-<?php echo $d['id'] ?>").length > 0 ){
+																				var pie_data = [{
+																					label: "Sent",
+																					data: <?php echo intval($rowDSent['cnt']) + intval($rowES['cnt']) + intval($rowEP['cnt']) ?>,
+																					color: "#469408",
+																					
+																				}, {
+																					label: "Replied",
+																					data: <?php echo intval($rowDR['cnt']) + intval($rowESR['cnt']) + intval($rowEPR['cnt']) ?>,
+																					color: "#dc4666",
+																				}, {
+																					label: "Not Sent",
+																					data: 0,
+																					color:"#177ec1",
+																				}];
+
+																				var pie_op = {
+																					series: {
+																						pie: {
+																							show: true
+																						}
+																					},
+																					legend : {
+																						backgroundColor: 'transparent',
+																					},
+																					grid: {
+																						hoverable: true
+																					},
+																					color: null,
+																					tooltip: true,
+																					tooltipOpts: {
+																						content: "%p.0% (%y.0)", // show percentages, rounding to 2 decimal places
+																						shifts: {
+																							x: 20,
+																							y: 0
+																						},
+																						defaultTheme: false
+																					},
+																				};
+																				$.plot($('#flot_pie_chart_d-<?php echo $d['id'] ?>'), pie_data, pie_op);
+																			}
+																		});
+																		
+																	</script>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										<?php endwhile; ?>
+
+										<!-- <div class="col-md-4 col-sm-6 col-xs-12">
+											<div class="panel panel-inverse card-view">
+												<div class="panel-heading">
+													<div class="pull-left">
+														<h6 class="panel-title txt-dark">IT</h6>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+												<div class="panel-wrapper collapse in">
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="flot-container" style="height:250px">
+																	<div id="flot_pie_chart" class="demo-placeholder"></div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div> -->
+									</div>
+									
+								</div>
+							</div>
+						</div>
+
+						<div class="panel panel-default border-panel card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Courses</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="row">
+										<?php
+											$selCourse = "select * from school_courses order by description";
+											$rsCourse = mysqli_query($mysqli, $selCourse);
+
+											while ($c = mysqli_fetch_assoc($rsCourse)):
+										?>
+											<div class="col-md-4 col-sm-6 col-xs-12">
+												<div class="panel panel-inverse card-view">
+													<div class="panel-heading">
+														<div class="pull-left">
+															<h6 class="panel-title txt-dark"><?php echo $c['description'] ?></h6>
+														</div>
+														<div class="clearfix"></div>
+													</div>
+													<div class="panel-wrapper collapse in">
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-xs-12">
+																	<div class="flot-container" style="height:250px">
+																		<div id="flot_pie_chart_c-<?php echo $c['id'] ?>" class="demo-placeholder"></div>
+																	</div>
+																	<?php
+																		$selDSent = "select count(message_recipients.id) as cnt from message_recipients inner join (students inner join enrollees on enrollees.student_id = students.id) on students.id = message_recipients.student_id where date_format(message_recipients.created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "' and enrollees.school_course_id = " . $c['id'];
+																		$rsDSent = mysqli_query($mysqli, $selDSent);
+																		$rowDSent = mysqli_fetch_assoc($rsDSent);
+
+																		$selES = "select count(emergency_recipients.id) as cnt from emergency_recipients inner join (students inner join enrollees on enrollees.student_id = students.id) on students.id = substring_index(emergency_recipients.recipient_id,':',-1) where date_format(emergency_recipients.created_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "' and substring_index(emergency_recipients.recipient_id,':',1) = 's' and enrollees.school_course_id = " . $c['id'];
+																		$rsES = mysqli_query($mysqli, $selES);
+																		$rowES = mysqli_fetch_assoc($rsES);
+
+																		//REPLIED
+																		$selDR = "select count(message_recipients.id) as cnt from message_recipients inner join (students inner join enrollees on enrollees.student_id = students.id) on students.id = message_recipients.student_id where date_format(message_recipients.updated_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "' and message_recipients.remarks is not null and enrollees.school_course_id = " . $c['id'];
+																		$rsDR = mysqli_query($mysqli, $selDR);
+																		$rowDR = mysqli_fetch_assoc($rsDR);
+
+																		$selESR = "select count(emergency_recipients.id) as cnt from emergency_recipients inner join (students inner join enrollees on enrollees.student_id = students.id) on students.id = substring_index(emergency_recipients.recipient_id,':',-1) where date_format(emergency_recipients.updated_at, '%Y-%m-%d') between '" . $startdate . "' and '" . $enddate . "' and substring_index(emergency_recipients.recipient_id,':',1) = 's' and (emergency_recipients.remarks != 'a:no' and emergency_recipients.remarks is not null) and enrollees.school_course_id = " . $c['id'];
+																		$rsESR = mysqli_query($mysqli, $selESR);
+																		$rowESR = mysqli_fetch_assoc($rsESR);
+																	?>
+																	<script type="text/javascript">
+																		$(document).ready(function(){
+																			if($("#flot_pie_chart_c-<?php echo $c['id'] ?>").length > 0 ){
+																				var pie_data = [{
+																					label: "Sent",
+																					data: <?php echo intval($rowDSent['cnt']) + intval($rowES['cnt']) ?>,
+																					color: "#469408",
+																					
+																				}, {
+																					label: "Replied",
+																					data: <?php echo intval($rowDR['cnt']) + intval($rowESR['cnt']) ?>,
+																					color: "#dc4666",
+																				}, {
+																					label: "Not Sent",
+																					data: 0,
+																					color:"#177ec1",
+																				}];
+
+																				var pie_op = {
+																					series: {
+																						pie: {
+																							show: true
+																						}
+																					},
+																					legend : {
+																						backgroundColor: 'transparent',
+																					},
+																					grid: {
+																						hoverable: true
+																					},
+																					color: null,
+																					tooltip: true,
+																					tooltipOpts: {
+																						content: "%p.0% (%y.0)", // show percentages, rounding to 2 decimal places
+																						shifts: {
+																							x: 20,
+																							y: 0
+																						},
+																						defaultTheme: false
+																					},
+																				};
+																				$.plot($('#flot_pie_chart_c-<?php echo $c['id'] ?>'), pie_data, pie_op);
+																			}
+																		});
+																		
+																	</script>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										<?php endwhile; ?>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- <div class="panel panel-default border-panel card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Year Level</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-md-4 col-sm-6 col-xs-12">
+											<div class="panel panel-inverse card-view">
+												<div class="panel-heading">
+													<div class="pull-left">
+														<h6 class="panel-title txt-dark">IT</h6>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+												<div class="panel-wrapper collapse in">
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="flot-container" style="height:250px">
+																	<div id="flot_pie_chart" class="demo-placeholder"></div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div> -->
+
+						<!-- <div class="panel panel-default border-panel card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Deparments</h6>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-md-4 col-sm-6 col-xs-12">
+											<div class="panel panel-inverse card-view">
+												<div class="panel-heading">
+													<div class="pull-left">
+														<h6 class="panel-title txt-dark">IT</h6>
+													</div>
+													<div class="clearfix"></div>
+												</div>
+												<div class="panel-wrapper collapse in">
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="flot-container" style="height:250px">
+																	<div id="flot_pie_chart" class="demo-placeholder"></div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div> -->
 					</div>
 				</div>
 				<!-- /Row -->
@@ -119,7 +447,7 @@
 	<!-- <button data-toggle="modal" data-target="#responsive-modal" class="model_img img-responsive hidden" id="btn-modal">modal<button> -->
 	
 	<!-- JavaScript -->
-	<?php include('partial/_js.php'); ?>
+	
 
 	<script src="vendors/bower_components/Flot/excanvas.min.js"></script>
 	<script src="vendors/bower_components/Flot/jquery.flot.js"></script>
@@ -136,7 +464,11 @@
 		$(document).ready(function(){
 			keyNumber();
 
-			if( $('#flot_pie_chart').length > 0 ){
+			
+		});
+
+		function flotChart(type, id) {
+			if( $('#flot_pie_chart_' + type + '-' + id).length > 0 ){
 				var pie_data = [{
 					label: "Sent",
 					data: <?php echo $rowSent['cnt'] ?>,
@@ -175,9 +507,9 @@
 						defaultTheme: false
 					},
 				};
-				$.plot($("#flot_pie_chart"), pie_data, pie_op);
+				$.plot($("#flot_pie_chart_" + type + '-' + id), pie_data, pie_op);
 			}
-		});
+		}
 		function checkPassword() {
 			var pwd = $("#tb-password").val();
 			var sc = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
