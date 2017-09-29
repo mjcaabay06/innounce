@@ -82,9 +82,9 @@
 				<div class="row">
 					<?php
 						if ($_COOKIE['userType'] == 1) {
-							$selMsg = "select * from sent_messages where created_at between date_sub(NOW(), interval 30 day) and NOW() order by created_at desc";
+							$selMsg = "select * from sent_messages where created_at between date_sub(NOW(), interval 10 day) and NOW() order by created_at desc";
 						} else {
-							$selMsg = "select * from sent_messages where created_at between date_sub(NOW(), interval 30 day) and NOW() and user_id = " . $_COOKIE['authId'] . " order by created_at desc";
+							$selMsg = "select * from sent_messages where created_at between date_sub(NOW(), interval 10 day) and NOW() and user_id = " . $_COOKIE['authId'] . " order by created_at desc";
 						}
 						
 						$rsMsg = mysqli_query($mysqli, $selMsg);
